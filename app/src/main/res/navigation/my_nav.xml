@@ -8,16 +8,16 @@
     <fragment
         android:id="@+id/recipesFragment"
         android:name="com.kosyakoff.foodapp.RecipesFragment"
-        android:label="fragment_recipes"
+        android:label="@string/menu_recipes_fragment"
         tools:layout="@layout/fragment_recipes" />
     <fragment
         android:id="@+id/favouriteRecipesFragment"
         android:name="com.kosyakoff.foodapp.FavouriteRecipesFragment"
-        android:label="fragment_favourite_recipes"
+        android:label="@string/menu_favorite_recipes_fragment"
         tools:layout="@layout/fragment_favourite_recipes" />
     <fragment
         android:id="@+id/foodJokeFragment"
         android:name="com.kosyakoff.foodapp.FoodJokeFragment"
-        android:label="fragment_food_joke"
+        android:label="@string/menu_food_joke_fragment"
         tools:layout="@layout/fragment_food_joke" />
 </navigation>
