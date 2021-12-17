@@ -1,4 +1,4 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

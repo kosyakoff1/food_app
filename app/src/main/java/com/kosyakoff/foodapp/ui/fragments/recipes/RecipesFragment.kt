@@ -1,4 +1,4 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.ui.fragments.recipes
 
 import android.os.Bundle
 import android.view.LayoutInflater
