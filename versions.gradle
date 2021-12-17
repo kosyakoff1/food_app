@@ -1,5 +1,5 @@
 ext {
-    room_version = "2.3.0"
+    room_version = "2.4.0"
     hilt_version = "2.40.5"
     hilt_compiler_version = "2.40.5"
     core_ktx_version = "1.7.0"
