@@ -1,5 +1,6 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.data
 
+import com.kosyakoff.foodapp.data.network.FoodRecipesApi
 import com.kosyakoff.foodapp.models.FoodRecipes
 import retrofit2.Response
 import javax.inject.Inject

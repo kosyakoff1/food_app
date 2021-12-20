@@ -1,4 +1,4 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.util
 
 class Constants {
 

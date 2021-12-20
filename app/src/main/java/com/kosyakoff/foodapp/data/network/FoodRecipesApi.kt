@@ -1,4 +1,4 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.data.network
 
 import com.kosyakoff.foodapp.models.FoodRecipes
 import retrofit2.Response

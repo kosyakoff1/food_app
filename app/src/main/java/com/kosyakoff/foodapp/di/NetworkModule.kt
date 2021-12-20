@@ -1,7 +1,7 @@
-package com.kosyakoff.di
+package com.kosyakoff.foodapp.di
 
-import com.kosyakoff.foodapp.Constants
-import com.kosyakoff.foodapp.FoodRecipesApi
+import com.kosyakoff.foodapp.util.Constants
+import com.kosyakoff.foodapp.data.network.FoodRecipesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
