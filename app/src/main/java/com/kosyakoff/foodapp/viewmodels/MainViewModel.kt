@@ -1,4 +1,4 @@
-package com.kosyakoff.foodapp
+package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
 import android.content.Context
@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.NetworkResult

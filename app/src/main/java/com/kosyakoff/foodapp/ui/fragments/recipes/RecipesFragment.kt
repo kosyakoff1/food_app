@@ -8,18 +8,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.kosyakoff.foodapp.MainViewModel
+import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import com.kosyakoff.foodapp.adapters.RecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentRecipesBinding
 import com.kosyakoff.foodapp.util.Constants
 import com.kosyakoff.foodapp.util.NetworkResult
+import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
+    private val recipesViewModel: RecipesViewModel by viewModels()
     private lateinit var binding: FragmentRecipesBinding
     private val recipesAdapter by lazy { RecipesAdapter() }
 
@@ -45,7 +46,7 @@ class RecipesFragment : Fragment() {
     }
 
     private fun requestApiData() {
-        mainViewModel.getRecipes(getQueries())
+        mainViewModel.getRecipes(recipesViewModel.getQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -63,17 +64,6 @@ class RecipesFragment : Fragment() {
         }
     }
 
-    private fun getQueries(): HashMap<String, String> {
-        val queries: HashMap<String, String> = HashMap()
-        queries["number"] = "50"
-        queries["apiKey"] = Constants.API_KEY
-        queries["type"] = "snack"
-        queries["diet"] = "vegan"
-        queries["addRecipeInformation"] = "true"
-        queries["fillIngredients"] = "true"
-
-        return queries
-    }
 
     private fun toggleShimmerEffect(on: Boolean) {
         if (on) {
