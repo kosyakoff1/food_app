@@ -5,11 +5,21 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import coil.load
 import com.kosyakoff.foodapp.R
 
 class RecipesRowBinding {
 
     companion object {
+
+        @BindingAdapter("coilImage")
+        @JvmStatic
+        fun coilImage(view: ImageView, imageUrl: String) {
+            view.load(imageUrl) {
+                crossfade(600)
+
+            }
+        }
 
         @BindingAdapter("numberAsString")
         @JvmStatic
@@ -17,7 +27,7 @@ class RecipesRowBinding {
             view.text = value.toString()
         }
 
-        @BindingAdapter("app:isVegan")
+        @BindingAdapter("isVegan")
         @JvmStatic
         fun isVegan(view: View, isVegan: Boolean) {
             when (view) {
