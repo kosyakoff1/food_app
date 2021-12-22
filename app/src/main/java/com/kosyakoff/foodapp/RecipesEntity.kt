@@ -2,12 +2,12 @@ package com.kosyakoff.foodapp
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.kosyakoff.foodapp.models.FoodRecipe
+import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.Constants.Companion.RECIPES_TABLE_NAME
 
 @Entity(tableName = RECIPES_TABLE_NAME)
 data class RecipesEntity(
     @PrimaryKey(autoGenerate = false)
     var id: Int = 0,
-    var foodRecipe: FoodRecipe
+    var foodRecipes: FoodRecipes
 )
