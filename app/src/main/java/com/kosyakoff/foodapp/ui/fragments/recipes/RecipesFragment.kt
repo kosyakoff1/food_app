@@ -7,14 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import com.kosyakoff.foodapp.adapters.RecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentRecipesBinding
-import com.kosyakoff.foodapp.util.Constants
 import com.kosyakoff.foodapp.util.NetworkResult
+import com.kosyakoff.foodapp.util.observeOnce
+import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
@@ -32,9 +34,22 @@ class RecipesFragment : Fragment() {
         binding = FragmentRecipesBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
-        requestApiData()
+        getRecipes()
 
         return binding.root
+    }
+
+    private fun getRecipes() {
+        lifecycleScope.launch {
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { localData ->
+                if (localData.isNotEmpty()) {
+                    recipesAdapter.setData(localData.first().foodRecipes)
+                    toggleShimmerEffect(false)
+                } else {
+                    requestApiData()
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() {
@@ -73,4 +88,5 @@ class RecipesFragment : Fragment() {
         }
 
     }
+
 }

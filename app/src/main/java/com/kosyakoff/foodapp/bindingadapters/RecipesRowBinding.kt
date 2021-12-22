@@ -15,7 +15,7 @@ object RecipesRowBinding {
     fun coilImage(view: ImageView, imageUrl: String) {
         view.load(imageUrl) {
             crossfade(600)
-
+            error(R.drawable.ic_error_placeholder)
         }
     }
 
