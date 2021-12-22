@@ -10,4 +10,19 @@
     <string name="str_error_timeout">Timeout</string>
     <string name="str_error_api_limit_reached">Api key reached limits</string>
     <string name="str_error_recipes_not_found">Recipes not found</string>
+    <string name="scr_recipes_bottom_sheet_txt_view_meal_type">Meal Type</string>
+    <string name="scr_recipes_bottom_sheet_chip_main_course">Main Course</string>
+    <string name="scr_recipes_bottom_sheet_chip_side_dish">Side Dish</string>
+    <string name="scr_recipes_bottom_sheet_chip_dessert">Dessert</string>
+    <string name="scr_recipes_bottom_sheet_chip_appetizer">Appetizer</string>
+    <string name="scr_recipes_bottom_sheet_chip_salad">Salad</string>
+    <string name="scr_recipes_bottom_sheet_chip_soup">Soup</string>
+    <string name="scr_recipes_bottom_sheet_chip_finger">Finger Food</string>
+    <string name="scr_recipes_bottom_sheet_txt_view_diet_type">Diet Type</string>
+    <string name="scr_recipes_bottom_sheet_chip_gluten_free">Gluten Free</string>
+    <string name="scr_recipes_bottom_sheet_chip_ketogenic">Ketogenic</string>
+    <string name="scr_recipes_bottom_sheet_chip_vegeterian">Vegeterian</string>
+    <string name="scr_recipes_bottom_sheet_chip_vegan">Vegan</string>
+    <string name="scr_recipes_bottom_sheet_chip_paleo">Paleo</string>
+    <string name="str_apply">Apply</string>
 </resources>
