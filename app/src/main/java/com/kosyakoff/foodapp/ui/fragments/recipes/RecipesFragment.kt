@@ -32,6 +32,8 @@ class RecipesFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = mainViewModel
 
         setupRecyclerView()
         getRecipes()
