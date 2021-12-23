@@ -17,5 +17,17 @@ class Constants {
         //Room database
         const val RECIPES_DATABASE_NAME = "recipes_database"
         const val RECIPES_TABLE_NAME = "recipes_table"
+
+        //Bottom sheet preferences
+
+        const val PREFERENCES_FILE_NAME = "settings"
+
+        const val DEFAULT_RECIPES_NUMBER = 50L.toString()
+        const val DEFAULT_MEAL_TYPE = "main course"
+        const val DEFAULT_DIET_TYPE = "vegetarian"
+        const val PREFERENCES_MEAL_TYPE_KEY = "mealType"
+        const val PREFERENCES_MEAL_TYPE_ID_KEY = "mealTypeId"
+        const val PREFERENCES_DIET_TYPE_KEY = "dietType"
+        const val PREFERENCES_DIET_TYPE_ID_KEY = "dietTypeId"
     }
 }
