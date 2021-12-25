@@ -2,10 +2,12 @@ package com.kosyakoff.foodapp.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
+import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_BACK_ONLINE_KEY
 import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_DIET_TYPE_ID_KEY
 import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_DIET_TYPE_KEY
 import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_FILE_NAME
@@ -30,6 +32,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
 
         val dietType = stringPreferencesKey(PREFERENCES_DIET_TYPE_KEY)
         val dietTypeId = intPreferencesKey(PREFERENCES_DIET_TYPE_ID_KEY)
+        val backOnline = booleanPreferencesKey(PREFERENCES_BACK_ONLINE_KEY)
 
     }
 
@@ -50,6 +53,24 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             selectedMealTypeId, selectedDietType,
             selectedDietTypeId
         )
+    }
+
+    val readBackOnline: Flow<Boolean> = context.dataStore.data.catch { exception ->
+        if (exception is IOException) {
+            emit(emptyPreferences())
+        } else {
+            throw exception
+        }
+    }.map { preferences ->
+        val backOnline = preferences[PreferenceKeys.backOnline] ?: false
+
+        backOnline
+    }
+
+    suspend fun saveBackOnline(backOnline: Boolean) {
+        context.dataStore.edit { settings ->
+            settings[PreferenceKeys.backOnline] = backOnline
+        }
     }
 
     suspend fun saveMealAndDietTypes(

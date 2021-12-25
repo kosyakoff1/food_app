@@ -11,14 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentRecipesBinding
+import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.observeOnce
 import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,22 +30,37 @@ class RecipesFragment : Fragment() {
     private val recipesViewModel: RecipesViewModel by viewModels()
     private lateinit var binding: FragmentRecipesBinding
     private val recipesAdapter by lazy { RecipesAdapter() }
+    private lateinit var networkListener: NetworkListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         binding = FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = mainViewModel
 
         setupRecyclerView()
-        getRecipes()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
+            recipesViewModel.backOnline = it
+        }
+
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(requireContext()).collect { status ->
+                recipesViewModel.showNetworkStatus(status)
+
+                getRecipes()
+            }
+        }
 
         binding.recipesFab.setOnClickListener {
-            val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
-            findNavController().navigate(action)
+            if (recipesViewModel.networkIsAvailable) {
+                val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
+                findNavController().navigate(action)
+            }
         }
 
         return binding.root

@@ -2,7 +2,9 @@ package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_DIET_TYPE
@@ -14,6 +16,8 @@ import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_FILL_INGREDIENTS
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_NUMBER
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_RECIPE_INFO
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_TYPE
+import com.kosyakoff.foodapp.util.extensions.showToast
+import com.kosyakoff.foodapp.util.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -30,6 +34,17 @@ class RecipesViewModel @Inject constructor(
     private var dietType = DEFAULT_DIET_TYPE
 
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+
+    var networkIsAvailable = false
+    var backOnline = false
+
+    private fun saveBackOnline(backOnline: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
+    }
 
     fun saveMealAndDietTypes(
         selectedMealType: String,
@@ -65,5 +80,17 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_FILL_INGREDIENTS] = true.toString()
 
         return queries
+    }
+
+    fun showNetworkStatus(newNetworkStatus: Boolean?) {
+        newNetworkStatus?.let { networkIsAvailable = it }
+
+        if (!networkIsAvailable) {
+            getApplication<Application>().showToast(getString(R.string.str_error_no_internet_connection))
+            saveBackOnline(true)
+        } else if (backOnline) {
+            getApplication<Application>().showToast(getString(R.string.str_internet_restored))
+            saveBackOnline(false)
+        }
     }
 }
