@@ -39,7 +39,6 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         } else {
             throw exception
         }
-
     }.map { preferences ->
         val selectedMealType = preferences[PreferenceKeys.mealType] ?: DEFAULT_MEAL_TYPE
         val selectedMealTypeId = preferences[PreferenceKeys.mealTypeId] ?: 0

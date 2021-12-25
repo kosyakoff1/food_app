@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipesAdapter
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    val recipesFragmentArgs: RecipesFragmentArgs by navArgs()
     private val mainViewModel: MainViewModel by viewModels()
     private val recipesViewModel: RecipesViewModel by viewModels()
     private lateinit var binding: FragmentRecipesBinding
@@ -41,7 +43,8 @@ class RecipesFragment : Fragment() {
         getRecipes()
 
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
+            findNavController().navigate(action)
         }
 
         return binding.root
@@ -50,7 +53,7 @@ class RecipesFragment : Fragment() {
     private fun getRecipes() {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { localData ->
-                if (localData.isNotEmpty()) {
+                if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
                     recipesAdapter.setData(localData.first().foodRecipes)
                     toggleShimmerEffect(false)
                 } else {

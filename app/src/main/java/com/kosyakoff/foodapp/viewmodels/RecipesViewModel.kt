@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.kosyakoff.foodapp.data.DataStoreRepository
-import com.kosyakoff.foodapp.util.Constants
 import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE

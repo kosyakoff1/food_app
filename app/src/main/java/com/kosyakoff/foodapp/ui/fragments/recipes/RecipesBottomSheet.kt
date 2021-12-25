@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.kosyakoff.foodapp.databinding.FragmentRecipesBottomSheetBinding
@@ -20,9 +21,9 @@ import java.util.*
 @AndroidEntryPoint
 class RecipesBottomSheet : BottomSheetDialogFragment() {
 
-    private var mealTypeChip = DEFAULT_MEAL_TYPE
+    private var mealTypeChipTitle = DEFAULT_MEAL_TYPE
     private var mealTypeChipId = 0
-    private var dietTypeChip = DEFAULT_DIET_TYPE
+    private var dietTypeChipTitle = DEFAULT_DIET_TYPE
     private var dietTypeChipId = 0
 
     private lateinit var binding: FragmentRecipesBottomSheetBinding
@@ -39,7 +40,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             val chip = group.findViewById<Chip>(checkedId)
             val selectedMealType = chip.text.toString().lowercase(Locale.ROOT)
 
-            mealTypeChip = selectedMealType
+            mealTypeChipTitle = selectedMealType
             mealTypeChipId = checkedId
         }
 
@@ -47,25 +48,35 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             val chip = group.findViewById<Chip>(checkedId)
             val selectedDietType = chip.text.toString().lowercase(Locale.ROOT)
 
-            dietTypeChip = selectedDietType
+            dietTypeChipTitle = selectedDietType
             dietTypeChipId = checkedId
         }
 
         binding.applyButton.setOnClickListener {
             recipesViewModel.saveMealAndDietTypes(
-                mealTypeChip,
-                mealTypeChipId, dietTypeChip, dietTypeChipId
+                mealTypeChipTitle,
+                mealTypeChipId, dietTypeChipTitle, dietTypeChipId
             )
+
+            val action = RecipesBottomSheetDirections.actionRecipesBottomSheetToRecipesFragment(
+                backFromBottomSheet = true
+            )
+            findNavController().navigate(action)
         }
 
         recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
-            mealTypeChip = value.selectedMealType
-            dietTypeChip = value.selectedDietType
+            mealTypeChipTitle = value.selectedMealType
+            dietTypeChipTitle = value.selectedDietType
 
             binding.apply {
                 try {
-                    mealTypeChipGroup.findViewById<Chip>(value.selectedMealTypeId).isChecked = true
-                    dietTypeChipGroup.findViewById<Chip>(value.selectedDietTypeId).isChecked = true
+
+                    value.selectedMealTypeId.takeIf { it != 0 }?.let {
+                        mealTypeChipGroup.findViewById<Chip>(it).isChecked = true
+                    }
+                    value.selectedDietTypeId.takeIf { it != 0 }?.let {
+                        dietTypeChipGroup.findViewById<Chip>(it).isChecked = true
+                    }
                 } catch (ex: Exception) {
                     context?.showToast(ex.message.toString())
                 }
