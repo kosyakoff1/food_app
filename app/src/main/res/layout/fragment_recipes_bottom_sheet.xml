@@ -169,7 +169,7 @@
     </HorizontalScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/apply_button"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="24dp"
