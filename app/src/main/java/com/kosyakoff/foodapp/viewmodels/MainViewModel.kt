@@ -32,6 +32,30 @@ class MainViewModel @Inject constructor(
         }
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
+    var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
+
+    fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
+        searchRecipesSafeCall(searchQuery)
+    }
+
+    private suspend fun searchRecipesSafeCall(searchQuery: Map<String, String>) {
+        searchRecipesResponse.value = NetworkResult.Loading()
+
+        if (hasInternetConnection()) {
+            try {
+                val response = repository.remoteDataSource.searchRecipes(searchQuery)
+                searchRecipesResponse.value = handleFoodRecipesResponse(response)
+            } catch (e: Exception) {
+                searchRecipesResponse.value =
+                    NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
+            }
+        } else {
+            searchRecipesResponse.value =
+                NetworkResult.Error(
+                    getString(R.string.str_error_no_internet_connection)
+                )
+        }
+    }
 
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)
@@ -64,7 +88,7 @@ class MainViewModel @Inject constructor(
         insertRecipes(RecipesEntity(0, foodRecipes))
     }
 
-    private fun handleFoodRecipesResponse(response: Response<FoodRecipes>): NetworkResult<FoodRecipes>? {
+    private fun handleFoodRecipesResponse(response: Response<FoodRecipes>): NetworkResult<FoodRecipes> {
         when {
             response.message().contains("timeout") -> {
                 return NetworkResult.Error(getString(R.string.str_error_timeout))

@@ -15,6 +15,7 @@ import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_DIET
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_FILL_INGREDIENTS
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_NUMBER
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_RECIPE_INFO
+import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_SEARCH
 import com.kosyakoff.foodapp.util.Constants.Companion.QUERY_TYPE
 import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.util.getString
@@ -76,6 +77,17 @@ class RecipesViewModel @Inject constructor(
         queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_TYPE] = mealType
         queries[QUERY_DIET] = dietType
+        queries[QUERY_RECIPE_INFO] = true.toString()
+        queries[QUERY_FILL_INGREDIENTS] = true.toString()
+
+        return queries
+    }
+
+    fun getSearchQuery(searchQuery: String): HashMap<String, String> {
+        val queries: HashMap<String, String> = HashMap()
+        queries[QUERY_SEARCH] = searchQuery
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_RECIPE_INFO] = true.toString()
         queries[QUERY_FILL_INGREDIENTS] = true.toString()
 
