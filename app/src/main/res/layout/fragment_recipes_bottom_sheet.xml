@@ -150,7 +150,7 @@
                     android:id="@+id/vegetarian_chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/scr_recipes_bottom_sheet_chip_vegeterian" />
+                    android:text="@string/scr_recipes_bottom_sheet_chip_vegetarian" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/vegan_chip"

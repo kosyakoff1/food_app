@@ -22,7 +22,7 @@
     <string name="scr_recipes_bottom_sheet_txt_view_diet_type">Diet Type</string>
     <string name="scr_recipes_bottom_sheet_chip_gluten_free">Gluten Free</string>
     <string name="scr_recipes_bottom_sheet_chip_ketogenic">Ketogenic</string>
-    <string name="scr_recipes_bottom_sheet_chip_vegeterian">Vegeterian</string>
+    <string name="scr_recipes_bottom_sheet_chip_vegetarian">Vegetarian</string>
     <string name="scr_recipes_bottom_sheet_chip_vegan">Vegan</string>
     <string name="scr_recipes_bottom_sheet_chip_paleo">Paleo</string>
     <string name="str_apply">Apply</string>
