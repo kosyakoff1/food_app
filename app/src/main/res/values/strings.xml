@@ -25,10 +25,19 @@
     <string name="scr_recipes_bottom_sheet_chip_vegetarian">Vegetarian</string>
     <string name="scr_recipes_bottom_sheet_chip_vegan">Vegan</string>
     <string name="scr_recipes_bottom_sheet_chip_paleo">Paleo</string>
+    <string name="scr_overview_text_view_vegetarian">Vegetarian</string>
+    <string name="scr_overview_text_view_vegan">Vegan</string>
+    <string name="scr_overview_text_view_gluten_free">Gluten Free</string>
+    <string name="scr_overview_text_view_dairy_free">Dairy Free</string>
+    <string name="scr_overview_text_view_healthy">Healthy</string>
+    <string name="scr_overview_text_view_cheap">Cheap</string>
     <string name="str_apply">Apply</string>
     <string name="menu_search_search">Search</string>
     <string name="str_details_activity">Details</string>
     <string name="str_details">Details</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="str_overview">Overview</string>
+    <string name="str_ingredients">Ingredients</string>
+    <string name="str_instructions">Instructions</string>
 </resources>

@@ -44,4 +44,18 @@
     <style name="CustomTabTextStyle" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="RecipeOverviewHighlightTextViewStyle" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">@color/darkGray</item>
+        <item name="maxLines">1</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="RecipeOverviewHighlightImageViewStyle">
+        <item name="android:src">@drawable/ic_check_mark</item>
+        <item name="tint">@color/darkGray</item>
+    </style>
+
+
 </resources>
