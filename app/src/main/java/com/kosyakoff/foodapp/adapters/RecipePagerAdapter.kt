@@ -17,7 +17,7 @@ class RecipePagerAdapter(
     override fun getItem(position: Int): Fragment =
         fragments[position].apply { arguments = resultBundle }
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return titles[position]
     }
 

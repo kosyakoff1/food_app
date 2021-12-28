@@ -16,7 +16,9 @@ class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
     private val args: DetailsActivityArgs by navArgs()
 
-    val BUNDLE_KEY = "recipeBundle"
+    companion object {
+        val BUNDLE_KEY = "recipeBundle"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
