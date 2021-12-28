@@ -22,4 +22,8 @@
     <color name="chipTextColor">@color/darkGray</color>
 
     <color name="actionBarBackgroundColor">@color/colorPrimary</color>
+
+    <color name="ingredientCardStrokeColor">@color/lightMediumGray</color>
+    <color name="ingredientCardBackGroundColor">@color/white</color>
+    <color name="ingredientTitleColor">@color/darker</color>
 </resources>
