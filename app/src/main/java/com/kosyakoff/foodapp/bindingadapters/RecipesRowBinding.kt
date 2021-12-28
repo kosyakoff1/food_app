@@ -12,6 +12,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.kosyakoff.foodapp.util.extensions.showToast
+import org.jsoup.Jsoup
 import java.lang.Exception
 
 object RecipesRowBinding {
@@ -22,6 +23,15 @@ object RecipesRowBinding {
         view.load(imageUrl) {
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:textToParse")
+    fun textToParse(textView: TextView, inputString: String?) {
+        inputString?.let {
+            val parsedString = Jsoup.parse(it).text()
+            textView.text = parsedString
         }
     }
 

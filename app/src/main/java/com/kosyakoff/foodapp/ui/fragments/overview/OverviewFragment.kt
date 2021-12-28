@@ -11,6 +11,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentOverviewBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.ui.DetailsActivity
+import org.jsoup.Jsoup
 
 
 class OverviewFragment : Fragment() {
@@ -30,7 +31,8 @@ class OverviewFragment : Fragment() {
             titleTextView.text = recipe.title
             numberOfLikesTextView.text = recipe.aggregateLikes.toString()
             timeTextView.text = recipe.readyInMinutes.toString()
-            overviewTextView.text = recipe.summary
+            val parsedString = Jsoup.parse(recipe.summary).text()
+            overviewTextView.text = parsedString
         }
         setCheckedItems(recipe)
 
