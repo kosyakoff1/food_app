@@ -11,6 +11,7 @@ TODO:
 * refactor repository to consume models, not entities for saving and also return models, not
   entities
 * refactor favorites logic - to keep only id, as data in recipe can change and we can keep outdated
-  recipe in favorites 
-  
+  recipe in favorites
+* decide whenever use or not use data binding in project and refactor for same style in all
+  fragments   
 

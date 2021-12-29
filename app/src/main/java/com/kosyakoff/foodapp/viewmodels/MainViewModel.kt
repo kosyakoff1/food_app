@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.*
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
+import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.NetworkResult
@@ -26,10 +27,27 @@ class MainViewModel @Inject constructor(
     val readRecipes: LiveData<List<RecipesEntity>> =
         repository.localDataSource.loadRecipes().asLiveData()
 
+    val readFavoriteRecipes: LiveData<List<FavoriteEntity>> =
+        repository.localDataSource.loadFavoriteRecipes().asLiveData()
+
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             repository.localDataSource.insertRecipes(recipesEntity)
         }
+
+    private fun insertFavoriteRecipe(recipe: FavoriteEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.localDataSource.insertFavoriteRecipe(recipe)
+        }
+
+    private fun deleteFavoriteRecipe(recipe: FavoriteEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.localDataSource.deleteFavoriteRecipe(recipe)
+        }
+
+    private fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
+        repository.localDataSource.deleteAllFavoriteRecipes()
+    }
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
     var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
