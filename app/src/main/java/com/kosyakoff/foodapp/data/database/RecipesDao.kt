@@ -11,13 +11,13 @@ interface RecipesDao {
     suspend fun insertRecipes(recipesEntity: RecipesEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteRecipes(recipe: FavoriteEntity)
+    suspend fun insertFavoriteRecipe(recipe: FavoriteEntity)
 
     @Query("select * from recipes_table order by id ASC")
-    fun readRecipes(): Flow<List<RecipesEntity>>
+    fun loadRecipes(): Flow<List<RecipesEntity>>
 
     @Query("select * from favorites_table order by id asc")
-    fun readFavoriteRecipe(): Flow<List<FavoriteEntity>>
+    fun loadFavoriteRecipes(): Flow<List<FavoriteEntity>>
 
     @Delete
     suspend fun deleteFavoriteRecipe(recipe: FavoriteEntity)

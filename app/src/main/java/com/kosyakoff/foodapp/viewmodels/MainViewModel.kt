@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
     val readRecipes: LiveData<List<RecipesEntity>> =
-        repository.localDataSource.readFromDatabase().asLiveData()
+        repository.localDataSource.loadRecipes().asLiveData()
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
