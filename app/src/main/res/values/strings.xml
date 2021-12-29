@@ -40,4 +40,5 @@
     <string name="str_overview">Overview</string>
     <string name="str_ingredients">Ingredients</string>
     <string name="str_instructions">Instructions</string>
+    <string name="menu_details_activity_save_to_favorites">Save to favorites</string>
 </resources>
