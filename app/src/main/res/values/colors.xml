@@ -5,6 +5,7 @@
     <color name="colorAccent">#9D46FF</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="snowWhite">#FFFFFFF9</color>
     <color name="lightGray">#F9F9F9</color>
     <color name="mediumGray">#D1D1D1</color>
     <color name="lightMediumGray">#80D1D1D1</color>
@@ -24,6 +25,6 @@
     <color name="actionBarBackgroundColor">@color/colorPrimary</color>
 
     <color name="ingredientCardStrokeColor">@color/lightMediumGray</color>
-    <color name="ingredientCardBackGroundColor">@color/white</color>
+    <color name="ingredientCardBackGroundColor">@color/snowWhite</color>
     <color name="ingredientTitleColor">@color/darker</color>
 </resources>
