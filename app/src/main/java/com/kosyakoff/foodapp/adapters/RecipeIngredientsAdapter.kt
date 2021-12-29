@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.IngredientsRowLayoutBinding
 import com.kosyakoff.foodapp.models.ExtendedIngredient
 import com.kosyakoff.foodapp.util.Constants.Companion.CDN_URL
@@ -20,7 +21,10 @@ class RecipeIngredientsAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(ingredient: ExtendedIngredient) {
             binding.apply {
-                ingredientImageView.load(CDN_URL + ingredient.image)
+                ingredientImageView.load(CDN_URL + ingredient.image) {
+                    crossfade(600)
+                    error(R.drawable.ic_error_placeholder)
+                }
                 ingredientNameTextView.text = ingredient.name.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
