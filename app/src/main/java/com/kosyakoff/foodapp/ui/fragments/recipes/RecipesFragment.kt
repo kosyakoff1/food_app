@@ -96,7 +96,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         lifecycleScope.launch {
             mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { localData ->
                 if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
-                    recipesAdapter.setData(localData.first().foodRecipes)
+                    recipesAdapter.submitList(localData.first().foodRecipes.results)
                     toggleShimmerEffect(false)
                 } else {
                     requestApiData()
@@ -119,7 +119,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
         mainViewModel.searchRecipes(recipesViewModel.getSearchQuery(searchString))
         mainViewModel.searchRecipesResponse.observe(viewLifecycleOwner) {
-            Log.d("searchRecipesResponse", "searchRecipesResponse")
             processRecipesNetworkResult(it)
         }
     }
@@ -129,7 +128,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
         mainViewModel.getRecipes(recipesViewModel.getQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) {
-            Log.d("recipesResponse", "recipesResponse")
             processRecipesNetworkResult(it)
         }
     }
@@ -138,7 +136,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         when (response) {
             is NetworkResult.Success -> {
                 toggleShimmerEffect(false)
-                response.data?.let { recipesAdapter.setData(it) }
+                response.data?.let { recipesAdapter.submitList(it.results) }
             }
             is NetworkResult.Error -> {
                 toggleShimmerEffect(false)

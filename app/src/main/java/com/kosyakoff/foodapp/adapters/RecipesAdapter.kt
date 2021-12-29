@@ -3,16 +3,14 @@ package com.kosyakoff.foodapp.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kosyakoff.foodapp.databinding.RecipesRowLayoutBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.models.FoodRecipes
-import com.kosyakoff.foodapp.util.RecipesDiffUtil
+import com.kosyakoff.foodapp.util.RecipesDiffUtilCallback
 
-//TODO better change it to ListAdaper and asycnDiffUtil
-class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
-
-    private var recipes = emptyList<FoodRecipe>()
+class RecipesAdapter : ListAdapter<FoodRecipe, RecipesAdapter.MyViewHolder>(RecipesDiffUtilCallback) {
 
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -37,15 +35,5 @@ class RecipesAdapter : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
         MyViewHolder.from(parent)
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) =
-        holder.bind(recipes[position])
-
-    fun setData(newData: FoodRecipes) {
-        val recipesDiffUtil = RecipesDiffUtil(recipes, newData.results)
-        val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
-        diffUtilResult.dispatchUpdatesTo(this)
-        recipes = newData.results
-
-    }
-
-    override fun getItemCount(): Int = recipes.size
+        holder.bind(currentList[position])
 }
