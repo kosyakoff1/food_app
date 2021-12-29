@@ -5,6 +5,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipePagerAdapter
 import com.kosyakoff.foodapp.databinding.ActivityDetailsBinding
@@ -12,8 +13,8 @@ import com.kosyakoff.foodapp.ui.fragments.ingredients.IngredientsFragment
 import com.kosyakoff.foodapp.ui.fragments.instructions.InstructionsFragment
 import com.kosyakoff.foodapp.ui.fragments.overview.OverviewFragment
 
-class DetailsActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailsBinding
+class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
+    private val binding: ActivityDetailsBinding by viewBinding(ActivityDetailsBinding::bind)
     private val args: DetailsActivityArgs by navArgs()
 
     companion object {
@@ -22,8 +23,7 @@ class DetailsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
         with(binding) {
             setSupportActionBar(toolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)

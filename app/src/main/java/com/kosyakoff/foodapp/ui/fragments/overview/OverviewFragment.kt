@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentOverviewBinding
@@ -14,18 +15,15 @@ import com.kosyakoff.foodapp.ui.DetailsActivity
 import org.jsoup.Jsoup
 
 
-class OverviewFragment : Fragment() {
+class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
-    private lateinit var binding: FragmentOverviewBinding
+    private val binding: FragmentOverviewBinding by viewBinding(FragmentOverviewBinding::bind)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val recipe = requireArguments().getParcelable<FoodRecipe>(DetailsActivity.BUNDLE_KEY)!!
 
-        binding = FragmentOverviewBinding.inflate(inflater, container, false)
         with(binding) {
             mainImageView.load(recipe.image)
             titleTextView.text = recipe.title
@@ -35,11 +33,9 @@ class OverviewFragment : Fragment() {
             overviewTextView.text = parsedString
         }
         setCheckedItems(recipe)
-
-        return binding.root
     }
 
-    private fun setCheckedItems(recipe: FoodRecipe) {
+     private fun setCheckedItems(recipe: FoodRecipe) {
         val checkedColor = ContextCompat.getColor(
             requireContext(),
             R.color.green

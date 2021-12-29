@@ -26,7 +26,8 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     private var dietTypeChipTitle = DEFAULT_DIET_TYPE
     private var dietTypeChipId = 0
 
-    private lateinit var binding: FragmentRecipesBottomSheetBinding
+    private var _binding: FragmentRecipesBottomSheetBinding? = null
+    private val binding get() = _binding!!
     private val recipesViewModel: RecipesViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,7 +35,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
+        _binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
 
         binding.mealTypeChipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -85,6 +86,11 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
 }

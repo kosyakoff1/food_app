@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentRecipesBinding
@@ -25,22 +26,18 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
+class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryTextListener {
 
     private val recipesFragmentArgs: RecipesFragmentArgs by navArgs()
     private val mainViewModel: MainViewModel by viewModels()
     private val recipesViewModel: RecipesViewModel by viewModels()
-    private lateinit var binding: FragmentRecipesBinding
+    private val binding by viewBinding(FragmentRecipesBinding::bind)
     private val recipesAdapter by lazy { RecipesAdapter() }
     private lateinit var networkListener: NetworkListener
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentRecipesBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = mainViewModel
 
         setHasOptionsMenu(true)
@@ -66,8 +63,6 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                 findNavController().navigate(action)
             }
         }
-
-        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -1,4 +1,5 @@
 ext {
+    view_binding_property_version = "1.5.3"
     room_version = "2.4.0"
     hilt_version = "2.40.5"
     hilt_compiler_version = "2.40.5"
