@@ -1,7 +1,7 @@
 package com.kosyakoff.foodapp.data
 
 import com.kosyakoff.foodapp.data.database.RecipesDao
-import com.kosyakoff.foodapp.data.database.RecipesEntity
+import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.*
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
-import com.kosyakoff.foodapp.data.database.RecipesEntity
+import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.getString
