@@ -25,7 +25,7 @@ class RecipeIngredientsAdapter :
                     crossfade(600)
                     error(R.drawable.ic_error_placeholder)
                 }
-                ingredientNameTextView.text = ingredient.name.replaceFirstChar {
+                ingredientNameTextView.text = ingredient.name?.replaceFirstChar {
                     if (it.isLowerCase()) it.titlecase(
                         Locale.getDefault()
                     ) else it.toString()
