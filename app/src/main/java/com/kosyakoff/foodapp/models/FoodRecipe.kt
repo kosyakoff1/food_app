@@ -25,13 +25,13 @@ data class FoodRecipe(
     @SerializedName("instructions")
     val instructions: String?,
     @SerializedName("readyInMinutes")
-    val readyInMinutes: Int,
+    val readyInMinutes: Int?,
     @SerializedName("sourceUrl")
     val sourceUrl: String,
     @SerializedName("summary")
-    val summary: String,
+    val summary: String?,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("vegan")
     val vegan: Boolean,
     @SerializedName("vegetarian")
