@@ -8,7 +8,8 @@ import com.kosyakoff.foodapp.databinding.RecipesRowLayoutBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.util.RecipesDiffUtilCallback
 
-class RecipesAdapter : ListAdapter<FoodRecipe, RecipesAdapter.MyViewHolder>(RecipesDiffUtilCallback) {
+class RecipesAdapter :
+    ListAdapter<FoodRecipe, RecipesAdapter.MyViewHolder>(RecipesDiffUtilCallback) {
 
     class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -5,11 +5,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import coil.load
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.models.FoodRecipe
+import com.kosyakoff.foodapp.ui.fragments.favorites.FavouriteRecipesFragmentDirections
 import com.kosyakoff.foodapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.kosyakoff.foodapp.util.extensions.showToast
 import org.jsoup.Jsoup
@@ -35,10 +37,38 @@ object RecipesRowBinding {
         }
     }
 
+    @JvmStatic
+    @BindingAdapter("app:visibilityBaseOnDataPresence")
+    fun visibilityBaseOnDataPresence(view: View, data: List<Any>?) {
+        view.isVisible = data.isNullOrEmpty().not()
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:visibilityBaseOnDataPresenceReverse")
+    fun visibilityBaseOnDataPresenceReverse(view: View, data: List<Any>?) {
+        view.isVisible = data.isNullOrEmpty()
+    }
+
     @BindingAdapter("numberAsString")
     @JvmStatic
     fun numberAsString(view: TextView, value: Int) {
         view.text = value.toString()
+    }
+
+    @BindingAdapter("app:onFavoriteRecipesClicked")
+    @JvmStatic
+    fun onFavoriteRecipesClicked(recipesLayout: ConstraintLayout, recipe: FoodRecipe) {
+        recipesLayout.setOnClickListener {
+            try {
+                val action =
+                    FavouriteRecipesFragmentDirections.actionFavouriteRecipesFragmentToDetailsActivity(
+                        recipe
+                    )
+                recipesLayout.findNavController().navigate(action)
+            } catch (ex: Exception) {
+                recipesLayout.context.showToast(ex.message.toString())
+            }
+        }
     }
 
     @BindingAdapter("app:onRecipesClicked")

@@ -4,8 +4,9 @@ Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
 
-* check app with leak canary
- * move logic from fragments and activities 
+* check app with leak canary (e.g. clearance of data bindings with live data (possible leak of
+  viewLifeCycleOwner as we don't set it and believe in byViewBinding) )
+* move logic from fragments and activities
 * separate app to models
 * add unit tests
 * refactor saving recipes request data (not json file of whole bunch on every request)

@@ -1,7 +1,6 @@
 package com.kosyakoff.foodapp.ui.fragments.recipes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
@@ -39,6 +38,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = mainViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setHasOptionsMenu(true)
 
