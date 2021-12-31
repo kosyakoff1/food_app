@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.kosyakoff.foodapp.databinding.RecipesRowLayoutBinding
+import com.kosyakoff.foodapp.databinding.FavoriteRecipesRowLayoutBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.util.RecipesDiffUtilCallback
 
-class RecipesAdapter : ListAdapter<FoodRecipe, RecipesAdapter.MyViewHolder>(RecipesDiffUtilCallback) {
+class FavoriteRecipesAdapter :
+    ListAdapter<FoodRecipe, FavoriteRecipesAdapter.MyViewHolder>(RecipesDiffUtilCallback) {
 
-    class MyViewHolder(private val binding: RecipesRowLayoutBinding) :
+    class MyViewHolder(private val binding: FavoriteRecipesRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: FoodRecipe) {
             binding.recipe = recipe
@@ -19,14 +20,13 @@ class RecipesAdapter : ListAdapter<FoodRecipe, RecipesAdapter.MyViewHolder>(Reci
 
         companion object {
             fun from(parent: ViewGroup): MyViewHolder = MyViewHolder(
-                RecipesRowLayoutBinding.inflate(
+                FavoriteRecipesRowLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
             )
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder =
