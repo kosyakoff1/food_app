@@ -43,4 +43,5 @@
     <string name="menu_details_activity_save_to_favorites">Save to favorites</string>
     <string name="scr_details_tst_recipe_saved_to_favorites">Recipe added to favorites</string>
     <string name="scr_details_tst_recipe_removed_from_favorites">Recipe removed from favorites</string>
+    <string name="src_favorites_text_view_no_favorites">No favorite recipes</string>
 </resources>
