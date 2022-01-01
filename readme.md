@@ -3,7 +3,9 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
-
+* add onboarding
+* add swipe to refresh
+* test to rotation state saving
 * check app with leak canary (e.g. clearance of data bindings with live data (possible leak of
   viewLifeCycleOwner as we don't set it and believe in byViewBinding) )
 * move logic from fragments and activities

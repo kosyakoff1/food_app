@@ -84,7 +84,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="12dp"
         android:ellipsize="end"
-        android:fontFamily="@font/courgette"
+        android:fontFamily="@font/cabin_medium"
         android:maxLines="1"
         android:textColor="@color/darkGray"
         android:textSize="22sp"

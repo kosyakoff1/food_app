@@ -17,7 +17,7 @@ import com.kosyakoff.foodapp.util.extensions.showToast
 import org.jsoup.Jsoup
 import java.lang.Exception
 
-object RecipesRowBinding {
+object RecipesRowBindingAdapters {
 
     @BindingAdapter("coilImage")
     @JvmStatic

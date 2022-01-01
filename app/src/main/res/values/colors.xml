@@ -27,4 +27,10 @@
     <color name="ingredientCardStrokeColor">@color/lightMediumGray</color>
     <color name="ingredientCardBackGroundColor">@color/snowWhite</color>
     <color name="ingredientTitleColor">@color/darker</color>
+    <color name="itemSelectionColor">#4DAADCEE</color>
+    <color name="itemDefaultColor">@color/snowWhite</color>
+
+    <color name="statusBarColor">@color/colorPrimaryDark</color>
+    <color name="contextualStatusBarColor">@color/darker</color>
+    <color name="actionModeBackgroundColor">@color/colorPrimary</color>
 </resources>

@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:ellipsize="end"
-                android:fontFamily="@font/courgette"
+                android:fontFamily="@font/cabin_medium"
                 android:maxLines="1"
                 android:textColor="@color/ingredientTitleColor"
                 android:textSize="20sp"

@@ -40,8 +40,15 @@
     <string name="str_overview">Overview</string>
     <string name="str_ingredients">Ingredients</string>
     <string name="str_instructions">Instructions</string>
-    <string name="menu_details_activity_save_to_favorites">Save to favorites</string>
+    <string name="scr_details_activity_save_to_favorites_menu">Save to favorites</string>
     <string name="scr_details_tst_recipe_saved_to_favorites">Recipe added to favorites</string>
     <string name="scr_details_tst_recipe_removed_from_favorites">Recipe removed from favorites</string>
     <string name="src_favorites_text_view_no_favorites">No favorite recipes</string>
+    <string name="scr_favorites_delete_favorite_menu">Delete Favorite</string>
+<!--    <string name="scr_favorites_items_selected_menu_title">Favorites selected: %1$d</string>-->
+
+    <plurals name="scr_favorites_items_selected_menu_title">
+        <item quantity="one">%d favorite selected</item>
+        <item quantity="other">%d favorites selected</item>
+    </plurals>
 </resources>

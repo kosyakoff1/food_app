@@ -25,6 +25,8 @@ class Constants {
 
         const val PREFERENCES_FILE_NAME = "settings"
 
+        const val FAVORITES_SELECTION_NAME = "FAVORITES_SELECTION_NAME"
+
         const val DEFAULT_RECIPES_NUMBER = 50L.toString()
         const val DEFAULT_MEAL_TYPE = "main course"
         const val DEFAULT_DIET_TYPE = "vegetarian"

@@ -102,6 +102,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
 
     private fun setupRecyclerView() {
         with(binding.recipesRecyclerView) {
+            setHasFixedSize(true)
             this.adapter = recipesAdapter
             layoutManager = LinearLayoutManager(requireContext())
             toggleShimmerEffect(true)
