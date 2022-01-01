@@ -18,6 +18,7 @@
         app:onFavoriteRecipesClicked="@{recipe}">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
@@ -26,7 +27,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:strokeColor="@color/lightMediumGray"
+            app:strokeColor="@color/selective_card_stroke_color"
             app:strokeWidth="1dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
