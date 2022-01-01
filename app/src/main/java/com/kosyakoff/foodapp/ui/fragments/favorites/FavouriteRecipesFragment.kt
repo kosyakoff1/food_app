@@ -5,7 +5,6 @@ import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.selection.SelectionPredicates
@@ -112,6 +111,12 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
     override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.delete_favorite_menu) {
+            mainViewModel.deleteGroupOfFavoriteRecipes(
+                favoriteSelectionTracker.selection.toList()
+            )
+            actionMode?.finish()
+        }
         return true
     }
 

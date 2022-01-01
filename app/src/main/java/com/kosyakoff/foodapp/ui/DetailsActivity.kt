@@ -115,7 +115,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
     }
 
     private fun writeRecipeToFavorites(menuItem: MenuItem) {
-        mainViewModel.writeFavoriteRecipe(FavoriteEntity(0, args.recipe))
+        mainViewModel.writeFavoriteRecipe(FavoriteEntity(0, args.recipe.id, args.recipe))
         isFavored = true
         setMenuStarIsFavored(menuItem, isFavored)
         showToast(getString(R.string.scr_details_tst_recipe_saved_to_favorites))

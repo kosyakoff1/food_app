@@ -23,6 +23,10 @@ class LocalDataSource @Inject constructor(
     suspend fun deleteFavoriteRecipe(recipe: FavoriteEntity) =
         recipesDao.deleteFavoriteRecipe(recipe)
 
+    suspend fun deleteGroupOfFavoriteRecipes(favoriteIds: List<Long>) {
+        recipesDao.deleteGroupOfFavoriteRecipes(favoriteIds)
+    }
+
     suspend fun deleteAllFavoriteRecipes() = recipesDao.deleteAllFavoriteRecipes()
 
 }

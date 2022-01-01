@@ -5,16 +5,19 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.*
+import com.kosyakoff.MyApplication
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.NetworkResult
+import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.util.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -47,6 +50,16 @@ class MainViewModel @Inject constructor(
 
     private fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
         repository.localDataSource.deleteAllFavoriteRecipes()
+    }
+
+    fun deleteGroupOfFavoriteRecipes(group: List<Long>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.localDataSource.deleteGroupOfFavoriteRecipes(group)
+
+            withContext(Dispatchers.Main) {
+                getApplication<MyApplication>().showToast(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
+            }
+        }
     }
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()

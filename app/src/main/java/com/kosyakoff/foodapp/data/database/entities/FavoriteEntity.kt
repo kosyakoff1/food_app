@@ -9,5 +9,6 @@ import com.kosyakoff.foodapp.util.Constants.Companion.FAVORITE_RECIPES_TABLE_NAM
 data class FavoriteEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
+    var recipe_id: Int,
     var recipe: FoodRecipe
 )

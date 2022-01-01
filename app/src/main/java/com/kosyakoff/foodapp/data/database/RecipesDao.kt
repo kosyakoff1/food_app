@@ -19,6 +19,9 @@ interface RecipesDao {
     @Query("select * from favorites_table order by id asc")
     fun loadFavoriteRecipes(): Flow<List<FavoriteEntity>>
 
+    @Query("delete from favorites_table where recipe_id in (:favoriteIds)")
+    suspend fun deleteGroupOfFavoriteRecipes(favoriteIds: List<Long>)
+
     @Delete
     suspend fun deleteFavoriteRecipe(recipe: FavoriteEntity)
 
