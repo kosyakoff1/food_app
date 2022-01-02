@@ -98,7 +98,6 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
                 writeRecipeToFavorites(item)
             }
         }
-
         return super.onOptionsItemSelected(item)
     }
 

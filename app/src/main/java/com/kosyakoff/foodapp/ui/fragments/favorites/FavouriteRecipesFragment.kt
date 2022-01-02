@@ -1,10 +1,7 @@
 package com.kosyakoff.foodapp.ui.fragments.favorites
 
 import android.os.Bundle
-import android.view.ActionMode
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.selection.SelectionPredicates
@@ -16,6 +13,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.FavoriteRecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentFavouriteRecipesBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.FAVORITES_SELECTION_NAME
+import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,6 +34,8 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         setupRecyclerView()
         savedInstanceState?.let {
             favoriteSelectionTracker.onRestoreInstanceState(it)
@@ -47,11 +47,53 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         mainViewModel.readFavoriteRecipes.observe(viewLifecycleOwner) { favoriteEntities ->
             adapter.submitList(favoriteEntities.map { favoriteEntity -> favoriteEntity.recipe })
         }
+
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         favoriteSelectionTracker.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_all_favorites_menu) {
+            mainViewModel.deleteAllFavoriteRecipes()
+            context?.showToast(getString(R.string.scr_favorites_all_favorites_deleted))
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favorites_main_menu, menu)
+    }
+
+    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+        mode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
+        return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actionMode?.finish()
+    }
+
+    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
+
+    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.delete_favorite_menu) {
+            mainViewModel.deleteGroupOfFavoriteRecipes(
+                favoriteSelectionTracker.selection.toList()
+            )
+            actionMode?.finish()
+        }
+        return true
+    }
+
+    override fun onDestroyActionMode(mode: ActionMode?) {
+        actionMode = null
+        favoriteSelectionTracker.clearSelection()
     }
 
     private fun setupRecyclerView() {
@@ -110,32 +152,4 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
             }
         }
     }
-
-    override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        mode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
-        return true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        actionMode?.finish()
-    }
-
-    override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
-
-    override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.delete_favorite_menu) {
-            mainViewModel.deleteGroupOfFavoriteRecipes(
-                favoriteSelectionTracker.selection.toList()
-            )
-            actionMode?.finish()
-        }
-        return true
-    }
-
-    override fun onDestroyActionMode(mode: ActionMode?) {
-        actionMode = null
-        favoriteSelectionTracker.clearSelection()
-    }
-
 }

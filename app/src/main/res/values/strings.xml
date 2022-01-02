@@ -46,7 +46,9 @@
     <string name="scr_details_tst_recipes_removed_from_favorites">Recipes removed from favorites</string>
     <string name="src_favorites_text_view_no_favorites">No favorite recipes</string>
     <string name="scr_favorites_delete_favorite_menu">Delete Favorite</string>
-<!--    <string name="scr_favorites_items_selected_menu_title">Favorites selected: %1$d</string>-->
+    <string name="scr_favorites_delete_all_menu">Delete All</string>
+    <string name="scr_favorites_all_favorites_deleted">All favorites deleted</string>
+    <!--    <string name="scr_favorites_items_selected_menu_title">Favorites selected: %1$d</string>-->
 
     <plurals name="scr_favorites_items_selected_menu_title">
         <item quantity="one">%d favorite selected</item>
