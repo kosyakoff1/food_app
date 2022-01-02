@@ -10,6 +10,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
+import com.kosyakoff.foodapp.models.FoodJoke
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.showToast
@@ -62,6 +63,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    var foodJokeResponse: MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
     var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
 
@@ -89,10 +91,34 @@ class MainViewModel @Inject constructor(
     }
 
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
-        getRecipesSafeCall(queries)
+        fetchRecipesSafeCall(queries)
     }
 
-    private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
+    fun getFoodJoke(apiKey: String) = viewModelScope.launch {
+        fetchFoodJokeSafeCall(apiKey)
+    }
+
+    private suspend fun fetchFoodJokeSafeCall(apiKey: String) {
+        foodJokeResponse.value = NetworkResult.Loading()
+
+        if (hasInternetConnection()) {
+            try {
+                val response = repository.remoteDataSource.getFoodJoke(apiKey)
+                foodJokeResponse.value = handleFoodRecipesResponse(response)
+
+            } catch (e: Exception) {
+                foodJokeResponse.value =
+                    NetworkResult.Error(e.message)
+            }
+        } else {
+            foodJokeResponse.value =
+                NetworkResult.Error(
+                    getString(R.string.str_error_no_internet_connection)
+                )
+        }
+    }
+
+    private suspend fun fetchRecipesSafeCall(queries: Map<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
 
         if (hasInternetConnection()) {
@@ -119,7 +145,7 @@ class MainViewModel @Inject constructor(
         insertRecipes(RecipesEntity(0, foodRecipes))
     }
 
-    private fun handleFoodRecipesResponse(response: Response<FoodRecipes>): NetworkResult<FoodRecipes> {
+    private fun <T> handleFoodRecipesResponse(response: Response<T>): NetworkResult<T> {
         when {
             response.message().contains("timeout") -> {
                 return NetworkResult.Error(getString(R.string.str_error_timeout))
@@ -127,11 +153,9 @@ class MainViewModel @Inject constructor(
             response.code() == 402 -> {
                 return NetworkResult.Error(getString(R.string.str_error_api_limit_reached))
             }
-            response.body()!!.results.isNullOrEmpty() -> {
-                return NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
-            }
             response.isSuccessful -> {
                 val foodRecipes = response.body()!!
+
                 return NetworkResult.Success(foodRecipes)
             }
             else -> {

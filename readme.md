@@ -4,6 +4,7 @@ Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
 
+* app crashes if network status changes while user not in recipes fragment
 * add onboarding
 * add russian version
 * add swipe to refresh
