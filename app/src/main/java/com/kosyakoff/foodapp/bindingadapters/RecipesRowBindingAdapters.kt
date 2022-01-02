@@ -15,7 +15,6 @@ import com.kosyakoff.foodapp.ui.fragments.favorites.FavouriteRecipesFragmentDire
 import com.kosyakoff.foodapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.kosyakoff.foodapp.util.extensions.showToast
 import org.jsoup.Jsoup
-import java.lang.Exception
 
 object RecipesRowBindingAdapters {
 

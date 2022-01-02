@@ -1,11 +1,13 @@
 package com.kosyakoff.foodapp.ui.fragments.foodjoke
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,6 +29,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
         super.onViewCreated(view, savedInstanceState)
 
         setHasOptionsMenu(true)
+        setupBackground()
 
         mainViewModel.getFoodJoke(API_KEY)
         with(binding) {
@@ -52,6 +55,25 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
                         foodJokeLoadingProgressBar.isVisible = true
                     }
                 }
+            }
+        }
+    }
+
+    private fun setupBackground() {
+
+        with(binding.foodJokeBackgroundLayout) {
+            val isDarkMode = when (resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> true
+                Configuration.UI_MODE_NIGHT_NO -> false
+                Configuration.UI_MODE_NIGHT_UNDEFINED -> false
+                else -> false
+            }
+
+            background = if (isDarkMode) {
+                ContextCompat.getDrawable(context, R.drawable.ic_food_joke_background_dark)
+            } else {
+                ContextCompat.getDrawable(context, R.drawable.ic_food_joke_background_light)
             }
         }
     }
