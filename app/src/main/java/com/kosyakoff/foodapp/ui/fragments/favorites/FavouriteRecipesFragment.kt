@@ -90,6 +90,14 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
                 actionMode = requireActivity().startActionMode(
                     this@FavouriteRecipesFragment
                 )
+                actionMode?.apply {
+                    val selectionSize = favoriteSelectionTracker.selection.size()
+                    title = resources.getQuantityString(
+                        R.plurals.scr_favorites_items_selected_menu_title,
+                        selectionSize,
+                        selectionSize
+                    )
+                }
             } else {
                 actionMode?.apply {
                     val selectionSize = favoriteSelectionTracker.selection.size()
@@ -106,6 +114,11 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
         mode?.menuInflater?.inflate(R.menu.favorites_contextual_menu, menu)
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        actionMode?.finish()
     }
 
     override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean = true
