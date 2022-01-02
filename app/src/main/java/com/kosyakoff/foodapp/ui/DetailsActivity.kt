@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipePagerAdapter
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
@@ -56,12 +57,14 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
         val adapter = RecipePagerAdapter(
             bundleOf(BUNDLE_KEY to args.recipe),
             fragments,
-            titles,
-            supportFragmentManager
+            this
         )
 
         binding.viewPager.adapter = adapter
-        binding.tabLayout.setupWithViewPager(binding.viewPager)
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) {
+            tab, position ->
+            tab.text = titles[position]
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
