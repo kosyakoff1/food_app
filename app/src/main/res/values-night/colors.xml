@@ -12,6 +12,7 @@
     <color name="lightMediumGray">#80D1D1D1</color>
     <color name="darkGray">#4B4B4B</color>
     <color name="dark">#313C44</color>
+    <color name="darkish">#242C32</color>
     <color name="darker">#151B20</color>
     <color name="black">#000000</color>
     <color name="red">#FF4646</color>
@@ -23,7 +24,7 @@
     <color name="checkedChipTextColor">@color/colorPrimary</color>
     <color name="chipTextColor">@color/darkGray</color>
 
-    <color name="actionBarBackgroundColor">@color/colorSurface</color>
+    <color name="actionBarBackgroundColor">@color/darkish</color>
 
     <color name="titleTextColor">@color/snowWhite</color>
     <color name="descriptionTextColor">@color/lightGray</color>
@@ -36,7 +37,7 @@
     <color name="cardStrokeSelectedColor">#336200EA</color>
     <color name="recipesIconDefaultColor">@color/lightGray</color>
 
-    <color name="statusBarColor">@color/darker</color>
+    <color name="statusBarColor">@color/black</color>
     <color name="contextualStatusBarColor">@color/darker</color>
-    <color name="actionModeBackgroundColor">@color/colorSurface</color>
+    <color name="actionModeBackgroundColor">@color/darkish</color>
 </resources>
