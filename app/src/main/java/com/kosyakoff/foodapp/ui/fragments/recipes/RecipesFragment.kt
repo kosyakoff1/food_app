@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -129,6 +130,8 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
     }
 
     private fun processRecipesNetworkResult(response: NetworkResult<FoodRecipes>) {
+        binding.errorImageView.isVisible = false
+        binding.errorTextView.isVisible = false
         when (response) {
             is NetworkResult.Success -> {
                 toggleShimmerEffect(false)
@@ -136,7 +139,9 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
             }
             is NetworkResult.Error -> {
                 toggleShimmerEffect(false)
-                Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
+                binding.errorImageView.isVisible = true
+                binding.errorTextView.isVisible = true
+                binding.errorTextView.text = response.message.toString()
             }
             is NetworkResult.Loading -> {
                 toggleShimmerEffect(true)
