@@ -48,12 +48,6 @@ object RecipesRowBindingAdapters {
         view.isVisible = data.isNullOrEmpty()
     }
 
-    @BindingAdapter("numberAsString")
-    @JvmStatic
-    fun numberAsString(view: TextView, value: Int) {
-        view.text = value.toString()
-    }
-
     @BindingAdapter("app:onFavoriteRecipesClicked")
     @JvmStatic
     fun onFavoriteRecipesClicked(recipesLayout: ConstraintLayout, recipe: FoodRecipe) {

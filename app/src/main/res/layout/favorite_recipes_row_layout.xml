@@ -101,7 +101,7 @@
                 <TextView
 
                     android:id="@+id/favorite_likes_count_text_view"
-                    numberAsString="@{recipe.aggregateLikes}"
+                   android:text="@{String.valueOf(recipe.aggregateLikes)}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
@@ -125,7 +125,7 @@
 
                 <TextView
                     android:id="@+id/favorite_clock_text_view"
-                    numberAsString="@{recipe.readyInMinutes}"
+                    android:text="@{String.valueOf(recipe.readyInMinutes)}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
