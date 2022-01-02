@@ -12,6 +12,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="android:colorBackground">@color/colorSurface</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/colorAccent</item>
@@ -55,7 +57,7 @@
     </style>
 
     <style name="RecipeOverviewHighlightTextViewStyle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/darkGray</item>
+        <item name="android:textColor">@color/recipesIconDefaultColor</item>
         <item name="maxLines">1</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:ellipsize">end</item>
@@ -63,7 +65,7 @@
 
     <style name="RecipeOverviewHighlightImageViewStyle">
         <item name="android:src">@drawable/ic_check_mark</item>
-        <item name="tint">@color/darkGray</item>
+        <item name="tint">@color/recipesIconDefaultColor</item>
     </style>
 
 

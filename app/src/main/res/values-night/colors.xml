@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EA</color>
-    <color name="colorPrimaryDark">#5502C8</color>
-    <color name="colorAccent">#9D46FF</color>
-    <color name="colorSurface">@color/snowWhite</color>
+    <color name="colorPrimary">#81D4FA</color>
+    <color name="colorPrimaryDark">#9575CD</color>
+    <color name="colorAccent">@color/mediumGray</color>
+    <color name="colorSurface">@color/dark</color>
 
     <color name="white">#FFFFFF</color>
     <color name="snowWhite">#FFFFFFF9</color>
@@ -23,20 +23,20 @@
     <color name="checkedChipTextColor">@color/colorPrimary</color>
     <color name="chipTextColor">@color/darkGray</color>
 
-    <color name="actionBarBackgroundColor">@color/colorPrimary</color>
+    <color name="actionBarBackgroundColor">@color/colorSurface</color>
 
-    <color name="titleTextColor">@color/darker</color>
-    <color name="descriptionTextColor">@color/darkGray</color>
+    <color name="titleTextColor">@color/snowWhite</color>
+    <color name="descriptionTextColor">@color/lightGray</color>
     <color name="ingredientCardStrokeColor">@color/lightMediumGray</color>
     <color name="ingredientCardBackGroundColor">@color/snowWhite</color>
     <color name="ingredientTitleColor">@color/darker</color>
-    <color name="itemSelectionColor">#4DAADCEE</color>
+    <color name="itemSelectionColor">#B3536B73</color>
     <color name="itemDefaultColor">@color/colorSurface</color>
     <color name="cardStrokeColor">@color/lightMediumGray</color>
     <color name="cardStrokeSelectedColor">#336200EA</color>
+    <color name="recipesIconDefaultColor">@color/lightGray</color>
 
-    <color name="recipesIconDefaultColor">@color/darkGray</color>
-    <color name="statusBarColor">@color/colorPrimaryDark</color>
+    <color name="statusBarColor">@color/darker</color>
     <color name="contextualStatusBarColor">@color/darker</color>
-    <color name="actionModeBackgroundColor">@color/colorPrimary</color>
+    <color name="actionModeBackgroundColor">@color/colorSurface</color>
 </resources>

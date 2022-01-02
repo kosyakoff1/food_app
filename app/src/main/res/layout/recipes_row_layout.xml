@@ -33,7 +33,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/snowWhite">
+                android:background="@color/colorSurface">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/recipe_image_view"
@@ -58,7 +58,7 @@
                     android:fontFamily="@font/cabin_medium"
                     android:maxLines="2"
                     android:text="@{recipe.title}"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/titleTextColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                     android:ellipsize="end"
                     app:textToParse="@{recipe.summary}"
                     android:maxLines="3"
-                    android:textColor="@color/darkGray"
+                    android:textColor="@color/descriptionTextColor"
                     app:layout_constraintEnd_toEndOf="@+id/title_text_view"
                     app:layout_constraintStart_toEndOf="@+id/recipe_image_view"
                     app:layout_constraintTop_toBottomOf="@+id/title_text_view"
