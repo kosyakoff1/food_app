@@ -3,7 +3,7 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
-
+* add rest of diets and food types
 * add onboarding
 * add russian version
 * add swipe to refresh

@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-@ViewModelScoped
+@ActivityRetainedScoped
 class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_FILE_NAME)

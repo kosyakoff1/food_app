@@ -60,6 +60,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
             this
         )
 
+        binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) {
             tab, position ->

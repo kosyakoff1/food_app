@@ -73,10 +73,16 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
                 try {
 
                     value.selectedMealTypeId.takeIf { it != 0 }?.let {
-                        mealTypeChipGroup.findViewById<Chip>(it).isChecked = true
+                        mealTypeChipGroup.findViewById<Chip>(it).apply {
+                            isChecked = true
+                            mealTypeChipGroup.requestChildFocus(this, this)
+                        }
                     }
                     value.selectedDietTypeId.takeIf { it != 0 }?.let {
-                        dietTypeChipGroup.findViewById<Chip>(it).isChecked = true
+                        dietTypeChipGroup.findViewById<Chip>(it).apply {
+                            isChecked = true
+                            dietTypeChipGroup.requestChildFocus(this, this)
+                        }
                     }
                 } catch (ex: Exception) {
                     context?.showToast(ex.message.toString())
