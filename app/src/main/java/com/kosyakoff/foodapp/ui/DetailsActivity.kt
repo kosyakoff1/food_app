@@ -122,4 +122,5 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
         setMenuStarIsFavored(menuItem, isFavored)
         showToast(getString(R.string.scr_details_tst_recipe_saved_to_favorites))
     }
+
 }

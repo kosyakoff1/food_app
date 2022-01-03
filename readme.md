@@ -4,15 +4,14 @@ Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
 
-* app crashes if network status changes while user not in recipes fragment
 * add onboarding
 * add russian version
 * add swipe to refresh
 * test to rotation state saving
 * check app with leak canary (e.g. clearance of data bindings with live data (possible leak of
-  viewLifeCycleOwner as we don't set it and believe in byViewBinding) )
+  viewLifeCycleOwner as we don't set it and believe in byViewBinding) ) + profiler
 * move logic from fragments and activities
-* separate app to models
+* separate app to modules
 * add unit tests
 * refactor saving recipes request data (not json file of whole bunch on every request)
 * add pagination
