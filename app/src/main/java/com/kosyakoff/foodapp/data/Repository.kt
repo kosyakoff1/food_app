@@ -1,9 +1,9 @@
 package com.kosyakoff.foodapp.data
 
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
-@ActivityRetainedScoped
+@ViewModelScoped
 class Repository @Inject constructor(
     val remoteDataSource: RemoteDataSource,
     val localDataSource: LocalDataSource

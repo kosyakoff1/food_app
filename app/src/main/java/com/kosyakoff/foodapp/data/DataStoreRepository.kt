@@ -15,13 +15,14 @@ import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_MEAL_TYPE_ID_K
 import com.kosyakoff.foodapp.util.Constants.Companion.PREFERENCES_MEAL_TYPE_KEY
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
 
-@ActivityRetainedScoped
+@ViewModelScoped
 class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREFERENCES_FILE_NAME)
