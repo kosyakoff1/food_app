@@ -3,6 +3,7 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
+* add navigator
 * add registration
 * add rest of diets and food types
 * add onboarding
