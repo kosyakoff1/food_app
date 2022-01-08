@@ -3,6 +3,7 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
+* clear git repo from misc data (# .idea files) 
 * add navigator
 * add registration
 * add rest of diets and food types
