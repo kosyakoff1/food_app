@@ -6,6 +6,7 @@ TODO:
 * clear git repo from misc data (# .idea files) 
 * add navigator
 * add registration
+* change LiveData with StateFlow
 * add rest of diets and food types
 * add onboarding
 * add russian version
