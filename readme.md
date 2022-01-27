@@ -4,7 +4,8 @@ Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
 * clear git repo from misc data (# .idea files) 
-* add navigator
+* add navigator 
+* move to state objects for UI instead of scattered data
 * add registration
 * change LiveData with StateFlow
 * add rest of diets and food types
