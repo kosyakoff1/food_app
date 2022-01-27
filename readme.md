@@ -8,6 +8,7 @@ TODO:
 * add registration
 * change LiveData with StateFlow
 * add rest of diets and food types
+* refactor code to use RepeatOnLifecycle/flowOnLifeCycle instead of launchOn
 * add onboarding
 * add russian version
 * add swipe to refresh
