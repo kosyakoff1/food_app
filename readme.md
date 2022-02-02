@@ -3,6 +3,10 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 TODO:
+* add use cases
+* refactor inter-layer communications for usage of interfaces instead of specific implementations
+  
+* add translucent controls 
 * clear git repo from misc data (# .idea files) 
 * add navigator 
 * move to state objects for UI instead of scattered data

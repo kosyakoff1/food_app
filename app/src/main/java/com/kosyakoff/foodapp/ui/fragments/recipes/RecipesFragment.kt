@@ -53,7 +53,6 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext()).collect { status ->
                 recipesViewModel.showNetworkStatus(status)
-
                 getRecipes()
             }
         }
