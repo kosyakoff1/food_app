@@ -1,8 +1,10 @@
 package com.kosyakoff.foodapp.ui
 
 import android.os.Bundle
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -21,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         installSplashScreen()
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContentView(R.layout.activity_main)
 
@@ -38,6 +41,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.foodJokeFragment
             )
         )
+
+        val mainLayout: ViewGroup = findViewById(R.id.main_layout)
+        mainLayout.applyInsetter {
+            type(statusBars = true, navigationBars = true) {
+                // Add to padding on all sides
+                padding()
+            }
+        }
 
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         navView.setupWithNavController(navController)

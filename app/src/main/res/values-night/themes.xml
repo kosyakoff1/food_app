@@ -23,7 +23,10 @@
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarColor</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">
+            @android:color/transparent
+        </item>
         <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
         <!-- Customize your theme here. -->
         <item name="actionBarStyle">@style/CustomActionBarStyle</item>
@@ -46,7 +49,10 @@
         <item name="colorSecondaryVariant">@color/colorAccent</item>
 
         <item name="android:colorControlNormal">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">
+            @android:color/transparent
+        </item>
     </style>
 
 

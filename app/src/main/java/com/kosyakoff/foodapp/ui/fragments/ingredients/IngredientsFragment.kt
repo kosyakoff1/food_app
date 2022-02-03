@@ -10,6 +10,7 @@ import com.kosyakoff.foodapp.adapters.RecipeIngredientsAdapter
 import com.kosyakoff.foodapp.databinding.FragmentIngredientsBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.ui.DetailsActivity
+import dev.chrisbanes.insetter.applyInsetter
 
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
@@ -18,6 +19,13 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.ingredientsRecyclerView.applyInsetter {
+            type(navigationBars = true) {
+                // Add to padding on all sides
+                padding()
+            }
+        }
 
         val recipe = arguments?.getParcelable<FoodRecipe>(DetailsActivity.BUNDLE_KEY)!!
 

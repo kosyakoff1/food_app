@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#5502C8</color>
     <color name="colorAccent">#9D46FF</color>
     <color name="colorSurface">@color/snowWhite</color>
+    <color name="colorStatusBar">#65000000</color>
 
     <color name="white">#FFFFFF</color>
     <color name="snowWhite">#FFFFFFF9</color>
@@ -37,7 +38,5 @@
     <color name="cardStrokeSelectedColor">#336200EA</color>
 
     <color name="recipesIconDefaultColor">@color/darkGray</color>
-    <color name="statusBarColor">@color/colorPrimaryDark</color>
-    <color name="contextualStatusBarColor">@color/darker</color>
     <color name="actionModeBackgroundColor">@color/colorPrimary</color>
 </resources>

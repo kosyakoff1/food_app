@@ -38,6 +38,11 @@
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1671875" />
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1671875" />
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_text.xml" value="0.1671875" />
+        <entry key="app/src/main/res/layout/activity_details.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_ingredients.xml" value="0.11854103343465046" />
+        <entry key="app/src/main/res/layout/fragment_overview.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.11854103343465046" />
       </map>
     </option>
   </component>
