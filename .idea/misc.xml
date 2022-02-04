@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../.gradle/caches/transforms-3/cc6904cd122f8b456c15862a57ffad60/transformed/appcompat-1.4.0/res/drawable/abc_ic_ab_back_material.xml" value="0.1225" />
+        <entry key="../../.gradle/caches/transforms-3/cc6904cd122f8b456c15862a57ffad60/transformed/appcompat-1.4.0/res/drawable/abc_list_selector_holo_dark.xml" value="0.2495" />
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/drawable/favorite_recipe_item_card_background.xml" value="0.18703703703703703" />
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/drawable/gradient_overlay.xml" value="0.3609375" />
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/drawable/ic_delete.xml" value="0.16944444444444445" />
@@ -40,9 +42,14 @@
         <entry key="..\:/Users/Kosyakoff/AndroidStudioProjects/codelabs/FoodApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_text.xml" value="0.1671875" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_favourite_recipes.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_ingredients.xml" value="0.11854103343465046" />
         <entry key="app/src/main/res/layout/fragment_overview.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_recipes.xml" value="0.11854103343465046" />
+        <entry key="app/src/main/res/layout/fragment_recipes_bottom_sheet.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/favorites_contextual_menu.xml" value="0.18888888888888888" />
+        <entry key="app/src/main/res/menu/favorites_main_menu.xml" value="0.24375" />
+        <entry key="app/src/main/res/menu/recipes_fragment_menu.xml" value="0.18888888888888888" />
       </map>
     </option>
   </component>

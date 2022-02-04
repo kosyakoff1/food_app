@@ -25,7 +25,7 @@
     <color name="checkedChipTextColor">@color/colorPrimary</color>
     <color name="chipTextColor">@color/darkGray</color>
 
-    <color name="actionBarBackgroundColor">@color/darkish</color>
+    <color name="actionBarBackgroundColor">@color/colorPrimary</color>
 
     <color name="titleTextColor">@color/snowWhite</color>
     <color name="descriptionTextColor">@color/lightGray</color>

@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
 
         android:text="@string/scr_recipes_bottom_sheet_txt_view_meal_type"
-        android:textColor="@color/dark"
+        android:textColor="@color/titleTextColor"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/scr_recipes_bottom_sheet_txt_view_diet_type"
-        android:textColor="@color/dark"
+        android:textColor="@color/titleTextColor"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

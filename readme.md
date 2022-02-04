@@ -6,6 +6,7 @@ TODO:
 * add use cases
 * refactor inter-layer communications for usage of interfaces instead of specific implementations
   
+* test insets and themes on old android versions
 * add translucent controls 
 * clear git repo from misc data (# .idea files) 
 * add navigator 

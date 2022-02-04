@@ -6,12 +6,17 @@
         <item name="postSplashScreenTheme">@style/Theme.FoodApp</item>
     </style>
 
-    <style name="CustomActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
-        <item name="background">@color/actionBarBackgroundColor</item>
+    <style name="MainToolbarStyle" parent="Widget.MaterialComponents.ActionBar.Surface">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
+    </style>
+
+    <style name="MainActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="Theme.FoodApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.FoodApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -29,7 +34,9 @@
         </item>
         <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
         <!-- Customize your theme here. -->
-        <item name="actionBarStyle">@style/CustomActionBarStyle</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/MainActionModeStyle</item> <!--for paint action mode title to bright colors-->
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item> <!--for paint action mode icons to bright colors-->
     </style>
 
     <style name="CustomChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
