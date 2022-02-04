@@ -6,22 +6,16 @@
         <item name="postSplashScreenTheme">@style/Theme.FoodApp</item>
     </style>
 
-    <style name="MainToolbarStyle" parent="Widget.MaterialComponents.ActionBar.Surface"> <!-- for toolbar text and search colors -->
-        <item name="colorControlNormal">@color/white</item>
-        <item name="android:editTextColor">@android:color/white</item>
+    <style name="Theme.FoodApp" parent="Theme.BaseTheme">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor">
+            #B3000000
+        </item>
     </style>
-
-    <style name="MainActionModeStyle" parent="Widget.AppCompat.ActionMode">
-        <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
-    </style>
-
-    <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
-        <item name="android:textColor">@android:color/white</item>
-    </style>
-
 
     <!-- Base application theme. -->
-    <style name="Theme.FoodApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -32,16 +26,29 @@
         <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
+        <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
+        <!--        <item name="actionBarStyle">@style/CustomActionBarStyle</item>-->
+        <item name="windowActionModeOverlay">true
+        </item> <!--for proper work of action mode in edge to edge design-->
+        <item name="actionModeStyle">@style/MainActionModeStyle
+        </item> <!--for paint action mode title to bright colors-->
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar
+        </item> <!--for paint action mode and toolbar icons to bright colors-->
+    </style>
+
+    <style name="DetailsActivityStyle" parent="BaseDetailsActivityStyle">
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
         <item name="android:navigationBarColor" tools:targetApi="l">
-            @android:color/transparent
+            #B3000000
         </item>
-        <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
-<!--        <item name="actionBarStyle">@style/CustomActionBarStyle</item>-->
-        <item name="windowActionModeOverlay">true</item> <!--for proper work of action mode in edge to edge design-->
-        <item name="actionModeStyle">@style/MainActionModeStyle</item> <!--for paint action mode title to bright colors-->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item> <!--for paint action mode and toolbar icons to bright colors-->
+    </style>
+
+    <style name="BaseDetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/colorPrimaryDark</item>
+        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <item name="android:colorControlNormal">@color/white</item>
     </style>
 
     <style name="CustomChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
@@ -53,20 +60,6 @@
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconTint">@color/chip_text_color</item>
     </style>
-
-    <style name="DetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-
-        <item name="android:colorControlNormal">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
-        <item name="android:navigationBarColor" tools:targetApi="l">
-            @android:color/transparent
-        </item>
-    </style>
-
 
     <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="background">@color/actionBarBackgroundColor</item>
@@ -89,6 +82,19 @@
     <style name="RecipeOverviewHighlightImageViewStyle">
         <item name="android:src">@drawable/ic_check_mark</item>
         <item name="tint">@color/recipesIconDefaultColor</item>
+    </style>
+
+    <style name="MainToolbarStyle" parent="Widget.MaterialComponents.ActionBar.Surface"> <!-- for toolbar text and search colors -->
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
+    </style>
+
+    <style name="MainActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
+    </style>
+
+    <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 
