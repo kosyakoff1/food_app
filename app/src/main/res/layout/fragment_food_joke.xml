@@ -11,7 +11,6 @@
     android:id="@+id/food_joke_background_layout"
     tools:context=".ui.fragments.foodjoke.FoodJokeFragment">
 
-<!--    app:strokeColor="@color/lightMediumGray"-->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/food_joke_card_layout"
         android:layout_width="match_parent"
@@ -19,12 +18,13 @@
 
         android:visibility="invisible"
         app:cardCornerRadius="6dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeWidth="1dp"
         tools:visibility="visible">
 
         <androidx.core.widget.NestedScrollView
