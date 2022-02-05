@@ -18,7 +18,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             tools:title="Toolbar"
-            android:theme="@style/Widget.FoodApp.Toolbar.MainActivity"
+            android:theme="@style/Widget.FoodApp.Toolbar"
             app:titleTextColor="@color/snowWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
