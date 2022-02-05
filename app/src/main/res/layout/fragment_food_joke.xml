@@ -48,7 +48,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:alpha="0.5"
-        android:src="@drawable/ic_sad"
+        app:srcCompat="@drawable/ic_sad"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

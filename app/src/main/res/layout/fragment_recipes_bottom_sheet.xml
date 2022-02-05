@@ -8,7 +8,7 @@
     android:paddingHorizontal="16dp"
     android:paddingTop="24dp"
     android:paddingBottom="8dp"
-    android:theme="@style/Theme.FoodApp"
+    android:theme="@style/Theme.FoodApp.Main"
     tools:context=".ui.fragments.recipes.RecipesBottomSheet">
 
     <TextView
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/meal_type_text_view">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -43,7 +43,7 @@
                 android:id="@+id/meal_type_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/CustomChipGroupStyle"
+                android:theme="@style/Theme.FoodApp.ChipGroup"
                 app:checkedChip="@id/main_course_chip"
                 app:selectionRequired="true"
                 app:singleLine="true"
@@ -93,7 +93,7 @@
                     android:text="@string/scr_recipes_bottom_sheet_chip_finger" />
 
             </com.google.android.material.chip.ChipGroup>
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </HorizontalScrollView>
 
     <TextView
@@ -119,7 +119,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/diet_type_text_view">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -128,7 +128,7 @@
                 android:id="@+id/diet_type_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/CustomChipGroupStyle"
+                android:theme="@style/Theme.FoodApp.ChipGroup"
                 app:checkedChip="@id/vegetarian_chip"
                 app:selectionRequired="true"
                 app:singleLine="true"
@@ -165,7 +165,7 @@
                     android:text="@string/scr_recipes_bottom_sheet_chip_paleo" />
 
             </com.google.android.material.chip.ChipGroup>
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </HorizontalScrollView>
 
     <com.google.android.material.button.MaterialButton

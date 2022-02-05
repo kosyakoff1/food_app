@@ -37,6 +37,4 @@
     <color name="cardStrokeColor">@color/lightMediumGray</color>
     <color name="cardStrokeSelectedColor">#336200EA</color>
     <color name="recipesIconDefaultColor">@color/lightGray</color>
-
-    <color name="actionModeBackgroundColor">@color/darkish</color>
 </resources>

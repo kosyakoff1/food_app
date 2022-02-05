@@ -9,6 +9,7 @@ DONE:
 
 TODO:
 * change to overlays instead specifying color for child controls
+  * some styles can be remade to be overlays
 * add use cases
 * refactor inter-layer communications for usage of interfaces instead of specific implementations
 * check why splash screen looks different on api28 and api31

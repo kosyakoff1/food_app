@@ -3,20 +3,10 @@
     <style name="Theme.FoodApp.Starting" parent="Theme.SplashScreen.IconBackground">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="windowSplashScreenAnimationDuration">100</item>
-        <item name="postSplashScreenTheme">@style/Theme.FoodApp</item>
+        <item name="postSplashScreenTheme">@style/Theme.FoodApp.Main</item>
     </style>
 
-    <style name="MainToolbarStyle" parent="Widget.MaterialComponents.ActionBar.Surface">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="android:editTextColor">@android:color/white</item>
-    </style>
-
-    <style name="MainActionModeStyle" parent="Widget.AppCompat.ActionMode">
-        <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
-    </style>
-
-
-    <style name="Theme.FoodApp" parent="Theme.BaseTheme">
+    <style name="Theme.FoodApp.Main" parent="Theme.FoodApp.Base">
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
         <item name="android:navigationBarColor">
@@ -25,7 +15,7 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="Theme.BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.FoodApp.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
@@ -36,60 +26,67 @@
         <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
         <!-- Customize your theme here. -->
         <item name="windowActionModeOverlay">true</item>
-        <item name="actionModeStyle">@style/MainActionModeStyle</item> <!--for paint action mode title to bright colors-->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item> <!--for paint action mode icons to bright colors-->
+        <item name="actionModeStyle">@style/Widget.FoodApp.ActionMode
+        </item> <!--for paint action mode title to bright colors-->
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar
+        </item> <!--for paint action mode icons to bright colors-->
     </style>
 
-    <style name="DetailsActivityStyle" parent="BaseDetailsActivityStyle">
+    <style name="Theme.FoodApp.Details.Main" parent="Theme.FoodApp.Details.Base">
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
         <item name="android:navigationBarColor" tools:targetApi="l">
             #B3FFFFFF
         </item>
     </style>
 
-    <style name="BaseDetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.FoodApp.Details.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorSecondary">@color/colorPrimaryDark</item>
         <item name="colorSecondaryVariant">@color/colorAccent</item>
-
-        <item name="android:colorControlNormal">@color/white</item>
     </style>
 
-    <style name="CustomChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
-        <item name="chipStyle">@style/CustomChipStyle</item>
+    <style name="Theme.FoodApp.ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="chipStyle">@style/Widget.FoodApp.Chip.Filter</item>
     </style>
 
-    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
+    <style name="Widget.FoodApp.Chip.Filter" parent="Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconTint">@color/chip_text_color</item>
     </style>
 
-    <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
+    <style name="Widget.FoodApp.TabLayout.DetailsActivity" parent="Widget.Design.TabLayout">
         <item name="background">@color/actionBarBackgroundColor</item>
-        <item name="tabIndicator">@color/white</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
 
-    <style name="CustomTabTextStyle" parent="TextAppearance.MaterialComponents.Button">
+    <style name="Widget.FoodApp.TabText.DetailsActivity" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="RecipeOverviewHighlightTextViewStyle" parent="Widget.MaterialComponents.TextView">
+    <style name="Widget.FoodApp.Toolbar.MainActivity" parent="Widget.MaterialComponents.ActionBar.Surface">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:editTextColor">@android:color/white</item>
+    </style>
+
+    <style name="Widget.FoodApp.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="titleTextStyle">@style/TextAppearance.FoodApp.Widget.ActionMode.Title</item>
+    </style>
+
+    <style name="WidgetOverlay.FoodApp.TextView.FragmentOverview" parent="Widget.MaterialComponents.TextView">
         <item name="android:textColor">@color/recipesIconDefaultColor</item>
         <item name="maxLines">1</item>
         <item name="android:layout_marginStart">8dp</item>
         <item name="android:ellipsize">end</item>
     </style>
 
-    <style name="RecipeOverviewHighlightImageViewStyle">
-        <item name="android:src">@drawable/ic_check_mark</item>
+    <style name="WidgetOverlay.FoodApp.ImageView.FragmentOverview" parent="">
+        <item name="srcCompat">@drawable/ic_check_mark</item>
         <item name="tint">@color/recipesIconDefaultColor</item>
     </style>
 

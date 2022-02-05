@@ -47,7 +47,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/avatars" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/favorite_title_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/lorem_ipsum_lengthy" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/favorite_description_text_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     app:textToParse="@{recipe.summary}"
                     tools:text="@string/lorem_ipsum_lengthy" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/favorite_heart_image_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

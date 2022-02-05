@@ -17,18 +17,19 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/white"
+            android:theme="@style/Widget.FoodApp.Toolbar.MainActivity"
             tools:title="Toolbar"
+            app:titleTextColor="@color/snowWhite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            style="@style/CustomTabLayoutStyle"
+            style="@style/Widget.FoodApp.TabLayout.DetailsActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:tabTextAppearance="@style/CustomTabTextStyle">
+            app:tabTextAppearance="@style/Widget.FoodApp.TabText.DetailsActivity">
 
         </com.google.android.material.tabs.TabLayout>
 
