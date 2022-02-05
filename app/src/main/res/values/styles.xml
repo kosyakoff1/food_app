@@ -10,6 +10,10 @@
             <item name="chipBackgroundColor">@color/chip_background_color</item>
     </style>
 
+    <style name="ThemeOverlay.FoodApp.Toolbar.Text" parent="" >
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
 <!--    <style name="Widget.FoodApp.TabLayout.DetailsActivity" parent="Widget.Design.TabLayout">-->
 <!--        <item name="background">@color/actionBarBackgroundColor</item>-->
 <!--        <item name="tabIndicatorColor">@color/yellow</item>-->

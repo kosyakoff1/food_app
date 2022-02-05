@@ -21,6 +21,7 @@
             android:id="@+id/toolbar"
             tools:title="Toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:popupTheme="@style/ThemeOverlay.FoodApp.Toolbar.Text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
