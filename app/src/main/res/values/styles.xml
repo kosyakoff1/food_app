@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <style name="Widget.FoodApp.ChipGroup" parent="Widget.MaterialComponents.ChipGroup">-->
-<!--        <item name="chipStyle">@style/Widget.FoodApp.Chip.Filter</item>-->
-<!--    </style>-->
+    <style name="Widget.FoodApp.ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="chipStyle">@style/Widget.FoodApp.Chip.Choice</item>
+    </style>
 
-<!--    <style name="Widget.FoodApp.Chip.Filter" parent="Widget.MaterialComponents.Chip.Filter">-->
-<!--        <item name="chipBackgroundColor">@color/chip_background_color</item>-->
-<!--        <item name="android:textColor">@color/chip_text_color</item>-->
-<!--        <item name="checkedIconTint">@color/chip_text_color</item>-->
-<!--    </style>-->
+
+    <style name="Widget.FoodApp.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/chip_text_color</item>
+            <item name="chipBackgroundColor">@color/chip_background_color</item>
+    </style>
 
 <!--    <style name="Widget.FoodApp.TabLayout.DetailsActivity" parent="Widget.Design.TabLayout">-->
 <!--        <item name="background">@color/actionBarBackgroundColor</item>-->
@@ -32,11 +32,5 @@
         <item name="srcCompat">@drawable/ic_check_mark</item>
 <!--        <item name="tint">@color/recipesIconDefaultColor</item>-->
     </style>
-
-<!--    <style name="Widget.FoodApp.Toolbar" parent="Widget.MaterialComponents.ActionBar.PrimarySurface"> &lt;!&ndash; for toolbar text and search colors &ndash;&gt;-->
-<!--        <item name="colorControlNormal">@color/snowWhite</item>-->
-<!--        <item name="android:editTextColor">@color/snowWhite</item>-->
-<!--        <item name="navigationIconTint">@color/snowWhite</item>-->
-<!--    </style>-->
 
 </resources>
