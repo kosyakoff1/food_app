@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@android:color/white"
+            app:tint="@color/white"
             tools:ignore="ContentDescription" />
 
         <ImageView

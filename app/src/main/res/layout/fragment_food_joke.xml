@@ -11,6 +11,7 @@
     android:id="@+id/food_joke_background_layout"
     tools:context=".ui.fragments.foodjoke.FoodJokeFragment">
 
+<!--    app:strokeColor="@color/lightMediumGray"-->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/food_joke_card_layout"
         android:layout_width="match_parent"
@@ -23,7 +24,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/lightMediumGray"
         app:strokeWidth="1dp"
         tools:visibility="visible">
 
@@ -32,13 +32,13 @@
             android:layout_height="250dp"
             android:padding="16dp">
 
+<!--            android:textColor="@color/recipesIconDefaultColor"-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/food_joke_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/cabin_medium"
-                android:textColor="@color/recipesIconDefaultColor"
                 android:textSize="20sp"
                 tools:text="@string/lorem_ipsum_lengthy" />
         </androidx.core.widget.NestedScrollView>

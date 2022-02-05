@@ -15,11 +15,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content">
 
+<!--        android:theme="@style/Widget.FoodApp.Toolbar"-->
+<!--        app:titleTextColor="@color/snowWhite"-->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             tools:title="Toolbar"
-            android:theme="@style/Widget.FoodApp.Toolbar"
-            app:titleTextColor="@color/snowWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

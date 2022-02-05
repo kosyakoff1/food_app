@@ -8,7 +8,7 @@
 
     <style name="Theme.FoodApp.Main" parent="Theme.FoodApp.Base">
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
         <item name="android:navigationBarColor">
             #B3000000
         </item>
@@ -17,19 +17,28 @@
     <!-- Base application theme. -->
     <style name="Theme.FoodApp.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="android:colorBackground">@color/colorSurface</item>
+        <item name="colorPrimary">@color/brown_400</item>
+        <item name="colorPrimaryVariant">@color/brown_dark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/grey_600</item>
+        <item name="colorSecondaryVariant">@color/grey_dark</item>
+        <!-- Color on brand color. -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Color surfaces -->
+        <item name="android:windowBackground">@color/lightGray</item>
+        <item name="colorSurface">@color/white</item>
+
+        <!--various colors-->
+        <item name="colorShimmer">@color/lightMediumGray</item>
+        <item name="colorScreenPlaceHolder">@color/mediumGray</item>
+        <item name="colorItemSelection">@color/primary_color_25</item>
+
         <item name="windowActionModeOverlay">true
         </item> <!--for proper work of action mode in edge to edge design-->
-        <item name="actionModeStyle">@style/Widget.FoodApp.ActionMode
-        </item> <!--for paint action mode title to bright colors-->
+<!--        <item name="actionModeStyle">@style/Widget.FoodApp.ActionMode-->
+<!--        </item> &lt;!&ndash;for paint action mode title to bright colors&ndash;&gt;-->
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar
         </item> <!--for paint action mode and toolbar icons to bright colors-->
     </style>
@@ -42,11 +51,19 @@
     </style>
 
     <style name="Theme.FoodApp.Details.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/brown_400</item>
+        <item name="colorPrimaryVariant">@color/brown_dark</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/grey_600</item>
+        <item name="colorSecondaryVariant">@color/grey_dark</item>
+        <!-- Color on brand color. -->
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Color surfaces -->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorSurface">@color/lightGray</item>
     </style>
 
 </resources>

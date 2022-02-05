@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/snowWhite"
+    tools:background="@color/white"
     app:layoutDescription="@xml/fragment_overview_scene"
     tools:context=".ui.fragments.overview.OverviewFragment">
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/main_image_view"
@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:textColor="@color/white"
+        android:textColor="?colorOnPrimary"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/time_text_view"
@@ -78,6 +78,7 @@
         tools:layout_editor_absoluteX="196dp"
         tools:layout_editor_absoluteY="41dp" />
 
+<!--    android:textColor="@color/titleTextColor"-->
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="0dp"
@@ -88,7 +89,6 @@
         android:ellipsize="end"
         android:fontFamily="@font/cabin_medium"
         android:maxLines="1"
-        android:textColor="@color/titleTextColor"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
