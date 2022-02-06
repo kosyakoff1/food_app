@@ -15,8 +15,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-<!--        android:theme="@style/Widget.FoodApp.Toolbar"-->
-<!--        app:titleTextColor="@color/snowWhite"-->
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             tools:title="Toolbar"

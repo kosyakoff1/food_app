@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/main_image_view"
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="256dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
     <View
         android:id="@+id/gradient_view"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="96dp"
         android:background="@drawable/gradient_overlay"
         app:layout_constraintBottom_toBottomOf="@id/main_image_view"
         app:layout_constraintEnd_toEndOf="@id/main_image_view"
@@ -35,7 +35,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:textColor="?colorOnPrimary"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/main_image_view"
         app:layout_constraintEnd_toEndOf="@+id/main_image_view"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:textColor="?colorOnPrimary"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/time_text_view"
         app:layout_constraintEnd_toStartOf="@id/time_text_view"
@@ -74,22 +74,19 @@
         app:layout_constraintEnd_toEndOf="@id/number_of_likes_text_view"
         app:layout_constraintStart_toStartOf="@id/number_of_likes_text_view"
         app:tint="@color/white"
-        tools:ignore="ContentDescription"
-        tools:layout_editor_absoluteX="196dp"
-        tools:layout_editor_absoluteY="41dp" />
+        tools:ignore="ContentDescription" />
 
-<!--    android:textColor="@color/titleTextColor"-->
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/cabin_medium"
         android:maxLines="1"
-        android:textSize="22sp"
+        android:textSize="@dimen/text_h5_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -241,7 +238,7 @@
                 android:id="@+id/overview_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_body_1_size"
 
                 tools:text="@string/lorem_ipsum_lengthy" />
         </LinearLayout>

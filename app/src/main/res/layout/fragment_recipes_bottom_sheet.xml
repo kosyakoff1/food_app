@@ -11,14 +11,13 @@
     android:theme="@style/Theme.FoodApp.Main"
     tools:context=".ui.fragments.recipes.RecipesBottomSheet">
 
-<!--    android:textColor="@color/titleTextColor"-->
     <TextView
         android:id="@+id/meal_type_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:text="@string/scr_recipes_bottom_sheet_txt_view_meal_type"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,14 +95,13 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
     </HorizontalScrollView>
 
-<!--    android:textColor="@color/titleTextColor"-->
     <TextView
         android:id="@+id/diet_type_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/scr_recipes_bottom_sheet_txt_view_diet_type"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +122,6 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-<!--            android:theme="@style/Widget.FoodApp.ChipGroup"-->
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/diet_type_chip_group"
                 android:layout_width="match_parent"

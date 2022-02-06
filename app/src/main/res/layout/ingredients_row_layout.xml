@@ -6,14 +6,13 @@
     android:layout_height="wrap_content"
     android:padding="4dp">
 
-    <!--        app:strokeColor="@color/ingredientCardStrokeColor"-->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/ingredient_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,7 +47,6 @@
                 tools:ignore="ContentDescription"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <!--                android:textColor="@color/titleTextColor"-->
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/ingredient_name_text_view"
                 android:layout_width="0dp"
@@ -57,7 +55,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/cabin_medium"
                 android:maxLines="1"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_h6_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/white_background"

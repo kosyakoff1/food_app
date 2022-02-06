@@ -50,8 +50,6 @@
     <string name="scr_favorites_all_favorites_deleted">All favorites deleted</string>
     <string name="scr_food_joke_share_menu">Share</string>
     <string name="str_no_joke">No joke</string>
-    <!--    <string name="scr_favorites_items_selected_menu_title">Favorites selected: %1$d</string>-->
-
     <plurals name="scr_favorites_items_selected_menu_title">
         <item quantity="one">%d favorite selected</item>
         <item quantity="other">%d favorites selected</item>

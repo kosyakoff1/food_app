@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/no_data_image_view"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:alpha="0.5"
             app:srcCompat="@drawable/ic_menu_book"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
             android:layout_margin="8dp"
             android:alpha="0.5"
             android:text="@string/src_favorites_text_view_no_favorites"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_h6_size"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/no_data_image_view"
             app:layout_constraintStart_toStartOf="@+id/no_data_image_view"
