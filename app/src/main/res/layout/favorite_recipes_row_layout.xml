@@ -21,9 +21,9 @@
             android:id="@+id/card_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="2dp"
-            android:layout_margin="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -34,7 +34,7 @@
                 android:id="@+id/background_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:background="@drawable/favorite_recipe_item_card_background">
+                android:background="@drawable/favorite_recipe_item_card_background">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/favorite_recipe_image_view"

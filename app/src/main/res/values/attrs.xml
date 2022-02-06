@@ -2,5 +2,5 @@
 <resources>
     <attr name="colorShimmer" format="color"/>
     <attr name="colorScreenPlaceHolder" format="color"/>
-    <attr name="colorItemSelection" format="color"/>
+    <attr name="colorItemSelection" format="reference|color"/>
 </resources>
