@@ -36,7 +36,6 @@
     <string name="str_details_activity">Details</string>
     <string name="str_details">Details</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_overview">Overview</string>
     <string name="str_ingredients">Ingredients</string>
     <string name="str_instructions">Instructions</string>
