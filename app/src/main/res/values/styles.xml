@@ -15,7 +15,7 @@
         <item name="android:textColor">?colorOnSurface</item>
     </style>
 
-    <style name="Widget.FoodApp.TabLayout" parent="Widget.MaterialComponents.TabLayout.Colored">
+    <style name="Widget.FoodApp.TabLayout" parent="Widget.MaterialComponents.TabLayout.PrimarySurface">
         <item name="tabIndicatorColor">?colorOnPrimary</item>
         <item name="tabIndicatorHeight">2dp</item>
         <item name="tabGravity">fill</item>

@@ -19,13 +19,12 @@
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
 
-    <color name="lightGray">#F9F9F9</color>
-    <color name="mediumGray">#D1D1D1</color>
-    <color name="lightMediumGray">#80D1D1D1</color>
-    <color name="darkGray">#4B4B4B</color>
-    <color name="dark">#313C44</color>
-    <color name="darkish">#293239</color>
-    <color name="darker">#151B20</color>
+    <color name="app_lightest_grey">#F9F9F9</color>
+    <color name="app_light_grey">#D1D1D1</color>
+    <color name="app_medium_grey">#80D1D1D1</color>
+    <color name="app_dark_grey">#4B4B4B</color>
+    <color name="app_darker_grey">#313C44</color>
+    <color name="app_darkest_grey">#293239</color>
 
 
 <!--    <color name="checkedChipBackgroundColor">#206200EA</color>-->

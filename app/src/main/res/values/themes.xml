@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <style name="Theme.FoodApp.Starting" parent="Theme.SplashScreen.IconBackground">
         <item name="android:windowBackground">@drawable/splash_screen</item>
@@ -28,12 +28,12 @@
         <item name="colorOnSurface">@color/black</item>
 
         <!-- Color surfaces -->
-        <item name="android:windowBackground">@color/lightGray</item>
+        <item name="android:windowBackground">@color/app_lightest_grey</item>
         <item name="colorSurface">@color/white</item>
 
         <!--various colors-->
-        <item name="colorShimmer">@color/lightMediumGray</item>
-        <item name="colorScreenPlaceHolder">@color/mediumGray</item>
+        <item name="colorShimmer">@color/app_medium_grey</item>
+        <item name="colorScreenPlaceHolder">@color/app_light_grey</item>
         <item name="colorItemSelection">@color/primary_color_10</item>
 
         <item name="windowActionModeOverlay">true
@@ -60,7 +60,7 @@
         <item name="colorOnSurface">@color/black</item>
 
         <!-- Color surfaces -->
-        <item name="android:windowBackground">@color/lightGray</item>
+        <item name="android:windowBackground">@color/app_lightest_grey</item>
         <item name="colorSurface">@color/white</item>
     </style>
 

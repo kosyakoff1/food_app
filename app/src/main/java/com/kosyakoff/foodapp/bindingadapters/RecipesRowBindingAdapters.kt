@@ -86,7 +86,7 @@ object RecipesRowBindingAdapters {
                 view.setTextColor(
                     ContextCompat.getColor(
                         view.context,
-                        if (isVegan) R.color.green else R.color.mediumGray
+                        if (isVegan) R.color.green else R.color.app_light_grey
                     )
                 )
             }
@@ -94,7 +94,7 @@ object RecipesRowBindingAdapters {
                 view.setColorFilter(
                     ContextCompat.getColor(
                         view.context,
-                        if (isVegan) R.color.green else R.color.mediumGray
+                        if (isVegan) R.color.green else R.color.app_light_grey
                     )
                 )
             }
