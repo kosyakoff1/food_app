@@ -34,14 +34,10 @@
         <!--various colors-->
         <item name="colorShimmer">@color/lightMediumGray</item>
         <item name="colorScreenPlaceHolder">@color/mediumGray</item>
-        <item name="colorItemSelection">@color/primary_color_25</item>
+        <item name="colorItemSelection">@color/primary_color_10</item>
 
         <item name="windowActionModeOverlay">true
         </item> <!--for proper work of action mode in edge to edge design-->
-<!--        <item name="actionModeStyle">@style/Widget.FoodApp.ActionMode-->
-<!--        </item> &lt;!&ndash;for paint action mode title to bright colors&ndash;&gt;-->
-        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar
-        </item> <!--for paint action mode and toolbar icons to bright colors-->
     </style>
 
     <style name="Theme.FoodApp.Details.Main" parent="Theme.FoodApp.Details.Base">
@@ -61,10 +57,11 @@
         <!-- Color on brand color. -->
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
 
         <!-- Color surfaces -->
-        <item name="android:windowBackground">@color/white</item>
-        <item name="colorSurface">@color/lightGray</item>
+        <item name="android:windowBackground">@color/lightGray</item>
+        <item name="colorSurface">@color/white</item>
     </style>
 
 </resources>

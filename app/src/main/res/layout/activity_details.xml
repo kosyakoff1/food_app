@@ -20,13 +20,12 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             tools:title="Toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-<!--        style="@style/Widget.FoodApp.TabLayout.DetailsActivity"-->
-<!--        app:tabTextAppearance="@style/Widget.FoodApp.TabText.DetailsActivity"-->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
+            style="@style/Widget.FoodApp.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
