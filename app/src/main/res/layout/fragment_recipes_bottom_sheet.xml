@@ -127,7 +127,7 @@
                 android:id="@+id/diet_type_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:theme="@style/Widget.FoodApp.ChipGroup"
                 app:checkedChip="@id/vegetarian_chip"
                 app:selectionRequired="true"
                 app:singleLine="true"
