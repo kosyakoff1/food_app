@@ -38,14 +38,15 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
+
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/meal_type_chip_group"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:theme="@style/Widget.FoodApp.ChipGroup"
                 app:checkedChip="@id/main_course_chip"
                 app:selectionRequired="true"
                 app:singleLine="true"
+                android:theme="@style/Widget.FoodApp.ChipGroup"
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip

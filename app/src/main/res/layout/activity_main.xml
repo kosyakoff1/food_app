@@ -19,8 +19,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:popupTheme="@style/ThemeOverlay.FoodApp.Toolbar.PopupMenu.Text"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             tools:title="Toolbar" />
 
     </com.google.android.material.appbar.AppBarLayout>
