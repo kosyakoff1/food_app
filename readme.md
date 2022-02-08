@@ -3,18 +3,22 @@
 Food recipes app using https://spoonacular.com/ as endpoint
 
 DONE:
+
 * test insets and themes on old android versions
 * add translucent controls
 * clear git repo from misc data (# .idea files)
 
 TODO:
+
+* add edit button on favorites screen as side kick of long click gesture + add check mark on
+  selected/unselected items
 * change to overlays instead specifying color for child controls
-  * some styles can be remade to be overlays
+    * some styles can be remade to be overlays
 * add use cases
 * refactor inter-layer communications for usage of interfaces instead of specific implementations
 * check why splash screen looks different on api28 and api31
 
-* add navigator 
+* add navigator
 * move to state objects for UI instead of scattered data
 * add registration
 * change LiveData with StateFlow
