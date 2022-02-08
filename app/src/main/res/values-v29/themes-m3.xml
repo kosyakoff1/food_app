@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.FoodApp.M3.Main" parent="Theme.FoodApp.M3.Base">
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor">
+            @android:color/transparent
+        </item>
+    </style>
+
+    <style name="Theme.FoodApp.M3.Details.Main" parent="Theme.FoodApp.M3.Main"></style>
+
+</resources>

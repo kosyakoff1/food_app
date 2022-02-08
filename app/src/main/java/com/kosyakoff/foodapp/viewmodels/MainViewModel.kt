@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.lifecycle.*
-import com.kosyakoff.MyApplication
+import com.kosyakoff.FoodApplication
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
@@ -58,7 +58,7 @@ class MainViewModel @Inject constructor(
             repository.localDataSource.deleteGroupOfFavoriteRecipes(group)
 
             withContext(Dispatchers.Main) {
-                getApplication<MyApplication>().showToast(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
+                getApplication<FoodApplication>().showToast(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
             }
         }
     }

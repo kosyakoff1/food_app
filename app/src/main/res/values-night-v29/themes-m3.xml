@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.FoodApp.M3.Main" parent="Theme.FoodApp.M3.Base">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">
+            @android:color/transparent
+        </item>
+    </style>
+
+    <style name="Theme.FoodApp.M3.Details.Main" parent="Theme.FoodApp.M3.Main"></style>
+</resources>
