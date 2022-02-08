@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/snowWhite"
+    tools:background="@color/white"
     app:layoutDescription="@xml/fragment_overview_scene"
     tools:context=".ui.fragments.overview.OverviewFragment">
 
     <ImageView
         android:id="@+id/main_image_view"
         android:layout_width="0dp"
-        android:layout_height="250dp"
+        android:layout_height="256dp"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +22,7 @@
     <View
         android:id="@+id/gradient_view"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="96dp"
         android:background="@drawable/gradient_overlay"
         app:layout_constraintBottom_toBottomOf="@id/main_image_view"
         app:layout_constraintEnd_toEndOf="@id/main_image_view"
@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textColor="?colorOnPrimary"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/main_image_view"
         app:layout_constraintEnd_toEndOf="@+id/main_image_view"
@@ -45,7 +45,7 @@
         android:id="@+id/clock_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_clock"
+        app:srcCompat="@drawable/ic_clock"
         app:layout_constraintBottom_toTopOf="@id/time_text_view"
         app:layout_constraintEnd_toEndOf="@id/time_text_view"
         app:layout_constraintStart_toStartOf="@+id/time_text_view"
@@ -57,8 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textColor="?colorOnPrimary"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/time_text_view"
         app:layout_constraintEnd_toStartOf="@id/time_text_view"
@@ -69,27 +69,24 @@
         android:id="@+id/likes_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_heart"
+        app:srcCompat="@drawable/ic_heart"
         app:layout_constraintBottom_toTopOf="@id/number_of_likes_text_view"
         app:layout_constraintEnd_toEndOf="@id/number_of_likes_text_view"
         app:layout_constraintStart_toStartOf="@id/number_of_likes_text_view"
         app:tint="@color/white"
-        tools:ignore="ContentDescription"
-        tools:layout_editor_absoluteX="196dp"
-        tools:layout_editor_absoluteY="41dp" />
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="12dp"
         android:ellipsize="end"
         android:fontFamily="@font/cabin_medium"
         android:maxLines="1"
-        android:textColor="@color/titleTextColor"
-        android:textSize="22sp"
+        android:textSize="@dimen/text_h5_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +95,7 @@
 
     <ImageView
         android:id="@+id/vegetarian_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -106,9 +103,9 @@
         app:layout_constraintTop_toBottomOf="@id/title_text_view"
         tools:ignore="ContentDescription" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <TextView
         android:id="@+id/vegetarian_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_vegetarian"
@@ -118,7 +115,7 @@
 
     <ImageView
         android:id="@+id/vegan_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -128,7 +125,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/vegan_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_vegan"
@@ -138,7 +135,7 @@
 
     <ImageView
         android:id="@+id/gluten_free_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -149,7 +146,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/gluten_free_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_gluten_free"
@@ -159,7 +156,7 @@
 
     <ImageView
         android:id="@+id/dairy_free_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -170,7 +167,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/dairy_free_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_dairy_free"
@@ -180,7 +177,7 @@
 
     <ImageView
         android:id="@+id/healthy_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -191,7 +188,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/healthy_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_healthy"
@@ -201,7 +198,7 @@
 
     <ImageView
         android:id="@+id/cheap_image_view"
-        style="@style/RecipeOverviewHighlightImageViewStyle"
+        style="@style/WidgetOverlay.FoodApp.ImageView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -211,7 +208,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/cheap_text_view"
-        style="@style/RecipeOverviewHighlightTextViewStyle"
+        style="@style/WidgetOverlay.FoodApp.TextView.FragmentOverview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/scr_overview_text_view_cheap"
@@ -220,12 +217,15 @@
         app:layout_constraintTop_toTopOf="@+id/cheap_image_view" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/overview_scroll_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginHorizontal="12dp"
+        android:paddingBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dairy_free_text_view">
 
@@ -238,7 +238,7 @@
                 android:id="@+id/overview_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:textSize="@dimen/text_body_1_size"
 
                 tools:text="@string/lorem_ipsum_lengthy" />
         </LinearLayout>

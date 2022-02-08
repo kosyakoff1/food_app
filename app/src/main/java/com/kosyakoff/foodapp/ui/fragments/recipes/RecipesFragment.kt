@@ -2,7 +2,6 @@ package com.kosyakoff.foodapp.ui.fragments.recipes
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment

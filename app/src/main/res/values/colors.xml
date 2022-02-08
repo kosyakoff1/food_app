@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EA</color>
-    <color name="colorPrimaryDark">#5502C8</color>
-    <color name="colorAccent">#9D46FF</color>
-    <color name="colorSurface">@color/snowWhite</color>
+    <color name="colorStatusBar">#65000000</color>
 
-    <color name="white">#FFFFFF</color>
-    <color name="snowWhite">#FFFFFFF9</color>
-    <color name="lightGray">#F9F9F9</color>
-    <color name="mediumGray">#D1D1D1</color>
-    <color name="lightMediumGray">#80D1D1D1</color>
-    <color name="darkGray">#4B4B4B</color>
-    <color name="dark">#313C44</color>
-    <color name="darkish">#293239</color>
-    <color name="darker">#151B20</color>
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!--Primary color and variants-->
+    <color name="brown_400">#8d6e63</color>
+    <color name="brown_light">#BE9C91</color>
+    <color name="brown_dark">#5f4339</color>
+
+    <!--Secondary color and variants-->
+    <color name="grey_600">#757575</color>
+    <color name="grey_light">#a4a4a4</color>
+    <color name="grey_dark">#494949</color>
+
     <color name="red">#FF4646</color>
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
 
-    <color name="checkedChipBackgroundColor">#206200EA</color>
-    <color name="chipBackgroundColor">@color/lightGray</color>
-    <color name="checkedChipTextColor">@color/colorPrimary</color>
-    <color name="chipTextColor">@color/darkGray</color>
-
-    <color name="actionBarBackgroundColor">@color/colorPrimary</color>
-
-    <color name="titleTextColor">@color/darker</color>
-    <color name="descriptionTextColor">@color/darkGray</color>
-    <color name="ingredientCardStrokeColor">@color/lightMediumGray</color>
-    <color name="ingredientCardBackGroundColor">@color/snowWhite</color>
-    <color name="ingredientTitleColor">@color/darker</color>
-    <color name="itemSelectionColor">#4DAADCEE</color>
-    <color name="itemDefaultColor">@color/colorSurface</color>
-    <color name="cardStrokeColor">@color/lightMediumGray</color>
-    <color name="cardStrokeSelectedColor">#336200EA</color>
-
-    <color name="recipesIconDefaultColor">@color/darkGray</color>
-    <color name="statusBarColor">@color/colorPrimaryDark</color>
-    <color name="contextualStatusBarColor">@color/darker</color>
-    <color name="actionModeBackgroundColor">@color/colorPrimary</color>
+    <color name="app_lightest_grey">#F9F9F9</color>
+    <color name="app_light_grey">#D1D1D1</color>
+    <color name="app_medium_grey">#80D1D1D1</color>
+    <color name="app_dark_grey">#4B4B4B</color>
+    <color name="app_darker_grey">#313C44</color>
 </resources>

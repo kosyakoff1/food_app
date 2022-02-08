@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowCompat
 import androidx.navigation.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,6 +22,7 @@ import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.util.observeOnce
 import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
@@ -36,6 +38,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         with(binding) {
             setSupportActionBar(toolbar)
@@ -59,6 +62,13 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
             fragments,
             this
         )
+
+        binding.appBar.applyInsetter {
+            type(statusBars = true) {
+                // Add to padding on all sides
+                padding()
+            }
+        }
 
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = adapter

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.FoodApp.ChipGroup" parent="Widget.MaterialComponents.ChipGroup">
+        <item name="chipStyle">@style/Widget.FoodApp.Chip.Choice</item>
+    </style>
+
+
+    <style name="Widget.FoodApp.Chip.Choice" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+    </style>
+
+    <style name="ThemeOverlay.FoodApp.Toolbar.PopupMenu.Text" parent="">
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
+    <style name="Widget.FoodApp.TabLayout" parent="Widget.MaterialComponents.TabLayout.PrimarySurface">
+        <item name="tabIndicatorColor">?colorOnPrimary</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabPaddingStart">-1dp</item>
+        <item name="tabPaddingEnd">-1dp</item>
+        <item name="tabSelectedTextColor">?colorOnPrimary</item>
+        <item name="tabTextColor">@color/color_on_primary_65</item>
+    </style>
+
+    <style name="WidgetOverlay.FoodApp.TextView.FragmentOverview" parent="Widget.MaterialComponents.TextView">
+        <item name="maxLines">1</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="WidgetOverlay.FoodApp.ImageView.FragmentOverview" parent="">
+        <item name="srcCompat">@drawable/ic_check_mark</item>
+        <item name="tint">@color/primary_color_10</item>
+    </style>
+
+</resources>

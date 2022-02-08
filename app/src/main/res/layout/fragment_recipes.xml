@@ -33,11 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
-            android:src="@drawable/ic_restaurant"
+            app:srcCompat="@drawable/ic_restaurant"
             app:layout_constraintBottom_toBottomOf="parent"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:tint="@android:color/white"
+            app:tint="@color/white"
             tools:ignore="ContentDescription" />
 
         <ImageView
@@ -47,7 +47,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:alpha="0.5"
-            android:src="@drawable/ic_sad"
+            app:srcCompat="@drawable/ic_sad"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:alpha="0.5"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_body_1_size"
             android:textStyle="bold"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/error_image_view"

@@ -47,8 +47,6 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         mainViewModel.readFavoriteRecipes.observe(viewLifecycleOwner) { favoriteEntities ->
             adapter.submitList(favoriteEntities.map { favoriteEntity -> favoriteEntity.recipe })
         }
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

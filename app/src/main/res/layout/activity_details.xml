@@ -12,24 +12,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:titleTextColor="@color/white"
             tools:title="Toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"/>
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            style="@style/CustomTabLayoutStyle"
+            style="@style/Widget.FoodApp.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:tabTextAppearance="@style/CustomTabTextStyle">
+            >
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -40,7 +38,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/colorSurface"
+        android:background="?colorSurface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

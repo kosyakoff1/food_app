@@ -36,7 +36,6 @@
     <string name="str_details_activity">Details</string>
     <string name="str_details">Details</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="str_overview">Overview</string>
     <string name="str_ingredients">Ingredients</string>
     <string name="str_instructions">Instructions</string>
@@ -50,8 +49,6 @@
     <string name="scr_favorites_all_favorites_deleted">All favorites deleted</string>
     <string name="scr_food_joke_share_menu">Share</string>
     <string name="str_no_joke">No joke</string>
-    <!--    <string name="scr_favorites_items_selected_menu_title">Favorites selected: %1$d</string>-->
-
     <plurals name="scr_favorites_items_selected_menu_title">
         <item quantity="one">%d favorite selected</item>
         <item quantity="other">%d favorites selected</item>

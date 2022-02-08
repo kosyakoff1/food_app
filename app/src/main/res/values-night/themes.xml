@@ -3,75 +3,64 @@
     <style name="Theme.FoodApp.Starting" parent="Theme.SplashScreen.IconBackground">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="windowSplashScreenAnimationDuration">100</item>
-        <item name="postSplashScreenTheme">@style/Theme.FoodApp</item>
+        <item name="postSplashScreenTheme">@style/Theme.FoodApp.Main</item>
     </style>
 
-    <style name="CustomActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
-        <item name="background">@color/actionBarBackgroundColor</item>
+    <style name="Theme.FoodApp.Main" parent="Theme.FoodApp.Base">
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor">
+            #B3FFFFFF
+        </item>
     </style>
 
     <!-- Base application theme. -->
-    <style name="Theme.FoodApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.FoodApp.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSurface">@color/colorSurface</item>
-        <item name="android:colorBackground">@color/colorSurface</item>
+        <item name="colorPrimary">@color/brown_light</item>
+        <item name="colorPrimaryVariant">@color/brown_400</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarColor</item>
-        <item name="actionModeBackground">@color/actionModeBackgroundColor</item>
-        <!-- Customize your theme here. -->
-        <item name="actionBarStyle">@style/CustomActionBarStyle</item>
+        <item name="colorSecondary">@color/grey_light</item>
+        <item name="colorSecondaryVariant">@color/grey_600</item>
+        <!-- Color on brand color. -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+
+        <!-- Color surfaces -->
+        <item name="android:windowBackground">@color/app_darker_grey</item>
+        <item name="colorSurface">@color/app_dark_grey</item>
+
+        <!--various colors-->
+        <item name="colorShimmer">@color/app_medium_grey</item>
+        <item name="colorScreenPlaceHolder">@color/app_light_grey</item>
+        <item name="colorItemSelection">@color/primary_color_10</item>
+
+        <item name="windowActionModeOverlay">true
+        </item> <!--for proper work of action mode in edge to edge design-->
     </style>
 
-    <style name="CustomChipGroupStyle" parent="Widget.MaterialComponents.ChipGroup">
-        <item name="chipStyle">@style/CustomChipStyle</item>
+    <style name="Theme.FoodApp.Details.Main" parent="Theme.FoodApp.Details.Base">
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorStatusBar</item>
+        <item name="android:navigationBarColor" tools:targetApi="l">
+            #B3FFFFFF
+        </item>
     </style>
 
-    <style name="CustomChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
-        <item name="chipBackgroundColor">@color/chip_background_color</item>
-        <item name="android:textColor">@color/chip_text_color</item>
-        <item name="checkedIconTint">@color/chip_text_color</item>
+    <style name="Theme.FoodApp.Details.Base" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/brown_light</item>
+        <item name="colorPrimaryVariant">@color/brown_400</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/grey_light</item>
+        <item name="colorSecondaryVariant">@color/grey_600</item>
+        <!-- Color on brand color. -->
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+
+        <!-- Color surfaces -->
+        <item name="android:windowBackground">@color/app_darker_grey</item>
+        <item name="colorSurface">@color/app_dark_grey</item>
     </style>
-
-    <style name="DetailsActivityStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorSecondary">@color/colorPrimaryDark</item>
-        <item name="colorSecondaryVariant">@color/colorAccent</item>
-
-        <item name="android:colorControlNormal">@color/white</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
-    </style>
-
-
-    <style name="CustomTabLayoutStyle" parent="Widget.Design.TabLayout">
-        <item name="background">@color/actionBarBackgroundColor</item>
-        <item name="tabIndicator">@color/white</item>
-        <item name="tabIndicatorHeight">2dp</item>
-        <item name="tabSelectedTextColor">@color/white</item>
-    </style>
-
-    <style name="CustomTabTextStyle" parent="TextAppearance.MaterialComponents.Button">
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-    <style name="RecipeOverviewHighlightTextViewStyle" parent="Widget.MaterialComponents.TextView">
-        <item name="android:textColor">@color/recipesIconDefaultColor</item>
-        <item name="maxLines">1</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
-    <style name="RecipeOverviewHighlightImageViewStyle">
-        <item name="android:src">@drawable/ic_check_mark</item>
-        <item name="tint">@color/recipesIconDefaultColor</item>
-    </style>
-
-
 </resources>

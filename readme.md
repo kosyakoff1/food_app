@@ -2,12 +2,18 @@
 
 Food recipes app using https://spoonacular.com/ as endpoint
 
+DONE:
+* test insets and themes on old android versions
+* add translucent controls
+* clear git repo from misc data (# .idea files)
+
 TODO:
+* change to overlays instead specifying color for child controls
+  * some styles can be remade to be overlays
 * add use cases
 * refactor inter-layer communications for usage of interfaces instead of specific implementations
-  
-* add translucent controls 
-* clear git repo from misc data (# .idea files) 
+* check why splash screen looks different on api28 and api31
+
 * add navigator 
 * move to state objects for UI instead of scattered data
 * add registration

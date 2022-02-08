@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:padding="16dp"
+    android:background="@drawable/ic_food_joke_background"
     android:id="@+id/food_joke_background_layout"
     tools:context=".ui.fragments.foodjoke.FoodJokeFragment">
 
@@ -17,13 +18,13 @@
 
         android:visibility="invisible"
         app:cardCornerRadius="6dp"
+        app:cardElevation="5dp"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/lightMediumGray"
-        app:strokeWidth="1dp"
         tools:visibility="visible">
 
         <androidx.core.widget.NestedScrollView
@@ -37,8 +38,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:fontFamily="@font/cabin_medium"
-                android:textColor="@color/recipesIconDefaultColor"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_h6_size"
                 tools:text="@string/lorem_ipsum_lengthy" />
         </androidx.core.widget.NestedScrollView>
     </com.google.android.material.card.MaterialCardView>
@@ -48,7 +48,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:alpha="0.5"
-        android:src="@drawable/ic_sad"
+        app:srcCompat="@drawable/ic_sad"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:alpha="0.5"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_body_1_size"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="@id/food_joke_error_image_view"
