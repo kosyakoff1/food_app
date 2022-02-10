@@ -15,6 +15,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.RecipePagerAdapter
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.databinding.ActivityDetailsBinding
+import com.kosyakoff.foodapp.ui.base.BaseActivity
 import com.kosyakoff.foodapp.ui.fragments.ingredients.IngredientsFragment
 import com.kosyakoff.foodapp.ui.fragments.instructions.InstructionsFragment
 import com.kosyakoff.foodapp.ui.fragments.overview.OverviewFragment
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint
-class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
+class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivity {
     private val binding: ActivityDetailsBinding by viewBinding(ActivityDetailsBinding::bind)
     private val args: DetailsActivityArgs by navArgs()
     private val mainViewModel: MainViewModel by viewModels()
@@ -38,44 +39,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        with(binding) {
-            setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
-        val fragments = listOf(
-            OverviewFragment(),
-            IngredientsFragment(),
-            InstructionsFragment()
-        )
-
-        val titles = listOf(
-            getString(R.string.str_overview),
-            getString(R.string.str_ingredients),
-            getString(R.string.str_instructions)
-        )
-
-        val adapter = RecipePagerAdapter(
-            bundleOf(BUNDLE_KEY to args.recipe),
-            fragments,
-            this
-        )
-
-        binding.appBar.applyInsetter {
-            type(statusBars = true) {
-                // Add to padding on all sides
-                padding()
-            }
-        }
-
-        binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.adapter = adapter
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) {
-            tab, position ->
-            tab.text = titles[position]
-        }.attach()
+        setupViews()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -132,6 +96,49 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details) {
         isFavored = true
         setMenuStarIsFavored(menuItem, isFavored)
         showToast(getString(R.string.scr_details_tst_recipe_saved_to_favorites))
+    }
+
+    override fun setupViews() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        with(binding) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        setupInsets()
+
+        val fragments = listOf(
+            OverviewFragment(),
+            IngredientsFragment(),
+            InstructionsFragment()
+        )
+
+        val adapter = RecipePagerAdapter(
+            bundleOf(BUNDLE_KEY to args.recipe),
+            fragments,
+            this
+        )
+
+        binding.viewPager.isUserInputEnabled = false
+        binding.viewPager.adapter = adapter
+        val titles = listOf(
+            getString(R.string.str_overview),
+            getString(R.string.str_ingredients),
+            getString(R.string.str_instructions)
+        )
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = titles[position]
+        }.attach()
+    }
+
+    override fun setupInsets() {
+        binding.appBar.applyInsetter {
+            type(statusBars = true) {
+                // Add to padding on all sides
+                padding()
+            }
+        }
     }
 
 }

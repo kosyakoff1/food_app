@@ -12,22 +12,33 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kosyakoff.foodapp.R
+import com.kosyakoff.foodapp.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BaseActivity {
 
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupViews()
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun setupViews() {
         installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setupInsets()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_container) as NavHostFragment
@@ -42,6 +53,12 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
+        navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun setupInsets() {
         val appBarLayout: AppBarLayout = findViewById(R.id.appbar)
         appBarLayout.applyInsetter {
             type(statusBars = true, navigationBars = true) {
@@ -49,13 +66,5 @@ class MainActivity : AppCompatActivity() {
                 padding(top = true)
             }
         }
-
-        val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
-        navView.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
