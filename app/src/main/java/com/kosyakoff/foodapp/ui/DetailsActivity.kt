@@ -42,9 +42,51 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         setupViews()
     }
 
+    override fun setupInsets() {
+        binding.appBar.applyInsetter {
+            type(statusBars = true) {
+                // Add to padding on all sides
+                padding()
+            }
+        }
+    }
+
+    override fun setupViews() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        with(binding) {
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            setupInsets()
+
+            val fragments = listOf(
+                OverviewFragment(),
+                IngredientsFragment(),
+                InstructionsFragment()
+            )
+
+            val adapter = RecipePagerAdapter(
+                bundleOf(BUNDLE_KEY to args.recipe),
+                fragments,
+                this@DetailsActivity
+            )
+
+            viewPager.isUserInputEnabled = false
+            viewPager.adapter = adapter
+            val titles = listOf(
+                getString(R.string.str_overview),
+                getString(R.string.str_ingredients),
+                getString(R.string.str_instructions)
+            )
+
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = titles[position]
+            }.attach()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.details_activity_menu, menu)
-
         updateMenuVisuals(menu?.findItem(R.id.save_to_favorites_menu)!!)
 
         return true
@@ -97,48 +139,4 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         setMenuStarIsFavored(menuItem, isFavored)
         showToast(getString(R.string.scr_details_tst_recipe_saved_to_favorites))
     }
-
-    override fun setupViews() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        with(binding) {
-            setSupportActionBar(toolbar)
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-        setupInsets()
-
-        val fragments = listOf(
-            OverviewFragment(),
-            IngredientsFragment(),
-            InstructionsFragment()
-        )
-
-        val adapter = RecipePagerAdapter(
-            bundleOf(BUNDLE_KEY to args.recipe),
-            fragments,
-            this
-        )
-
-        binding.viewPager.isUserInputEnabled = false
-        binding.viewPager.adapter = adapter
-        val titles = listOf(
-            getString(R.string.str_overview),
-            getString(R.string.str_ingredients),
-            getString(R.string.str_instructions)
-        )
-
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = titles[position]
-        }.attach()
-    }
-
-    override fun setupInsets() {
-        binding.appBar.applyInsetter {
-            type(statusBars = true) {
-                // Add to padding on all sides
-                padding()
-            }
-        }
-    }
-
 }

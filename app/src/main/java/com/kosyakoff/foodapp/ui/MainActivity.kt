@@ -26,8 +26,14 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         setupViews()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+    override fun setupInsets() {
+        val appBarLayout: AppBarLayout = findViewById(R.id.appbar)
+        appBarLayout.applyInsetter {
+            type(statusBars = true, navigationBars = true) {
+                // Add to padding on all sides
+                padding(top = true)
+            }
+        }
     }
 
     override fun setupViews() {
@@ -58,13 +64,7 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
-    override fun setupInsets() {
-        val appBarLayout: AppBarLayout = findViewById(R.id.appbar)
-        appBarLayout.applyInsetter {
-            type(statusBars = true, navigationBars = true) {
-                // Add to padding on all sides
-                padding(top = true)
-            }
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
