@@ -36,6 +36,9 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         }
     }
 
+    override fun setupViewModel() {
+    }
+
     override fun setupViews() {
         installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)

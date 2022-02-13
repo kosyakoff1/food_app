@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+
 class NetworkListener : ConnectivityManager.NetworkCallback() {
 
     private val isNetworkAvailable = MutableStateFlow(false)

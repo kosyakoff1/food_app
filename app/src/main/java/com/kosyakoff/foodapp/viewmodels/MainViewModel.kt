@@ -7,16 +7,21 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.*
 import com.kosyakoff.FoodApplication
 import com.kosyakoff.foodapp.R
+import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import com.kosyakoff.foodapp.models.FoodJoke
 import com.kosyakoff.foodapp.models.FoodRecipes
+import com.kosyakoff.foodapp.ui.base.BaseViewModel
+import com.kosyakoff.foodapp.util.Constants
 import com.kosyakoff.foodapp.util.NetworkResult
+import com.kosyakoff.foodapp.util.extensions.appContext
 import com.kosyakoff.foodapp.util.extensions.showToast
-import com.kosyakoff.foodapp.util.getString
+import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -25,29 +30,47 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val repository: Repository,
+    private val dataStoreRepository: DataStoreRepository,
     application: Application
-) : AndroidViewModel(application) {
+) : BaseViewModel(application) {
 
-    val readRecipes: LiveData<List<RecipesEntity>> =
-        repository.localDataSource.loadRecipes().asLiveData()
+    private val _recipesFlow = repository.localDataSource.loadRecipes()
+    private var _readRecipes: MutableLiveData<List<RecipesEntity>> = MutableLiveData(null)
+    val readRecipes: LiveData<List<RecipesEntity>> get() = _readRecipes
+    //_recipesFlow.asLiveData()
 
+
+    private val _readFavoriteRecipes =
+        repository.localDataSource.loadFavoriteRecipes()
     val readFavoriteRecipes: LiveData<List<FavoriteEntity>> =
-        repository.localDataSource.loadFavoriteRecipes().asLiveData()
+        _readFavoriteRecipes.asLiveData()
 
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
             repository.localDataSource.insertRecipes(recipesEntity)
         }
 
-    fun writeFavoriteRecipe(recipe: FavoriteEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.insertFavoriteRecipe(recipe)
-        }
 
-    fun deleteFavoriteRecipe(recipe: FavoriteEntity) =
+    var networkIsAvailable = false
+    var backOnline = false
+
+    private fun saveBackOnline(backOnline: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.deleteFavoriteRecipe(recipe)
+            dataStoreRepository.saveBackOnline(backOnline)
         }
+    }
+
+    fun showNetworkStatus(newNetworkStatus: Boolean?) {
+        newNetworkStatus?.let { networkIsAvailable = it }
+
+        if (!networkIsAvailable) {
+            getApplication<Application>().showToast(getString(R.string.str_error_no_internet_connection))
+            saveBackOnline(true)
+        } else if (backOnline) {
+            getApplication<Application>().showToast(getString(R.string.str_internet_restored))
+            saveBackOnline(false)
+        }
+    }
 
     fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
         repository.localDataSource.deleteAllFavoriteRecipes()
@@ -166,7 +189,7 @@ class MainViewModel @Inject constructor(
 
     private fun hasInternetConnection(): Boolean {
         val connectivityManager =
-            getApplication<Application>()
+            appContext
                 .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val activeNetwork = connectivityManager.activeNetwork ?: return false
@@ -178,6 +201,26 @@ class MainViewModel @Inject constructor(
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
+        }
+    }
+
+    fun getListOfRecipes() {
+        viewModelScope.launch {
+            _recipesFlow.lastOrNull()?.let {
+                if (it.isNotEmpty() /*&& !recipesFragmentArgs.backFromBottomSheet*/) {
+                    _readRecipes.value = it
+                } else {
+                    requestApiData()
+                }
+            }
+        }
+        _recipesFlow.lastOrNull() { localData ->
+            if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
+                recipesAdapter.submitList(localData.first().foodRecipes.results)
+                toggleShimmerEffect(false)
+            } else {
+                requestApiData()
+            }
         }
     }
 }

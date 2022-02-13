@@ -6,7 +6,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +21,7 @@ import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.observeOnce
 import com.kosyakoff.foodapp.viewmodels.MainViewModel
-import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,7 +29,6 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
 
     private val recipesFragmentArgs: RecipesFragmentArgs by navArgs()
     private val mainViewModel: MainViewModel by viewModels()
-    private val recipesViewModel: RecipesViewModel by viewModels()
     private val binding by viewBinding(FragmentRecipesBinding::bind)
     private val recipesAdapter by lazy { RecipesAdapter() }
     private lateinit var networkListener: NetworkListener
@@ -44,20 +43,22 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
 
         setupRecyclerView()
 
-        recipesViewModel.readBackOnline.observe(viewLifecycleOwner) {
-            recipesViewModel.backOnline = it
+        mainViewModel.readBackOnline.observe(viewLifecycleOwner) {
+            mainViewModel.backOnline = it
         }
 
         lifecycleScope.launchWhenStarted {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireContext()).collect { status ->
                 recipesViewModel.showNetworkStatus(status)
-                getRecipes()
+                startGettingRecipes()
             }
         }
 
+        mainViewModel.getListOfRecipes()
+
         binding.recipesFab.setOnClickListener {
-            if (recipesViewModel.networkIsAvailable) {
+            if (mainViewModel.networkIsAvailable) {
                 val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
                 findNavController().navigate(action)
             }
@@ -86,14 +87,16 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
         return true
     }
 
-    private fun getRecipes() {
+    private fun startGettingRecipes() {
         lifecycleScope.launch {
-            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { localData ->
-                if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
-                    recipesAdapter.submitList(localData.first().foodRecipes.results)
-                    toggleShimmerEffect(false)
-                } else {
-                    requestApiData()
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { localData ->
+                    if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
+                        recipesAdapter.submitList(localData.first().foodRecipes.results)
+                        toggleShimmerEffect(false)
+                    } else {
+                        requestApiData()
+                    }
                 }
             }
         }
@@ -112,7 +115,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
 
         mainViewModel.searchRecipesResponse.removeObservers(viewLifecycleOwner)
 
-        mainViewModel.searchRecipes(recipesViewModel.getSearchQuery(searchString))
+        mainViewModel.searchRecipes(mainViewModel.getSearchQuery(searchString))
         mainViewModel.searchRecipesResponse.observe(viewLifecycleOwner) {
             processRecipesNetworkResult(it)
         }
@@ -121,7 +124,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
     private fun requestApiData() {
         mainViewModel.recipesResponse.removeObservers(viewLifecycleOwner)
 
-        mainViewModel.getRecipes(recipesViewModel.getQueries())
+        mainViewModel.getRecipes(mainViewModel.getQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner) {
             processRecipesNetworkResult(it)
         }
@@ -156,5 +159,4 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
         }
 
     }
-
 }

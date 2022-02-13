@@ -13,7 +13,7 @@ import com.kosyakoff.foodapp.databinding.FragmentRecipesBottomSheetBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.kosyakoff.foodapp.util.extensions.showToast
-import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
+import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import java.util.*
@@ -28,7 +28,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
 
     private var _binding: FragmentRecipesBottomSheetBinding? = null
     private val binding get() = _binding!!
-    private val recipesViewModel: RecipesViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +54,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.applyButton.setOnClickListener {
-            recipesViewModel.saveMealAndDietTypes(
+            mainViewModel.saveMealAndDietTypes(
                 mealTypeChipTitle,
                 mealTypeChipId, dietTypeChipTitle, dietTypeChipId
             )
@@ -65,13 +65,12 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             findNavController().navigate(action)
         }
 
-        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
+        mainViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
             mealTypeChipTitle = value.selectedMealType
             dietTypeChipTitle = value.selectedDietType
 
             binding.apply {
                 try {
-
                     value.selectedMealTypeId.takeIf { it != 0 }?.let {
                         mealTypeChipGroup.findViewById<Chip>(it).apply {
                             isChecked = true
