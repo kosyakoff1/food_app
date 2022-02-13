@@ -23,6 +23,10 @@ class InstructionsFragment : Fragment(R.layout.fragment_instructions) {
 
         val recipe = arguments?.getParcelable<FoodRecipe>(DetailsActivity.BUNDLE_KEY)!!
 
+        initViews(recipe)
+    }
+
+    private fun initViews(recipe: FoodRecipe) {
         with(binding) {
             instructionsWebView.webViewClient = object : WebViewClient() {}
             instructionsWebView.settings.javaScriptEnabled = true
