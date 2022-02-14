@@ -1,10 +1,7 @@
 package com.kosyakoff.foodapp.ui.fragments.overview
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,7 +13,6 @@ import coil.load
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentOverviewBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
-import com.kosyakoff.foodapp.ui.DetailsActivity
 import com.kosyakoff.foodapp.viewmodels.DetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -32,10 +28,10 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initViewModel()
+        initViews()
     }
 
-    private fun initViewModel() {
+    private fun initViews() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -9,18 +9,22 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentFoodJokeBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.NetworkResult
-import com.kosyakoff.foodapp.viewmodels.MainViewModel
+import com.kosyakoff.foodapp.viewmodels.FoodJokeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
-    private val mainViewModel: MainViewModel by viewModels()
+    private val foodJokeViewModel: FoodJokeViewModel by viewModels()
     private val binding: FragmentFoodJokeBinding by viewBinding(FragmentFoodJokeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,28 +32,32 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
         setHasOptionsMenu(true)
 
-        mainViewModel.getFoodJoke(API_KEY)
+        foodJokeViewModel.initVm(API_KEY)
+        initViews()
+    }
+
+    private fun initViews() {
+
         with(binding) {
-            mainViewModel.foodJokeResponse.observe(viewLifecycleOwner) { response ->
-                when (response) {
-                    is NetworkResult.Success -> {
-                        foodJokeCardLayout.isVisible = true
-                        foodJokeTextView.text = response.data?.text
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    foodJokeViewModel.foodJokeState.collect { response ->
+                        foodJokeErrorTextView.isVisible = response is NetworkResult.Error
+                        foodJokeErrorImageView.isVisible = response is NetworkResult.Error
+                        foodJokeLoadingProgressBar.isVisible = response is NetworkResult.Loading
+                        foodJokeCardLayout.isVisible = response is NetworkResult.Success
+                        foodJokeTextView.isVisible = response is NetworkResult.Success
 
-                        foodJokeErrorTextView.isVisible = false
-                        foodJokeErrorImageView.isVisible = false
-                        foodJokeLoadingProgressBar.isVisible = false
-                    }
-                    is NetworkResult.Error -> {
-                        foodJokeErrorTextView.isVisible = true
-                        foodJokeErrorImageView.isVisible = true
-                        foodJokeErrorTextView.text = response.message.toString()
-
-                        foodJokeTextView.isVisible = false
-                        foodJokeLoadingProgressBar.isVisible = false
-                    }
-                    is NetworkResult.Loading -> {
-                        foodJokeLoadingProgressBar.isVisible = true
+                        when (response) {
+                            is NetworkResult.Success -> {
+                                foodJokeTextView.text = response.data?.text
+                            }
+                            is NetworkResult.Error -> {
+                                foodJokeErrorTextView.text = response.message.toString()
+                            }
+                            is NetworkResult.Loading -> {
+                            }
+                        }
                     }
                 }
             }
@@ -63,7 +71,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.share_food_joke_menu) {
             val message =
-                mainViewModel.foodJokeResponse.value?.message ?: getString(R.string.str_no_joke)
+                foodJokeViewModel.foodJokeState.value.data?.text ?: getString(R.string.str_no_joke)
 
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND

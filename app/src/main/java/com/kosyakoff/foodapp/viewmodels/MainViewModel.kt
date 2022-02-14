@@ -11,10 +11,8 @@ import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
-import com.kosyakoff.foodapp.models.FoodJoke
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
-import com.kosyakoff.foodapp.util.Constants
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.appContext
 import com.kosyakoff.foodapp.util.extensions.showToast
@@ -86,7 +84,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    var foodJokeResponse: MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
+
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
     var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
 
@@ -100,7 +98,7 @@ class MainViewModel @Inject constructor(
         if (hasInternetConnection()) {
             try {
                 val response = repository.remoteDataSource.searchRecipes(searchQuery)
-                searchRecipesResponse.value = handleFoodRecipesResponse(response)
+                searchRecipesResponse.value = handleServerResponse(response)
             } catch (e: Exception) {
                 searchRecipesResponse.value =
                     NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
@@ -117,29 +115,6 @@ class MainViewModel @Inject constructor(
         fetchRecipesSafeCall(queries)
     }
 
-    fun getFoodJoke(apiKey: String) = viewModelScope.launch {
-        fetchFoodJokeSafeCall(apiKey)
-    }
-
-    private suspend fun fetchFoodJokeSafeCall(apiKey: String) {
-        foodJokeResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.getFoodJoke(apiKey)
-                foodJokeResponse.value = handleFoodRecipesResponse(response)
-
-            } catch (e: Exception) {
-                foodJokeResponse.value =
-                    NetworkResult.Error(e.message)
-            }
-        } else {
-            foodJokeResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
-                )
-        }
-    }
 
     private suspend fun fetchRecipesSafeCall(queries: Map<String, String>) {
         recipesResponse.value = NetworkResult.Loading()
@@ -147,7 +122,7 @@ class MainViewModel @Inject constructor(
         if (hasInternetConnection()) {
             try {
                 val response = repository.remoteDataSource.getRecipes(queries)
-                recipesResponse.value = handleFoodRecipesResponse(response)
+                recipesResponse.value = handleServerResponse(response)
 
                 recipesResponse.value!!.data?.let {
                     putRecipesInCache(it)
@@ -166,42 +141,6 @@ class MainViewModel @Inject constructor(
 
     private fun putRecipesInCache(foodRecipes: FoodRecipes) {
         insertRecipes(RecipesEntity(0, foodRecipes))
-    }
-
-    private fun <T> handleFoodRecipesResponse(response: Response<T>): NetworkResult<T> {
-        when {
-            response.message().contains("timeout") -> {
-                return NetworkResult.Error(getString(R.string.str_error_timeout))
-            }
-            response.code() == 402 -> {
-                return NetworkResult.Error(getString(R.string.str_error_api_limit_reached))
-            }
-            response.isSuccessful -> {
-                val foodRecipes = response.body()!!
-
-                return NetworkResult.Success(foodRecipes)
-            }
-            else -> {
-                return NetworkResult.Error(response.message().toString())
-            }
-        }
-    }
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager =
-            appContext
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
-        }
     }
 
     fun getListOfRecipes() {
