@@ -27,27 +27,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository,
     private val dataStoreRepository: DataStoreRepository,
     application: Application
 ) : BaseViewModel(application) {
 
-    private val _recipesFlow = repository.localDataSource.loadRecipes()
-    private var _readRecipes: MutableLiveData<List<RecipesEntity>> = MutableLiveData(null)
-    val readRecipes: LiveData<List<RecipesEntity>> get() = _readRecipes
-    //_recipesFlow.asLiveData()
-
-
-    private val _readFavoriteRecipes =
-        repository.localDataSource.loadFavoriteRecipes()
-    val readFavoriteRecipes: LiveData<List<FavoriteEntity>> =
-        _readFavoriteRecipes.asLiveData()
-
-    private fun insertRecipes(recipesEntity: RecipesEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.insertRecipes(recipesEntity)
-        }
-
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
 
     var networkIsAvailable = false
     var backOnline = false
@@ -70,96 +54,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
-        repository.localDataSource.deleteAllFavoriteRecipes()
+    override fun messageShown(messageId: Long) {
+        TODO("Not yet implemented")
     }
 
-    fun deleteGroupOfFavoriteRecipes(group: List<Long>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.deleteGroupOfFavoriteRecipes(group)
-
-            withContext(Dispatchers.Main) {
-                getApplication<FoodApplication>().showToast(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
-            }
-        }
+    override fun addMessageToQueue(message: String) {
+        TODO("Not yet implemented")
     }
 
-
-    var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
-    var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
-
-    fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
-        searchRecipesSafeCall(searchQuery)
-    }
-
-    private suspend fun searchRecipesSafeCall(searchQuery: Map<String, String>) {
-        searchRecipesResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.searchRecipes(searchQuery)
-                searchRecipesResponse.value = handleServerResponse(response)
-            } catch (e: Exception) {
-                searchRecipesResponse.value =
-                    NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
-            }
-        } else {
-            searchRecipesResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
-                )
-        }
-    }
-
-    fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
-        fetchRecipesSafeCall(queries)
-    }
-
-
-    private suspend fun fetchRecipesSafeCall(queries: Map<String, String>) {
-        recipesResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.getRecipes(queries)
-                recipesResponse.value = handleServerResponse(response)
-
-                recipesResponse.value!!.data?.let {
-                    putRecipesInCache(it)
-                }
-            } catch (e: Exception) {
-                recipesResponse.value =
-                    NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
-            }
-        } else {
-            recipesResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
-                )
-        }
-    }
-
-    private fun putRecipesInCache(foodRecipes: FoodRecipes) {
-        insertRecipes(RecipesEntity(0, foodRecipes))
-    }
-
-    fun getListOfRecipes() {
-        viewModelScope.launch {
-            _recipesFlow.lastOrNull()?.let {
-                if (it.isNotEmpty() /*&& !recipesFragmentArgs.backFromBottomSheet*/) {
-                    _readRecipes.value = it
-                } else {
-                    requestApiData()
-                }
-            }
-        }
-        _recipesFlow.lastOrNull() { localData ->
-            if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
-                recipesAdapter.submitList(localData.first().foodRecipes.results)
-                toggleShimmerEffect(false)
-            } else {
-                requestApiData()
-            }
-        }
-    }
 }

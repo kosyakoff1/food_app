@@ -85,7 +85,7 @@ class DetailsViewModel @Inject constructor(
         return recipe
     }
 
-    override fun userMessageShown(messageId: Long) {
+    override fun messageShown(messageId: Long) {
         _uiState.update { currentUiState ->
             val messages = currentUiState.userMessages.filterNot { it.id == messageId }
             currentUiState.copy(userMessages = messages)

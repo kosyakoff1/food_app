@@ -64,7 +64,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
 
                     uiState.userMessages.firstOrNull()?.let { userMessage ->
                         showToast(userMessage.text)
-                        detailsViewModel.userMessageShown(userMessage.id)
+                        detailsViewModel.messageShown(userMessage.id)
                     }
                 }
             }

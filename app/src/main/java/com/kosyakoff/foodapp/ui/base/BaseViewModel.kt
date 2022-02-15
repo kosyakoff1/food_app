@@ -13,7 +13,7 @@ import retrofit2.Response
 
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    abstract fun userMessageShown(messageId: Long)
+    abstract fun messageShown(messageId: Long)
     abstract fun addMessageToQueue(message: String)
 
     protected fun <T> handleServerResponse(response: Response<T>): NetworkResult<T> {

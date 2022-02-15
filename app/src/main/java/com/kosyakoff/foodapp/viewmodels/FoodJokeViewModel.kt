@@ -23,7 +23,7 @@ class FoodJokeViewModel @Inject constructor(
     application: Application,
     private val repository: Repository
 ) : BaseViewModel(application) {
-    override fun userMessageShown(messageId: Long) {
+    override fun messageShown(messageId: Long) {
         TODO("Not yet implemented")
     }
 

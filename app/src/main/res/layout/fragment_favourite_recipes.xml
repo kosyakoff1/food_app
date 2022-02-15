@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="mainViewModel"
-            type="com.kosyakoff.foodapp.viewmodels.MainViewModel" />
+            name="favoritesViewModel"
+            type="com.kosyakoff.foodapp.viewmodels.FavoritesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,21 +25,21 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/favorite_recipes_row_layout"
-            app:visibilityBaseOnDataPresence="@{mainViewModel.readFavoriteRecipes}" />
+            app:visibilityBaseOnDataPresence="@{favoritesViewModel.readFavoriteRecipes}"
+            tools:listitem="@layout/favorite_recipes_row_layout" />
 
         <ImageView
             android:id="@+id/no_data_image_view"
             android:layout_width="112dp"
             android:layout_height="112dp"
             android:alpha="0.5"
-            app:srcCompat="@drawable/ic_menu_book"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.37"
-            app:visibilityBaseOnDataPresenceReverse="@{mainViewModel.readFavoriteRecipes}"
+            app:srcCompat="@drawable/ic_menu_book"
+            app:visibilityBaseOnDataPresenceReverse="@{favoritesViewModel.readFavoriteRecipes}"
             tools:ignore="ContentDescription"
             tools:visibility="visible" />
 
@@ -55,7 +55,7 @@
             app:layout_constraintEnd_toEndOf="@+id/no_data_image_view"
             app:layout_constraintStart_toStartOf="@+id/no_data_image_view"
             app:layout_constraintTop_toBottomOf="@+id/no_data_image_view"
-            app:visibilityBaseOnDataPresenceReverse="@{mainViewModel.readFavoriteRecipes}"
+            app:visibilityBaseOnDataPresenceReverse="@{favoritesViewModel.readFavoriteRecipes}"
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
