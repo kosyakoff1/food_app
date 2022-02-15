@@ -41,8 +41,8 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupViews()
-        setupViewModel()
+        initViews()
+        initVm()
     }
 
     override fun setupInsets() {
@@ -54,7 +54,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         }
     }
 
-    override fun setupViewModel() {
+    private fun initVm() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 detailsViewModel.uiState.collect { uiState ->
@@ -72,7 +72,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         }
     }
 
-    override fun setupViews() {
+    fun initViews() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         with(binding) {

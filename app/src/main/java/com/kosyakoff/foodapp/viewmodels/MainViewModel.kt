@@ -11,7 +11,11 @@ import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
+import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.models.FoodRecipes
+import com.kosyakoff.foodapp.states.DetailsUIState
+import com.kosyakoff.foodapp.states.MainUIState
+import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
@@ -24,6 +28,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,10 +38,15 @@ class MainViewModel @Inject constructor(
     application: Application
 ) : BaseViewModel(application) {
 
-    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
-
-    var networkIsAvailable = false
-    var backOnline = false
+    private val _uiState =
+        MutableStateFlow(
+            MainUIState(
+                userMessages = emptyList(),
+                networkIsAvailable = false,
+                backOnline = false
+            )
+        )
+    val uiState: StateFlow<MainUIState> = _uiState
 
     private fun saveBackOnline(backOnline: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,13 +55,20 @@ class MainViewModel @Inject constructor(
     }
 
     private fun showNetworkStatus(newNetworkStatus: Boolean?) {
-        newNetworkStatus?.let { networkIsAvailable = it }
 
-        if (!networkIsAvailable) {
-            appContext.showToast(getString(R.string.str_error_no_internet_connection))
+        newNetworkStatus?.let {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    networkIsAvailable = newNetworkStatus,
+                )
+            }
+        }
+
+        if (!_uiState.value.networkIsAvailable) {
+            addMessageToQueue(getString(R.string.str_error_no_internet_connection))
             saveBackOnline(true)
-        } else if (backOnline) {
-            appContext.showToast(getString(R.string.str_internet_restored))
+        } else if (_uiState.value.backOnline) {
+            addMessageToQueue(getString(R.string.str_internet_restored))
             saveBackOnline(false)
         }
     }
@@ -59,18 +76,32 @@ class MainViewModel @Inject constructor(
     fun initVm() {
 
         viewModelScope.launch {
+
             networkListener.checkNetworkAvailability().collect { status ->
                 showNetworkStatus(status)
+            }
+
+            dataStoreRepository.readBackOnline.collect {
+                _uiState.update { currentState -> currentState.copy(backOnline = it) }
             }
         }
     }
 
     override fun messageShown(messageId: Long) {
-        TODO("Not yet implemented")
+        _uiState.update { currentUiState ->
+            val messages = currentUiState.userMessages.filterNot { it.id == messageId }
+            currentUiState.copy(userMessages = messages)
+        }
     }
 
     override fun addMessageToQueue(message: String) {
-        TODO("Not yet implemented")
+        _uiState.update { currentState ->
+            val messages = currentState.userMessages + UserMessage(
+                id = UUID.randomUUID().mostSignificantBits,
+                text = message
+            )
+            currentState.copy(userMessages = messages)
+        }
     }
 
 }
