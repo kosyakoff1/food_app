@@ -13,10 +13,8 @@ import com.kosyakoff.foodapp.databinding.FragmentRecipesBottomSheetBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.kosyakoff.foodapp.util.extensions.showToast
-import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import java.util.*
 
 @AndroidEntryPoint
@@ -37,6 +35,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        _binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
         initViews()
 
         initVm()
@@ -73,7 +72,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun initViews() {
-        _binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
 
         binding.mealTypeChipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)

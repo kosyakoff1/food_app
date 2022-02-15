@@ -13,6 +13,7 @@ import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
 import com.kosyakoff.foodapp.models.FoodRecipes
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
+import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.appContext
 import com.kosyakoff.foodapp.util.extensions.showToast
@@ -28,6 +29,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
+    private val networkListener: NetworkListener,
     application: Application
 ) : BaseViewModel(application) {
 
@@ -42,15 +44,24 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun showNetworkStatus(newNetworkStatus: Boolean?) {
+    private fun showNetworkStatus(newNetworkStatus: Boolean?) {
         newNetworkStatus?.let { networkIsAvailable = it }
 
         if (!networkIsAvailable) {
-            getApplication<Application>().showToast(getString(R.string.str_error_no_internet_connection))
+            appContext.showToast(getString(R.string.str_error_no_internet_connection))
             saveBackOnline(true)
         } else if (backOnline) {
-            getApplication<Application>().showToast(getString(R.string.str_internet_restored))
+            appContext.showToast(getString(R.string.str_internet_restored))
             saveBackOnline(false)
+        }
+    }
+
+    fun initVm() {
+
+        viewModelScope.launch {
+            networkListener.checkNetworkAvailability().collect { status ->
+                showNetworkStatus(status)
+            }
         }
     }
 

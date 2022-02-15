@@ -8,11 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 
-class NetworkListener : ConnectivityManager.NetworkCallback() {
+class NetworkListener(private val context: Context) : ConnectivityManager.NetworkCallback() {
 
     private val isNetworkAvailable = MutableStateFlow(false)
 
-    fun checkNetworkAvailability(context: Context): StateFlow<Boolean> {
+    fun checkNetworkAvailability(): StateFlow<Boolean> {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.registerDefaultNetworkCallback(this)
@@ -44,7 +44,6 @@ class NetworkListener : ConnectivityManager.NetworkCallback() {
         super.onAvailable(network)
 
         isNetworkAvailable.value = true
-
     }
 
     override fun onLost(network: Network) {

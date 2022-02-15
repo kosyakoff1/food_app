@@ -1,50 +1,45 @@
 package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
-import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.models.FoodRecipes
-import com.kosyakoff.foodapp.states.DetailsUIState
 import com.kosyakoff.foodapp.states.RecipesUIState
 import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.Constants
+import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
+import kotlin.collections.set
 
 @HiltViewModel
 class RecipesViewModel @Inject constructor(
     application: Application,
     private val dataStoreRepository: DataStoreRepository,
-    private val repository: Repository
+    private val repository: Repository,
+    private val networkListener: NetworkListener
 ) : BaseViewModel(application) {
 
     private var mealType = Constants.DEFAULT_MEAL_TYPE
     private var dietType = Constants.DEFAULT_DIET_TYPE
 
-
     private val _recipesFlow = repository.localDataSource.loadRecipes()
-    private var _readRecipes: MutableLiveData<List<RecipesEntity>> = MutableLiveData(null)
-    val readRecipes: LiveData<List<RecipesEntity>> get() = _readRecipes
+    val readRecipes =
+        _recipesFlow.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    private var backFromBottomSheet = false
 
     private val _uiState =
         MutableStateFlow(
@@ -53,7 +48,6 @@ class RecipesViewModel @Inject constructor(
             )
         )
     val uiState: StateFlow<RecipesUIState> = _uiState
-
 
     fun saveMealAndDietTypes(
         selectedMealType: String,
@@ -71,7 +65,7 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    fun getQueries(): HashMap<String, String> {
+    private fun getQueries(): HashMap<String, String> {
 
         viewModelScope.launch {
             readMealAndDietType.collectLatest { value ->
@@ -91,7 +85,7 @@ class RecipesViewModel @Inject constructor(
         return queries
     }
 
-    fun getSearchQuery(searchQuery: String): HashMap<String, String> {
+    private fun getSearchQuery(searchQuery: String): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
         queries[Constants.QUERY_SEARCH] = searchQuery
         queries[Constants.QUERY_NUMBER] = Constants.DEFAULT_RECIPES_NUMBER
@@ -103,32 +97,31 @@ class RecipesViewModel @Inject constructor(
     }
 
     var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
-    var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
 
-    fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
+    private fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
         searchRecipesSafeCall(searchQuery)
     }
 
     private suspend fun searchRecipesSafeCall(searchQuery: Map<String, String>) {
-        searchRecipesResponse.value = NetworkResult.Loading()
+        recipesResponse.value = NetworkResult.Loading()
 
         if (hasInternetConnection()) {
             try {
                 val response = repository.remoteDataSource.searchRecipes(searchQuery)
-                searchRecipesResponse.value = handleServerResponse(response)
+                recipesResponse.value = handleServerResponse(response)
             } catch (e: Exception) {
-                searchRecipesResponse.value =
+                recipesResponse.value =
                     NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
             }
         } else {
-            searchRecipesResponse.value =
+            recipesResponse.value =
                 NetworkResult.Error(
                     getString(R.string.str_error_no_internet_connection)
                 )
         }
     }
 
-    fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
+    private fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
         fetchRecipesSafeCall(queries)
     }
 
@@ -160,22 +153,33 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    fun getListOfRecipes() {
+    fun searchApiData(searchString: String) {
+        searchRecipes(getSearchQuery(searchString))
+    }
+
+    private fun requestApiData() {
+        getRecipes(getQueries())
+    }
+
+    private fun getListOfRecipes() {
         viewModelScope.launch {
             _recipesFlow.lastOrNull()?.let {
-                if (it.isNotEmpty() /*&& !recipesFragmentArgs.backFromBottomSheet*/) {
-                    _readRecipes.value = it
+                if (it.isNotEmpty() && !backFromBottomSheet) {
+                    it.lastOrNull()?.foodRecipes?.let { recipes ->
+                        recipesResponse.value = NetworkResult.Success(recipes)
+                    }
                 } else {
                     requestApiData()
                 }
             }
         }
-        _recipesFlow.lastOrNull() { localData ->
-            if (localData.isNotEmpty() && !recipesFragmentArgs.backFromBottomSheet) {
-                recipesAdapter.submitList(localData.first().foodRecipes.results)
-                toggleShimmerEffect(false)
-            } else {
-                requestApiData()
+    }
+
+    fun initVm(backFromBottomSheet: Boolean) {
+        this.backFromBottomSheet = backFromBottomSheet
+        viewModelScope.launch {
+            networkListener.checkNetworkAvailability().collect {
+                getListOfRecipes()
             }
         }
     }

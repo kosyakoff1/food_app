@@ -17,9 +17,7 @@ import com.kosyakoff.foodapp.util.extensions.getString
 import com.kosyakoff.foodapp.util.extensions.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -57,6 +55,7 @@ class FavoritesViewModel @Inject constructor(
 
     val readFavoriteRecipes =
         repository.localDataSource.loadFavoriteRecipes()
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun deleteAllFavoriteRecipes() = viewModelScope.launch {
         repository.localDataSource.deleteAllFavoriteRecipes()
