@@ -163,7 +163,7 @@ class RecipesViewModel @Inject constructor(
 
     private fun getListOfRecipes() {
         viewModelScope.launch {
-            _recipesFlow.lastOrNull()?.let {
+            readRecipes.value?.let {
                 if (it.isNotEmpty() && !backFromBottomSheet) {
                     it.lastOrNull()?.foodRecipes?.let { recipes ->
                         recipesResponse.value = NetworkResult.Success(recipes)
