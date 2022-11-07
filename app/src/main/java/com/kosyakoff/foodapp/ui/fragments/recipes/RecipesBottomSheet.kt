@@ -15,7 +15,6 @@ import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import java.util.*
 
 @AndroidEntryPoint
@@ -26,9 +25,10 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     private var dietTypeChipTitle = DEFAULT_DIET_TYPE
     private var dietTypeChipId = 0
 
+    private val recipesViewModel: RecipesViewModel by viewModels()
+
     private var _binding: FragmentRecipesBottomSheetBinding? = null
     private val binding get() = _binding!!
-    private val recipesViewModel: RecipesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +36,42 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     ): View {
 
         _binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
+        initViews()
+
+        initVm()
+        return binding.root
+    }
+
+    private fun initVm() {
+
+
+        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
+            mealTypeChipTitle = value.selectedMealType
+            dietTypeChipTitle = value.selectedDietType
+
+            binding.apply {
+                try {
+                    value.selectedMealTypeId.takeIf { it != 0 }?.let {
+                        mealTypeChipGroup.findViewById<Chip>(it).apply {
+                            isChecked = true
+                            mealTypeChipGroup.requestChildFocus(this, this)
+                        }
+                    }
+                    value.selectedDietTypeId.takeIf { it != 0 }?.let {
+                        dietTypeChipGroup.findViewById<Chip>(it).apply {
+                            isChecked = true
+                            dietTypeChipGroup.requestChildFocus(this, this)
+                        }
+                    }
+                } catch (ex: Exception) {
+                    context?.showToast(ex.message.toString())
+                }
+            }
+
+        }
+    }
+
+    private fun initViews() {
 
         binding.mealTypeChipGroup.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -64,34 +100,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             )
             findNavController().navigate(action)
         }
-
-        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
-            mealTypeChipTitle = value.selectedMealType
-            dietTypeChipTitle = value.selectedDietType
-
-            binding.apply {
-                try {
-
-                    value.selectedMealTypeId.takeIf { it != 0 }?.let {
-                        mealTypeChipGroup.findViewById<Chip>(it).apply {
-                            isChecked = true
-                            mealTypeChipGroup.requestChildFocus(this, this)
-                        }
-                    }
-                    value.selectedDietTypeId.takeIf { it != 0 }?.let {
-                        dietTypeChipGroup.findViewById<Chip>(it).apply {
-                            isChecked = true
-                            dietTypeChipGroup.requestChildFocus(this, this)
-                        }
-                    }
-                } catch (ex: Exception) {
-                    context?.showToast(ex.message.toString())
-                }
-            }
-
-        }
-
-        return binding.root
     }
 
     override fun onDestroyView() {

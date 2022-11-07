@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
@@ -14,8 +17,11 @@ import com.kosyakoff.foodapp.adapters.FavoriteRecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentFavouriteRecipesBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.FAVORITES_SELECTION_NAME
 import com.kosyakoff.foodapp.util.extensions.showToast
+import com.kosyakoff.foodapp.viewmodels.FavoritesViewModel
 import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -26,27 +32,42 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         FragmentFavouriteRecipesBinding::bind
     )
     private val adapter: FavoriteRecipesAdapter by lazy { FavoriteRecipesAdapter() }
-    private val mainViewModel by viewModels<MainViewModel>()
+    private val favoritesViewModel by viewModels<FavoritesViewModel>()
     private lateinit var favoriteSelectionTracker: SelectionTracker<Long>
     private var actionMode: ActionMode? = null
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setHasOptionsMenu(true)
+        initViews(savedInstanceState)
+        initVm()
+    }
 
+    private fun initVm() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favoritesViewModel.readFavoriteRecipes.collectLatest { favoriteEntities ->
+                    adapter.submitList(favoriteEntities.map { favoriteEntity -> favoriteEntity.recipe })
+                }
+                favoritesViewModel.uiState.collectLatest { currentState ->
+                    currentState.userMessages.firstOrNull()?.let {
+                        favoritesViewModel.messageShown(it.id)
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun initViews(savedInstanceState: Bundle?) {
+        setHasOptionsMenu(true)
         setupRecyclerView()
         savedInstanceState?.let {
             favoriteSelectionTracker.onRestoreInstanceState(it)
             setActionModeBasedOnCurrentSelection()
         }
-        binding.mainViewModel = mainViewModel
+        binding.favoritesViewModel = favoritesViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        mainViewModel.readFavoriteRecipes.observe(viewLifecycleOwner) { favoriteEntities ->
-            adapter.submitList(favoriteEntities.map { favoriteEntity -> favoriteEntity.recipe })
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -56,8 +77,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_all_favorites_menu) {
-            mainViewModel.deleteAllFavoriteRecipes()
-            context?.showToast(getString(R.string.scr_favorites_all_favorites_deleted))
+            favoritesViewModel.deleteAllFavoriteRecipes()
         }
 
         return super.onOptionsItemSelected(item)
@@ -81,7 +101,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         if (item?.itemId == R.id.delete_favorite_menu) {
-            mainViewModel.deleteGroupOfFavoriteRecipes(
+            favoritesViewModel.deleteGroupOfFavoriteRecipes(
                 favoriteSelectionTracker.selection.toList()
             )
             actionMode?.finish()

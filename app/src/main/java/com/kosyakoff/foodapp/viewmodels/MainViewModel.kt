@@ -7,177 +7,101 @@ import android.net.NetworkCapabilities
 import androidx.lifecycle.*
 import com.kosyakoff.FoodApplication
 import com.kosyakoff.foodapp.R
+import com.kosyakoff.foodapp.data.DataStoreRepository
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
 import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
-import com.kosyakoff.foodapp.models.FoodJoke
+import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.models.FoodRecipes
+import com.kosyakoff.foodapp.states.DetailsUIState
+import com.kosyakoff.foodapp.states.MainUIState
+import com.kosyakoff.foodapp.states.UserMessage
+import com.kosyakoff.foodapp.ui.base.BaseViewModel
+import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
+import com.kosyakoff.foodapp.util.extensions.appContext
 import com.kosyakoff.foodapp.util.extensions.showToast
-import com.kosyakoff.foodapp.util.getString
+import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val repository: Repository,
+    private val dataStoreRepository: DataStoreRepository,
+    private val networkListener: NetworkListener,
     application: Application
-) : AndroidViewModel(application) {
+) : BaseViewModel(application) {
 
-    val readRecipes: LiveData<List<RecipesEntity>> =
-        repository.localDataSource.loadRecipes().asLiveData()
+    private val _uiState =
+        MutableStateFlow(
+            MainUIState(
+                userMessages = emptyList(),
+                networkIsAvailable = false,
+                backOnline = false
+            )
+        )
+    val uiState: StateFlow<MainUIState> = _uiState
 
-    val readFavoriteRecipes: LiveData<List<FavoriteEntity>> =
-        repository.localDataSource.loadFavoriteRecipes().asLiveData()
-
-    private fun insertRecipes(recipesEntity: RecipesEntity) =
+    private fun saveBackOnline(backOnline: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.insertRecipes(recipesEntity)
-        }
-
-    fun writeFavoriteRecipe(recipe: FavoriteEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.insertFavoriteRecipe(recipe)
-        }
-
-    fun deleteFavoriteRecipe(recipe: FavoriteEntity) =
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.deleteFavoriteRecipe(recipe)
-        }
-
-    fun deleteAllFavoriteRecipes() = viewModelScope.launch(Dispatchers.IO) {
-        repository.localDataSource.deleteAllFavoriteRecipes()
-    }
-
-    fun deleteGroupOfFavoriteRecipes(group: List<Long>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.localDataSource.deleteGroupOfFavoriteRecipes(group)
-
-            withContext(Dispatchers.Main) {
-                getApplication<FoodApplication>().showToast(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
-            }
+            dataStoreRepository.saveBackOnline(backOnline)
         }
     }
 
-    var foodJokeResponse: MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
-    var recipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
-    var searchRecipesResponse: MutableLiveData<NetworkResult<FoodRecipes>> = MutableLiveData()
+    private fun showNetworkStatus(newNetworkStatus: Boolean?) {
 
-    fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
-        searchRecipesSafeCall(searchQuery)
-    }
-
-    private suspend fun searchRecipesSafeCall(searchQuery: Map<String, String>) {
-        searchRecipesResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.searchRecipes(searchQuery)
-                searchRecipesResponse.value = handleFoodRecipesResponse(response)
-            } catch (e: Exception) {
-                searchRecipesResponse.value =
-                    NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
-            }
-        } else {
-            searchRecipesResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
+        newNetworkStatus?.let {
+            _uiState.update { currentState ->
+                currentState.copy(
+                    networkIsAvailable = newNetworkStatus,
                 )
+            }
+        }
+
+        if (!_uiState.value.networkIsAvailable) {
+            addMessageToQueue(getString(R.string.str_error_no_internet_connection))
+            saveBackOnline(true)
+        } else if (_uiState.value.backOnline) {
+            addMessageToQueue(getString(R.string.str_internet_restored))
+            saveBackOnline(false)
         }
     }
 
-    fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
-        fetchRecipesSafeCall(queries)
-    }
+    fun initVm() {
 
-    fun getFoodJoke(apiKey: String) = viewModelScope.launch {
-        fetchFoodJokeSafeCall(apiKey)
-    }
+        viewModelScope.launch {
 
-    private suspend fun fetchFoodJokeSafeCall(apiKey: String) {
-        foodJokeResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.getFoodJoke(apiKey)
-                foodJokeResponse.value = handleFoodRecipesResponse(response)
-
-            } catch (e: Exception) {
-                foodJokeResponse.value =
-                    NetworkResult.Error(e.message)
+            networkListener.checkNetworkAvailability().collect { status ->
+                showNetworkStatus(status)
             }
-        } else {
-            foodJokeResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
-                )
-        }
-    }
 
-    private suspend fun fetchRecipesSafeCall(queries: Map<String, String>) {
-        recipesResponse.value = NetworkResult.Loading()
-
-        if (hasInternetConnection()) {
-            try {
-                val response = repository.remoteDataSource.getRecipes(queries)
-                recipesResponse.value = handleFoodRecipesResponse(response)
-
-                recipesResponse.value!!.data?.let {
-                    putRecipesInCache(it)
-                }
-            } catch (e: Exception) {
-                recipesResponse.value =
-                    NetworkResult.Error(getString(R.string.str_error_recipes_not_found))
-            }
-        } else {
-            recipesResponse.value =
-                NetworkResult.Error(
-                    getString(R.string.str_error_no_internet_connection)
-                )
-        }
-    }
-
-    private fun putRecipesInCache(foodRecipes: FoodRecipes) {
-        insertRecipes(RecipesEntity(0, foodRecipes))
-    }
-
-    private fun <T> handleFoodRecipesResponse(response: Response<T>): NetworkResult<T> {
-        when {
-            response.message().contains("timeout") -> {
-                return NetworkResult.Error(getString(R.string.str_error_timeout))
-            }
-            response.code() == 402 -> {
-                return NetworkResult.Error(getString(R.string.str_error_api_limit_reached))
-            }
-            response.isSuccessful -> {
-                val foodRecipes = response.body()!!
-
-                return NetworkResult.Success(foodRecipes)
-            }
-            else -> {
-                return NetworkResult.Error(response.message().toString())
+            dataStoreRepository.readBackOnline.collect {
+                _uiState.update { currentState -> currentState.copy(backOnline = it) }
             }
         }
     }
 
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager =
-            getApplication<Application>()
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-
-        val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            else -> false
+    override fun messageShown(messageId: Long) {
+        _uiState.update { currentUiState ->
+            val messages = currentUiState.userMessages.filterNot { it.id == messageId }
+            currentUiState.copy(userMessages = messages)
         }
     }
+
+    override fun addMessageToQueue(message: String) {
+        _uiState.update { currentState ->
+            val messages = currentState.userMessages + UserMessage(
+                id = UUID.randomUUID().mostSignificantBits,
+                text = message
+            )
+            currentState.copy(userMessages = messages)
+        }
+    }
+
 }

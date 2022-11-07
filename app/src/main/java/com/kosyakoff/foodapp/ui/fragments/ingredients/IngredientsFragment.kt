@@ -29,11 +29,11 @@ class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
         val recipe = arguments?.getParcelable<FoodRecipe>(DetailsActivity.BUNDLE_KEY)!!
 
-        setupRecyclerView()
+        initViews()
         adapter.submitList(recipe.extendedIngredients)
     }
 
-    private fun setupRecyclerView() {
+    private fun initViews() {
         binding.ingredientsRecyclerView.setHasFixedSize(true)
         binding.ingredientsRecyclerView.adapter = adapter
         binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
