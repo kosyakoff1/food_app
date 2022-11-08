@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,15 +14,14 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentOverviewBinding
 import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.viewmodels.DetailsViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 
 
-@AndroidEntryPoint
 class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
-    private val detailsViewModel: DetailsViewModel by viewModels()
+    private val detailsViewModel: DetailsViewModel by activityViewModels()
     private val binding: FragmentOverviewBinding by viewBinding(FragmentOverviewBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,15 +32,16 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     private fun initViews() {
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                detailsViewModel.uiState.collect { uiState ->
+                detailsViewModel.uiState.collectLatest { uiState ->
                     with(binding) {
                         mainImageView.load(uiState.currentRecipe.image)
                         titleTextView.text = uiState.currentRecipe.title
                         numberOfLikesTextView.text = uiState.currentRecipe.aggregateLikes.toString()
                         timeTextView.text = uiState.currentRecipe.readyInMinutes.toString()
-                        val parsedString = Jsoup.parse(uiState.currentRecipe.summary).text()
+                        val parsedString =
+                            uiState.currentRecipe.summary?.let { Jsoup.parse(it).text() }
                         overviewTextView.text = parsedString
                     }
                     setCheckedItems(uiState.currentRecipe)

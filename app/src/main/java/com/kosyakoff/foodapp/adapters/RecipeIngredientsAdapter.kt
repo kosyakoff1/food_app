@@ -7,19 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.IngredientsRowLayoutBinding
-import com.kosyakoff.foodapp.models.ExtendedIngredient
+import com.kosyakoff.foodapp.models.ExtendedIngredients
 import com.kosyakoff.foodapp.util.Constants.Companion.CDN_URL
 import com.kosyakoff.foodapp.util.RecipesIngredientDiffUtilCallback
 import java.util.*
 
 class RecipeIngredientsAdapter :
-    ListAdapter<ExtendedIngredient, RecipeIngredientsAdapter.ViewHolder>(
+    ListAdapter<ExtendedIngredients, RecipeIngredientsAdapter.ViewHolder>(
         RecipesIngredientDiffUtilCallback
     ) {
 
     class ViewHolder(private val binding: IngredientsRowLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(ingredient: ExtendedIngredient) {
+        fun bind(ingredient: ExtendedIngredients) {
             binding.apply {
                 ingredientImageView.load(CDN_URL + ingredient.image) {
                     crossfade(600)
@@ -32,7 +32,7 @@ class RecipeIngredientsAdapter :
                 }
                 ingredientAmountTextView.text = ingredient.amount.toString()
                 ingredientUnitTextView.text = ingredient.unit
-                ingredientConsistencyTextView.text = ingredient.consistency
+                ingredientConsistencyTextView.text = ingredient.consitency
                 ingredientOriginalTextView.text = ingredient.original
             }
         }

@@ -1,19 +1,19 @@
 package com.kosyakoff.foodapp.util
 
 import androidx.recyclerview.widget.DiffUtil
-import com.kosyakoff.foodapp.models.ExtendedIngredient
+import com.kosyakoff.foodapp.models.ExtendedIngredients
 
-object RecipesIngredientDiffUtilCallback : DiffUtil.ItemCallback<ExtendedIngredient>() {
+object RecipesIngredientDiffUtilCallback : DiffUtil.ItemCallback<ExtendedIngredients>() {
     override fun areItemsTheSame(
-        oldItem: ExtendedIngredient,
-        newItem: ExtendedIngredient
+        oldItem: ExtendedIngredients,
+        newItem: ExtendedIngredients
     ): Boolean {
         return oldItem === newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: ExtendedIngredient,
-        newItem: ExtendedIngredient
+        oldItem: ExtendedIngredients,
+        newItem: ExtendedIngredients
     ): Boolean {
         return oldItem == newItem
     }

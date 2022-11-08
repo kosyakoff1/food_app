@@ -19,6 +19,7 @@ import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.viewmodels.FoodJokeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -41,7 +42,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
         with(binding) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    foodJokeViewModel.foodJokeState.collect { response ->
+                    foodJokeViewModel.foodJokeState.collectLatest { response ->
                         foodJokeErrorTextView.isVisible = response is NetworkResult.Error
                         foodJokeErrorImageView.isVisible = response is NetworkResult.Error
                         foodJokeLoadingProgressBar.isVisible = response is NetworkResult.Loading

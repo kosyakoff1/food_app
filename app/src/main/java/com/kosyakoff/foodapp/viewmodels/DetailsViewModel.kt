@@ -32,21 +32,8 @@ class DetailsViewModel @Inject constructor(
         )
     val uiState: StateFlow<DetailsUIState> = _uiState
 
-    init {
-        viewModelScope.launch {
-            repository.localDataSource.loadFavoriteRecipes()
-                .collectLatest { listOfRecipes ->
-                    _uiState.update { currentUiState ->
-                        currentUiState.copy(
-                            isFavored = isRecipeIsFavored(
-                                currentUiState.currentRecipe.id, listOfRecipes
-                            )
-                        )
-
-                    }
-                }
-        }
-    }
+    private val _favoriteRecipesList = repository.localDataSource.loadFavoriteRecipes()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun initVm(recipe: FoodRecipe) {
         viewModelScope.launch {
@@ -78,8 +65,7 @@ class DetailsViewModel @Inject constructor(
             if (listOfFavorites != null) {
                 listOfFavorites.firstOrNull { entity -> entity.recipe.id == recipeId }
             } else {
-                repository.localDataSource.loadFavoriteRecipes().lastOrNull()
-                    ?.firstOrNull { entity -> entity.recipe.id == recipeId }
+                _favoriteRecipesList.value.firstOrNull { entity -> entity.recipe.id == recipeId }
             }
 
         return recipe

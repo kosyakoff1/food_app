@@ -21,10 +21,12 @@ import com.kosyakoff.foodapp.ui.base.BaseActivity
 import com.kosyakoff.foodapp.ui.fragments.ingredients.IngredientsFragment
 import com.kosyakoff.foodapp.ui.fragments.instructions.InstructionsFragment
 import com.kosyakoff.foodapp.ui.fragments.overview.OverviewFragment
+import com.kosyakoff.foodapp.util.Constants.Companion.RECIPE_DETAIL_BUNDLE_KEY
 import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.viewmodels.DetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.applyInsetter
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,14 +37,29 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
 
     private var activityMenu: Menu? = null
 
-    companion object {
-        const val BUNDLE_KEY = "recipeBundle"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViews()
-        initVm()
+        detailsViewModel.initVm(args.recipe)
+        initVM()
+    }
+
+    private fun initVM() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                detailsViewModel.uiState.collectLatest { uiState ->
+                    activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
+                        setMenuStarIsFavored(it, uiState.isFavored)
+                    }
+
+                    uiState.userMessages.firstOrNull()?.let { userMessage ->
+                        showToast(userMessage.text)
+                        detailsViewModel.messageShown(userMessage.id)
+                    }
+                }
+            }
+        }
     }
 
     override fun setupInsets() {
@@ -54,25 +71,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         }
     }
 
-    private fun initVm() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                detailsViewModel.uiState.collect { uiState ->
-                    activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
-                        setMenuStarIsFavored(it, uiState.isFavored)
-                    }
-
-                    uiState.userMessages.firstOrNull()?.let { userMessage ->
-                        showToast(userMessage.text)
-                        detailsViewModel.messageShown(userMessage.id)
-                    }
-                }
-            }
-            detailsViewModel.initVm(args.recipe)
-        }
-    }
-
-    fun initViews() {
+    private fun initViews() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         with(binding) {
@@ -87,7 +86,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
             )
 
             val adapter = RecipePagerAdapter(
-                bundleOf(BUNDLE_KEY to args.recipe),
+                bundleOf(RECIPE_DETAIL_BUNDLE_KEY to args.recipe),
                 fragments,
                 this@DetailsActivity
             )
@@ -109,9 +108,6 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.details_activity_menu, menu)
         activityMenu = menu
-//        activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
-//            setMenuStarIsFavored(it, detailsViewModel. isFavored)
-//        }
         return true
     }
 
