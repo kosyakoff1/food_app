@@ -15,7 +15,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.databinding.FragmentFoodJokeBinding
-import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.viewmodels.FoodJokeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,7 +32,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
         setHasOptionsMenu(true)
 
-        foodJokeViewModel.initVm(API_KEY)
+        foodJokeViewModel.initVm()
         initViews()
     }
 

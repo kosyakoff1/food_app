@@ -1,19 +1,16 @@
 package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
 import com.kosyakoff.foodapp.models.FoodJoke
-import com.kosyakoff.foodapp.models.FoodRecipe
-import com.kosyakoff.foodapp.states.DetailsUIState
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
+import com.kosyakoff.foodapp.util.Constants.Companion.API_KEY
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -37,8 +34,8 @@ class FoodJokeViewModel @Inject constructor(
         )
     val foodJokeState = _foodJokeState.asStateFlow()
 
-    fun initVm(apiKey: String) {
-        getFoodJoke(apiKey)
+    fun initVm() {
+        getFoodJoke(API_KEY)
     }
 
     private fun getFoodJoke(apiKey: String) = viewModelScope.launch {

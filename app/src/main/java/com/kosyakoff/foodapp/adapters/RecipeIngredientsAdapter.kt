@@ -30,8 +30,8 @@ class RecipeIngredientsAdapter :
                         Locale.getDefault()
                     ) else it.toString()
                 }
-                ingredientAmountTextView.text = ingredient.amount.toString()
-                ingredientUnitTextView.text = ingredient.unit
+                ingredientAmountTextView.text = ingredient.measures.metric?.amount.toString()
+                ingredientUnitTextView.text = ingredient.measures.metric?.unitLong
                 ingredientConsistencyTextView.text = ingredient.consitency
                 ingredientOriginalTextView.text = ingredient.original
             }
