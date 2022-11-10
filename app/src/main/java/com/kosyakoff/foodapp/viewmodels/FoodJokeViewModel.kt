@@ -35,11 +35,11 @@ class FoodJokeViewModel @Inject constructor(
     val foodJokeState = _foodJokeState.asStateFlow()
 
     fun initVm() {
-        getFoodJoke(API_KEY)
+        getFoodJoke()
     }
 
-    private fun getFoodJoke(apiKey: String) = viewModelScope.launch {
-        fetchFoodJokeSafeCall(apiKey)
+    private fun getFoodJoke() = viewModelScope.launch {
+        fetchFoodJokeSafeCall(API_KEY)
     }
 
     private suspend fun fetchFoodJokeSafeCall(apiKey: String) {

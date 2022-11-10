@@ -11,7 +11,10 @@ import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -32,12 +35,9 @@ class DetailsViewModel @Inject constructor(
         )
     val uiState: StateFlow<DetailsUIState> = _uiState
 
-    private val _favoriteRecipesList = repository.localDataSource.loadFavoriteRecipes()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
-
     fun initVm(recipe: FoodRecipe) {
         viewModelScope.launch {
-            val isFavored = isRecipeIsFavored(recipe.id)
+            val isFavored = getFavoredRecipe(recipe.id) != null
 
             _uiState.update { currentUiState ->
                 currentUiState.copy(currentRecipe = recipe, isFavored = isFavored)
@@ -57,16 +57,15 @@ class DetailsViewModel @Inject constructor(
 
 
     private suspend fun getFavoredRecipe(
-        recipeId: Int,
-        listOfFavorites: List<FavoriteEntity>? = null
+        recipeId: Int
     ): FavoriteEntity? {
 
-        val recipe =
-            if (listOfFavorites != null) {
-                listOfFavorites.firstOrNull { entity -> entity.recipe.id == recipeId }
-            } else {
-                _favoriteRecipesList.value.firstOrNull { entity -> entity.recipe.id == recipeId }
-            }
+        var recipe: FavoriteEntity? = null
+        viewModelScope.launch {
+            val favoritesList =
+                repository.localDataSource.loadFavoriteRecipes().lastOrNull()
+            recipe = favoritesList?.firstOrNull { entity -> entity.recipe.id == recipeId }
+        }
 
         return recipe
     }
@@ -78,48 +77,40 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun isRecipeIsFavored(
-        recipeId: Int,
-        listOfFavorites: List<FavoriteEntity>? = null
-    ): Boolean {
-        var isFavored = false
-        getFavoredRecipe(recipeId, listOfFavorites)?.let { isFavored = true }
-
-        return isFavored
-    }
-
     fun toggleIsFavored() {
-        if (!_uiState.value.isFavored) {
-            writeFavoriteRecipe(
-                FavoriteEntity(
-                    0,
-                    _uiState.value.currentRecipe.id,
-                    _uiState.value.currentRecipe
-                )
-            )
-            addMessageToQueue(
-                getString(R.string.scr_details_tst_recipe_saved_to_favorites)
-            )
-        } else {
-            viewModelScope.launch {
-                getFavoredRecipe(_uiState.value.currentRecipe.id)?.let {
-                    deleteFavoriteRecipe(it)
+        viewModelScope.launch {
+
+            with(_uiState.value) {
+                if (!isFavored) {
+                    writeFavoriteRecipe(
+                        FavoriteEntity(
+                            0,
+                            currentRecipe.id,
+                            currentRecipe
+                        )
+                    )
+                    addMessageToQueue(
+                        getString(R.string.scr_details_tst_recipe_saved_to_favorites)
+                    )
+
+                } else {
+
+                    deleteFavoriteRecipe(currentRecipe.id.toLong())
 
                     addMessageToQueue(
                         getString(R.string.scr_details_tst_recipe_removed_from_favorites)
                     )
                 }
+
+                _uiState.update { state -> state.copy(isFavored = !state.isFavored) }
             }
         }
     }
 
-    private fun writeFavoriteRecipe(recipe: FavoriteEntity) =
-        viewModelScope.launch {
-            repository.localDataSource.insertFavoriteRecipe(recipe)
-        }
+    private suspend fun writeFavoriteRecipe(recipe: FavoriteEntity) =
+        repository.localDataSource.insertFavoriteRecipe(recipe)
 
-    private fun deleteFavoriteRecipe(recipe: FavoriteEntity) =
-        viewModelScope.launch {
-            repository.localDataSource.deleteFavoriteRecipe(recipe)
-        }
+    private suspend fun deleteFavoriteRecipe(recipeId: Long) =
+        repository.localDataSource.deleteGroupOfFavoriteRecipes(listOf(recipeId))
+
 }

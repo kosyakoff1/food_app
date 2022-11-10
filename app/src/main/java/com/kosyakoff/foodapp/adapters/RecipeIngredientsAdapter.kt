@@ -32,7 +32,7 @@ class RecipeIngredientsAdapter :
                 }
                 ingredientAmountTextView.text = ingredient.measures.metric?.amount.toString()
                 ingredientUnitTextView.text = ingredient.measures.metric?.unitLong
-                ingredientConsistencyTextView.text = ingredient.consitency
+                ingredientAisleTextView.text = ingredient.aisle
                 ingredientOriginalTextView.text = ingredient.original
             }
         }
