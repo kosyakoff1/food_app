@@ -44,13 +44,12 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
     private fun bindVm() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                favoritesViewModel.readFavoriteRecipes.collectLatest { favoriteEntities ->
-                    adapter.submitList(favoriteEntities.map { favoriteEntity -> favoriteEntity.recipe })
-                }
+
                 favoritesViewModel.uiState.collectLatest { currentState ->
                     currentState.userMessages.firstOrNull()?.let {
                         favoritesViewModel.messageShown(it.id)
                     }
+                    adapter.submitList(currentState.favorites.map { favoriteEntity -> favoriteEntity.recipe })
                 }
             }
         }

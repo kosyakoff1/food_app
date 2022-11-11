@@ -49,9 +49,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
             repeatOnLifecycle(Lifecycle.State.STARTED) {
 
                 detailsViewModel.uiState.collectLatest { uiState ->
-                    activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
-                        setMenuStarIsFavored(it, uiState.isFavored)
-                    }
+                    updateFavoredButton()
 
                     uiState.userMessages.firstOrNull()?.let { userMessage ->
                         showToast(userMessage.text)
@@ -108,7 +106,14 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.details_activity_menu, menu)
         activityMenu = menu
+        updateFavoredButton()
         return true
+    }
+
+    private fun updateFavoredButton() {
+        activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
+            setMenuStarIsFavored(it, detailsViewModel.uiState.value.isFavored)
+        }
     }
 
     private fun setMenuStarIsFavored(menuItem: MenuItem, favored: Boolean) {

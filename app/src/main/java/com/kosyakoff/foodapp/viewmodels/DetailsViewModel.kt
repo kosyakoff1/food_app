@@ -13,7 +13,7 @@ import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.lastOrNull
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.*
@@ -37,10 +37,13 @@ class DetailsViewModel @Inject constructor(
 
     fun initVm(recipe: FoodRecipe) {
         viewModelScope.launch {
-            val isFavored = getFavoredRecipe(recipe.id) != null
 
             _uiState.update { currentUiState ->
-                currentUiState.copy(currentRecipe = recipe, isFavored = isFavored)
+                currentUiState.copy(currentRecipe = recipe, isFavored = false)
+            }
+
+            repository.localDataSource.loadFavoriteRecipes().collectLatest { favoriteEntities ->
+                _uiState.update { state -> state.copy(isFavored = favoriteEntities.any { el -> el.recipe.id == recipe.id }) }
             }
         }
     }
@@ -53,21 +56,6 @@ class DetailsViewModel @Inject constructor(
             )
             currentState.copy(userMessages = messages)
         }
-    }
-
-
-    private suspend fun getFavoredRecipe(
-        recipeId: Int
-    ): FavoriteEntity? {
-
-        var recipe: FavoriteEntity? = null
-        viewModelScope.launch {
-            val favoritesList =
-                repository.localDataSource.loadFavoriteRecipes().lastOrNull()
-            recipe = favoritesList?.firstOrNull { entity -> entity.recipe.id == recipeId }
-        }
-
-        return recipe
     }
 
     override fun messageShown(messageId: Long) {
