@@ -34,7 +34,7 @@ class FoodJokeViewModel @Inject constructor(
         )
     val foodJokeState = _foodJokeState.asStateFlow()
 
-    fun initVm() {
+    fun init() {
         getFoodJoke()
     }
 

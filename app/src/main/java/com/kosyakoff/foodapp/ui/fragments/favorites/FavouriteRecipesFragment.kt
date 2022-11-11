@@ -16,9 +16,7 @@ import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.adapters.FavoriteRecipesAdapter
 import com.kosyakoff.foodapp.databinding.FragmentFavouriteRecipesBinding
 import com.kosyakoff.foodapp.util.Constants.Companion.FAVORITES_SELECTION_NAME
-import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.viewmodels.FavoritesViewModel
-import com.kosyakoff.foodapp.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -40,10 +38,10 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         super.onViewCreated(view, savedInstanceState)
 
         initViews(savedInstanceState)
-        initVm()
+        bindVm()
     }
 
-    private fun initVm() {
+    private fun bindVm() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 favoritesViewModel.readFavoriteRecipes.collectLatest { favoriteEntities ->
@@ -150,24 +148,17 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
                 actionMode = requireActivity().startActionMode(
                     this@FavouriteRecipesFragment
                 )
-                actionMode?.apply {
-                    val selectionSize = favoriteSelectionTracker.selection.size()
-                    title = resources.getQuantityString(
-                        R.plurals.scr_favorites_items_selected_menu_title,
-                        selectionSize,
-                        selectionSize
-                    )
-                }
-            } else {
-                actionMode?.apply {
-                    val selectionSize = favoriteSelectionTracker.selection.size()
-                    title = resources.getQuantityString(
-                        R.plurals.scr_favorites_items_selected_menu_title,
-                        selectionSize,
-                        selectionSize
-                    )
-                }
+            }
+
+            actionMode?.apply {
+                val selectionSize = favoriteSelectionTracker.selection.size()
+                title = resources.getQuantityString(
+                    R.plurals.scr_favorites_items_selected_menu_title,
+                    selectionSize,
+                    selectionSize
+                )
             }
         }
+
     }
 }

@@ -32,11 +32,11 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
         setHasOptionsMenu(true)
 
-        foodJokeViewModel.initVm()
-        initViews()
+        foodJokeViewModel.init()
+        bindVm()
     }
 
-    private fun initViews() {
+    private fun bindVm() {
 
         with(binding) {
             viewLifecycleOwner.lifecycleScope.launch {

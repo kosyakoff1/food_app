@@ -1,25 +1,16 @@
 package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.kosyakoff.FoodApplication
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.Repository
-import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
-import com.kosyakoff.foodapp.models.FoodJoke
 import com.kosyakoff.foodapp.states.FavoritesUIState
 import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
-import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.util.extensions.getString
-import com.kosyakoff.foodapp.util.extensions.showToast
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 

@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
@@ -14,7 +15,6 @@ import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.ui.fragments.favorites.FavouriteRecipesFragmentDirections
 import com.kosyakoff.foodapp.ui.fragments.recipes.RecipesFragmentDirections
 import com.kosyakoff.foodapp.util.extensions.showToast
-import org.jsoup.Jsoup
 
 object RecipesRowBindingAdapters {
 
@@ -31,8 +31,7 @@ object RecipesRowBindingAdapters {
     @BindingAdapter("app:textToParse")
     fun textToParse(textView: TextView, inputString: String?) {
         inputString?.let {
-            val parsedString = Jsoup.parse(it).text()
-            textView.text = parsedString
+            textView.text = HtmlCompat.fromHtml(it, HtmlCompat.FROM_HTML_MODE_COMPACT)
         }
     }
 

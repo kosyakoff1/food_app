@@ -3,6 +3,7 @@ package com.kosyakoff.foodapp.ui.fragments.overview
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -16,7 +17,6 @@ import com.kosyakoff.foodapp.models.FoodRecipe
 import com.kosyakoff.foodapp.viewmodels.DetailsViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
 
 
 class OverviewFragment : Fragment(R.layout.fragment_overview) {
@@ -41,7 +41,12 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
                         numberOfLikesTextView.text = uiState.currentRecipe.aggregateLikes.toString()
                         timeTextView.text = uiState.currentRecipe.readyInMinutes.toString()
                         val parsedString =
-                            uiState.currentRecipe.summary?.let { Jsoup.parse(it).text() }
+                            uiState.currentRecipe.summary?.let {
+                                HtmlCompat.fromHtml(
+                                    it.replace(".", ".<br><br>"),
+                                    HtmlCompat.FROM_HTML_MODE_COMPACT
+                                )
+                            }
                         overviewTextView.text = parsedString
                     }
                     setCheckedItems(uiState.currentRecipe)
