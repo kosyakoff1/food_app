@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
-    private val detailsViewModel: DetailsViewModel by activityViewModels()
+    private val viewModel: DetailsViewModel by activityViewModels()
     private val binding: FragmentOverviewBinding by viewBinding(FragmentOverviewBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,9 +32,9 @@ class OverviewFragment : Fragment(R.layout.fragment_overview) {
 
     private fun initViews() {
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                detailsViewModel.uiState.collectLatest { uiState ->
+                viewModel.uiState.collectLatest { uiState ->
                     with(binding) {
                         mainImageView.load(uiState.currentRecipe.image)
                         titleTextView.text = uiState.currentRecipe.title

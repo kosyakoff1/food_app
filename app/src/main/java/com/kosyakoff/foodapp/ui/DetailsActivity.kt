@@ -33,27 +33,27 @@ import kotlinx.coroutines.launch
 class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivity {
     private val binding: ActivityDetailsBinding by viewBinding(ActivityDetailsBinding::bind)
     private val args: DetailsActivityArgs by navArgs()
-    private val detailsViewModel: DetailsViewModel by viewModels()
+    private val viewModel: DetailsViewModel by viewModels()
 
     private var activityMenu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViews()
-        detailsViewModel.initVm(args.recipe)
-        initVM()
+        viewModel.init(args.recipe)
+        bindVm()
     }
 
-    private fun initVM() {
+    private fun bindVm() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                detailsViewModel.uiState.collectLatest { uiState ->
+                viewModel.uiState.collectLatest { uiState ->
                     updateFavoredButton()
 
                     uiState.userMessages.firstOrNull()?.let { userMessage ->
                         showToast(userMessage.text)
-                        detailsViewModel.messageShown(userMessage.id)
+                        viewModel.messageShown(userMessage.id)
                     }
                 }
             }
@@ -112,7 +112,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
 
     private fun updateFavoredButton() {
         activityMenu?.findItem(R.id.save_to_favorites_menu)?.let {
-            setMenuStarIsFavored(it, detailsViewModel.uiState.value.isFavored)
+            setMenuStarIsFavored(it, viewModel.uiState.value.isFavored)
         }
     }
 
@@ -128,7 +128,7 @@ class DetailsActivity : AppCompatActivity(R.layout.activity_details), BaseActivi
         if (item.itemId == android.R.id.home) {
             finish()
         } else if (item.itemId == R.id.save_to_favorites_menu) {
-            detailsViewModel.toggleIsFavored()
+            viewModel.toggleIsFavored()
         }
         return super.onOptionsItemSelected(item)
     }

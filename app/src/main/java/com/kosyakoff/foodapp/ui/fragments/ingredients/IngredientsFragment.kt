@@ -19,38 +19,41 @@ import kotlinx.coroutines.launch
 
 class IngredientsFragment : Fragment(R.layout.fragment_ingredients) {
 
-    private val detailsViewModel: DetailsViewModel by activityViewModels()
+    private val viewModel: DetailsViewModel by activityViewModels()
     private val binding: FragmentIngredientsBinding by viewBinding(FragmentIngredientsBinding::bind)
     private val adapter: RecipeIngredientsAdapter by lazy { RecipeIngredientsAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.ingredientsRecyclerView.applyInsetter {
-            type(navigationBars = true) {
-                // Add to padding on all sides
-                padding()
+        initViews()
+        bindVm()
+    }
+
+    private fun bindVm() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest {
+                    adapter.submitList(
+                        it.currentRecipe.extendedIngredients
+                    )
+                }
             }
         }
-
-        initViews()
     }
 
     private fun initViews() {
-        binding.ingredientsRecyclerView.setHasFixedSize(true)
-        binding.ingredientsRecyclerView.adapter = adapter
-        binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        with(binding) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    detailsViewModel.uiState.collectLatest {
-                        adapter.submitList(
-                            it.currentRecipe.extendedIngredients
-                        )
-                    }
+        with(binding.ingredientsRecyclerView) {
+            applyInsetter {
+                type(navigationBars = true) {
+                    // Add to padding on all sides
+                    padding()
                 }
             }
+            setHasFixedSize(true)
+            adapter = adapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
     }
 }

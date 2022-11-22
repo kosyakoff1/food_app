@@ -30,7 +30,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         FragmentFavouriteRecipesBinding::bind
     )
     private val adapter: FavoriteRecipesAdapter by lazy { FavoriteRecipesAdapter() }
-    private val favoritesViewModel by viewModels<FavoritesViewModel>()
+    private val viewModel by viewModels<FavoritesViewModel>()
     private lateinit var favoriteSelectionTracker: SelectionTracker<Long>
     private var actionMode: ActionMode? = null
 
@@ -45,9 +45,9 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-                favoritesViewModel.uiState.collectLatest { currentState ->
+                viewModel.uiState.collectLatest { currentState ->
                     currentState.userMessages.firstOrNull()?.let {
-                        favoritesViewModel.messageShown(it.id)
+                        viewModel.messageShown(it.id)
                     }
                     adapter.submitList(currentState.favorites.map { favoriteEntity -> favoriteEntity.recipe })
                 }
@@ -63,7 +63,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
             favoriteSelectionTracker.onRestoreInstanceState(it)
             setActionModeBasedOnCurrentSelection()
         }
-        binding.favoritesViewModel = favoritesViewModel
+        binding.favoritesViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
@@ -74,7 +74,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete_all_favorites_menu) {
-            favoritesViewModel.deleteAllFavoriteRecipes()
+            viewModel.deleteAllFavoriteRecipes()
         }
 
         return super.onOptionsItemSelected(item)
@@ -98,7 +98,7 @@ class FavouriteRecipesFragment : Fragment(R.layout.fragment_favourite_recipes),
 
     override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
         if (item?.itemId == R.id.delete_favorite_menu) {
-            favoritesViewModel.deleteGroupOfFavoriteRecipes(
+            viewModel.deleteGroupOfFavoriteRecipes(
                 favoriteSelectionTracker.selection.toList()
             )
             actionMode?.finish()

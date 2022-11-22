@@ -11,10 +11,7 @@ import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -35,17 +32,16 @@ class DetailsViewModel @Inject constructor(
         )
     val uiState: StateFlow<DetailsUIState> = _uiState
 
-    fun initVm(recipe: FoodRecipe) {
-        viewModelScope.launch {
-
-            _uiState.update { currentUiState ->
-                currentUiState.copy(currentRecipe = recipe, isFavored = false)
-            }
-
-            repository.localDataSource.loadFavoriteRecipes().collectLatest { favoriteEntities ->
-                _uiState.update { state -> state.copy(isFavored = favoriteEntities.any { el -> el.recipe.id == recipe.id }) }
-            }
+    fun init(recipe: FoodRecipe) {
+        _uiState.update {
+            it.copy(currentRecipe = recipe)
         }
+
+        repository.localDataSource.loadFavoriteRecipes().onEach { favoriteEntities ->
+            _uiState.update {
+                it.copy(isFavored = favoriteEntities.any { el -> el.recipe.id == recipe.id })
+            }
+        }.launchIn(viewModelScope)
     }
 
     override fun addMessageToQueue(message: String) {
@@ -90,7 +86,7 @@ class DetailsViewModel @Inject constructor(
                     )
                 }
 
-                _uiState.update { state -> state.copy(isFavored = !state.isFavored) }
+                _uiState.update { it.copy(isFavored = !it.isFavored) }
             }
         }
     }

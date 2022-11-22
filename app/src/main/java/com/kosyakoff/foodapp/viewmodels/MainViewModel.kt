@@ -1,33 +1,17 @@
 package com.kosyakoff.foodapp.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import androidx.lifecycle.*
-import com.kosyakoff.FoodApplication
+import androidx.lifecycle.viewModelScope
 import com.kosyakoff.foodapp.R
 import com.kosyakoff.foodapp.data.DataStoreRepository
-import com.kosyakoff.foodapp.data.Repository
-import com.kosyakoff.foodapp.data.database.entities.FavoriteEntity
-import com.kosyakoff.foodapp.data.database.entities.RecipesEntity
-import com.kosyakoff.foodapp.models.FoodRecipe
-import com.kosyakoff.foodapp.models.FoodRecipes
-import com.kosyakoff.foodapp.states.DetailsUIState
 import com.kosyakoff.foodapp.states.MainUIState
 import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.NetworkListener
-import com.kosyakoff.foodapp.util.NetworkResult
-import com.kosyakoff.foodapp.util.extensions.appContext
-import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
@@ -49,7 +33,7 @@ class MainViewModel @Inject constructor(
     val uiState: StateFlow<MainUIState> = _uiState
 
     private fun saveBackOnline(backOnline: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             dataStoreRepository.saveBackOnline(backOnline)
         }
     }
@@ -59,7 +43,7 @@ class MainViewModel @Inject constructor(
         newNetworkStatus?.let {
             _uiState.update { currentState ->
                 currentState.copy(
-                    networkIsAvailable = newNetworkStatus,
+                    networkIsAvailable = it,
                 )
             }
         }
@@ -75,16 +59,13 @@ class MainViewModel @Inject constructor(
 
     fun initVm() {
 
-        viewModelScope.launch {
+        networkListener.checkNetworkAvailability().onEach { status ->
+            showNetworkStatus(status)
+        }.launchIn(viewModelScope)
 
-            networkListener.checkNetworkAvailability().collect { status ->
-                showNetworkStatus(status)
-            }
-
-            dataStoreRepository.readBackOnline.collect {
-                _uiState.update { currentState -> currentState.copy(backOnline = it) }
-            }
-        }
+        dataStoreRepository.readBackOnline.onEach {
+            _uiState.update { currentState -> currentState.copy(backOnline = it) }
+        }.launchIn(viewModelScope)
     }
 
     override fun messageShown(messageId: Long) {

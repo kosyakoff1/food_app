@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class InstructionsFragment : Fragment(R.layout.fragment_instructions) {
 
     private val binding: FragmentInstructionsBinding by viewBinding(FragmentInstructionsBinding::bind)
-    private val detailsViewModel: DetailsViewModel by activityViewModels()
+    private val viewModel: DetailsViewModel by activityViewModels()
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class InstructionsFragment : Fragment(R.layout.fragment_instructions) {
 
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    detailsViewModel.uiState.collectLatest { state ->
+                    viewModel.uiState.collectLatest { state ->
                         state.currentRecipe.sourceUrl?.let { instructionsWebView.loadUrl(it) }
                     }
                 }

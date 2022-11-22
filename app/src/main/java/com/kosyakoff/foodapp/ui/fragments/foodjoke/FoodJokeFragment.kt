@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
-    private val foodJokeViewModel: FoodJokeViewModel by viewModels()
+    private val viewModel: FoodJokeViewModel by viewModels()
     private val binding: FragmentFoodJokeBinding by viewBinding(FragmentFoodJokeBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,7 +32,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
 
         setHasOptionsMenu(true)
 
-        foodJokeViewModel.init()
+        viewModel.init()
         bindVm()
     }
 
@@ -41,7 +41,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
         with(binding) {
             viewLifecycleOwner.lifecycleScope.launch {
                 viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    foodJokeViewModel.foodJokeState.collectLatest { response ->
+                    viewModel.foodJokeState.collectLatest { response ->
                         foodJokeErrorTextView.isVisible = response is NetworkResult.Error
                         foodJokeErrorImageView.isVisible = response is NetworkResult.Error
                         foodJokeLoadingProgressBar.isVisible = response is NetworkResult.Loading
@@ -71,7 +71,7 @@ class FoodJokeFragment : Fragment(R.layout.fragment_food_joke) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.share_food_joke_menu) {
             val message =
-                foodJokeViewModel.foodJokeState.value.data?.text ?: getString(R.string.str_no_joke)
+                viewModel.foodJokeState.value.data?.text ?: getString(R.string.str_no_joke)
 
             val shareIntent = Intent().apply {
                 action = Intent.ACTION_SEND

@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity(), BaseActivity {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViews()
+        viewModel.initVm()
+        bindVm()
     }
 
     override fun setupInsets() {
@@ -70,7 +72,9 @@ class MainActivity : AppCompatActivity(), BaseActivity {
         val navView: BottomNavigationView = findViewById(R.id.bottom_navigation_view)
         navView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
 
+    private fun bindVm() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { uiState ->
@@ -82,8 +86,6 @@ class MainActivity : AppCompatActivity(), BaseActivity {
                 }
             }
         }
-
-        viewModel.initVm()
     }
 
     override fun onSupportNavigateUp(): Boolean {

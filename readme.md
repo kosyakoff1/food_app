@@ -10,6 +10,8 @@ DONE:
 
 TODO:
 
+* add custom view
+*
 * add https://github.com/itkacher/OkHttpProfiler to a project
 * add linter and progressive code cleanup rules
 * add edit button on favorites screen as side kick of long click gesture + add check mark on

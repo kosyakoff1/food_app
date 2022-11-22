@@ -1,11 +1,16 @@
 package com.kosyakoff.foodapp.ui.fragments.recipes
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,13 +23,15 @@ import com.kosyakoff.foodapp.util.NetworkListener
 import com.kosyakoff.foodapp.util.NetworkResult
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryTextListener {
 
     private val recipesFragmentArgs: RecipesFragmentArgs by navArgs()
-    private val recipesViewModel: RecipesViewModel by viewModels()
+    private val viewModel: RecipesViewModel by viewModels()
     private val binding by viewBinding(FragmentRecipesBinding::bind)
     private val recipesAdapter by lazy { RecipesAdapter() }
 
@@ -35,12 +42,23 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
         super.onViewCreated(view, savedInstanceState)
 
         initViews()
-        recipesViewModel.initVm(recipesFragmentArgs.backFromBottomSheet)
+        bindViewModel()
+        viewModel.init(recipesFragmentArgs.backFromBottomSheet)
+    }
 
+    private fun bindViewModel() {
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest {
+                    processRecipesNetworkResult(it.recipes)
+                }
+            }
+        }
     }
 
     private fun initViews() {
-        binding.viewModel = recipesViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         setHasOptionsMenu(true)
@@ -52,10 +70,6 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
                 val action = RecipesFragmentDirections.actionRecipesFragmentToRecipesBottomSheet()
                 findNavController().navigate(action)
             }
-        }
-
-        recipesViewModel.recipesResponse.observe(viewLifecycleOwner) {
-            processRecipesNetworkResult(it)
         }
     }
 
@@ -72,7 +86,7 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let {
-            recipesViewModel.searchApiData(it)
+            viewModel.searchApiData(it)
         }
         return true
     }
@@ -90,7 +104,6 @@ class RecipesFragment : Fragment(R.layout.fragment_recipes), SearchView.OnQueryT
             toggleShimmerEffect(true)
         }
     }
-
 
     private fun processRecipesNetworkResult(response: NetworkResult<FoodRecipes>) {
         binding.errorImageView.isVisible = response is NetworkResult.Error

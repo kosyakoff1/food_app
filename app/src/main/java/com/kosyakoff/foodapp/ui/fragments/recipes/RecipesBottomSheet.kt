@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -15,6 +17,8 @@ import com.kosyakoff.foodapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.kosyakoff.foodapp.util.extensions.showToast
 import com.kosyakoff.foodapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -25,7 +29,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
     private var dietTypeChipTitle = DEFAULT_DIET_TYPE
     private var dietTypeChipId = 0
 
-    private val recipesViewModel: RecipesViewModel by viewModels()
+    private val viewModel: RecipesViewModel by viewModels()
 
     private var _binding: FragmentRecipesBottomSheetBinding? = null
     private val binding get() = _binding!!
@@ -38,37 +42,42 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         _binding = FragmentRecipesBottomSheetBinding.inflate(inflater, container, false)
         initViews()
 
-        initVm()
+        bindVm()
         return binding.root
     }
 
-    private fun initVm() {
+    private fun bindVm() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collectLatest { state ->
 
+                    with(state.mealAndDietType) {
+                        mealTypeChipTitle = selectedMealType
+                        dietTypeChipTitle = selectedDietType
 
-        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
-            mealTypeChipTitle = value.selectedMealType
-            dietTypeChipTitle = value.selectedDietType
-
-            binding.apply {
-                try {
-                    value.selectedMealTypeId.takeIf { it != 0 }?.let {
-                        mealTypeChipGroup.findViewById<Chip>(it).apply {
-                            isChecked = true
-                            mealTypeChipGroup.requestChildFocus(this, this)
+                        binding.apply {
+                            try {
+                                selectedMealTypeId.takeIf { it != 0 }?.let {
+                                    mealTypeChipGroup.findViewById<Chip>(it).apply {
+                                        isChecked = true
+                                        mealTypeChipGroup.requestChildFocus(this, this)
+                                    }
+                                }
+                                selectedDietTypeId.takeIf { it != 0 }?.let {
+                                    dietTypeChipGroup.findViewById<Chip>(it).apply {
+                                        isChecked = true
+                                        dietTypeChipGroup.requestChildFocus(this, this)
+                                    }
+                                }
+                            } catch (ex: Exception) {
+                                context?.showToast(ex.message.toString())
+                            }
                         }
                     }
-                    value.selectedDietTypeId.takeIf { it != 0 }?.let {
-                        dietTypeChipGroup.findViewById<Chip>(it).apply {
-                            isChecked = true
-                            dietTypeChipGroup.requestChildFocus(this, this)
-                        }
-                    }
-                } catch (ex: Exception) {
-                    context?.showToast(ex.message.toString())
                 }
             }
-
         }
+
     }
 
     private fun initViews() {
@@ -90,7 +99,7 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         }
 
         binding.applyButton.setOnClickListener {
-            recipesViewModel.saveMealAndDietTypes(
+            viewModel.saveMealAndDietTypes(
                 mealTypeChipTitle,
                 mealTypeChipId, dietTypeChipTitle, dietTypeChipId
             )

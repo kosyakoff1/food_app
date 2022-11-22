@@ -9,10 +9,7 @@ import com.kosyakoff.foodapp.states.UserMessage
 import com.kosyakoff.foodapp.ui.base.BaseViewModel
 import com.kosyakoff.foodapp.util.extensions.getString
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -48,11 +45,11 @@ class FavoritesViewModel @Inject constructor(
     }
 
     init {
-        viewModelScope.launch {
-            repository.localDataSource.loadFavoriteRecipes().collectLatest { favoriteEntities ->
-                _uiState.update { state -> state.copy(favorites = favoriteEntities) }
+        repository.localDataSource.loadFavoriteRecipes().onEach { favoriteEntities ->
+            _uiState.update {
+                it.copy(favorites = favoriteEntities)
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun deleteAllFavoriteRecipes() = viewModelScope.launch {
@@ -60,10 +57,9 @@ class FavoritesViewModel @Inject constructor(
         addMessageToQueue(getString(R.string.scr_favorites_all_favorites_deleted))
     }
 
-    fun deleteGroupOfFavoriteRecipes(group: List<Long>) {
+    fun deleteGroupOfFavoriteRecipes(group: List<Long>) =
         viewModelScope.launch {
             repository.localDataSource.deleteGroupOfFavoriteRecipes(group)
             addMessageToQueue(getString(R.string.scr_details_tst_recipes_removed_from_favorites))
         }
-    }
 }
