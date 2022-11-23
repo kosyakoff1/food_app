@@ -38,15 +38,18 @@ class RecipesViewModel @Inject constructor(
             mealAndDietType = MealAndDietType(
                 Constants.DEFAULT_MEAL_TYPE, 0, Constants.DEFAULT_DIET_TYPE, 0
             ),
-            recipes = NetworkResult.Loading(),
-            backFromBottomSheet = false
+            recipes = NetworkResult.Loading()
         )
     )
+
+    private var _backFromBottomSheet = false
+    //private var _isNetworkAvailable = false
 
     val uiState: StateFlow<RecipesUIState> = _uiState
 
     fun init(backFromBottomSheet: Boolean) {
-        _uiState.update { state -> state.copy(backFromBottomSheet = backFromBottomSheet) }
+
+        _backFromBottomSheet = backFromBottomSheet
 
         dataStoreRepository.readMealAndDietType.onEach { mealAndDietType ->
             _uiState.update { state ->
@@ -54,8 +57,21 @@ class RecipesViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
 
-        networkListener.checkNetworkAvailability().onEach {
-            getListOfRecipes()
+//        networkListener.checkNetworkAvailability().onEach {
+//            if (it != _isNetworkAvailable) {
+//                _isNetworkAvailable = it
+//                getListOfRecipes()
+//            }
+//        }.launchIn(viewModelScope)
+
+        repository.localDataSource.loadRecipes().onEach { newRecipes ->
+            if (newRecipes.isEmpty()) {
+                getListOfRecipes()
+            } else {
+                _uiState.update { state ->
+                    state.copy(recipes = NetworkResult.Success(newRecipes.first().foodRecipes))
+                }
+            }
         }.launchIn(viewModelScope)
     }
 
@@ -101,10 +117,6 @@ class RecipesViewModel @Inject constructor(
             try {
                 val response = repository.remoteDataSource.searchRecipes(searchQuery)
                 val recipesNetworkResult = handleServerResponse(response)
-                _uiState.update { state ->
-                    state.copy(recipes = recipesNetworkResult)
-                }
-
                 recipesNetworkResult.data?.let { putRecipesInCache(it) }
 
             } catch (e: Exception) {
@@ -134,36 +146,29 @@ class RecipesViewModel @Inject constructor(
         }
     }
 
-    private fun getListOfRecipes() {
-        with(_uiState.value) {
-            if (recipes.data?.results?.isNotEmpty() == true && !backFromBottomSheet) {
-                viewModelScope.launch {
-                    searchRecipesSafeCall(formSearchQuery())
-                }
+    private fun getListOfRecipes() = with(_uiState.value) {
+        if (_backFromBottomSheet || recipes.data?.results.isNullOrEmpty()) {
+            viewModelScope.launch {
+                searchRecipesSafeCall(formSearchQuery())
             }
         }
     }
 
 
-    private suspend fun putRecipesInCache(foodRecipes: FoodRecipes) {
+    private suspend fun putRecipesInCache(foodRecipes: FoodRecipes) =
         insertRecipes(RecipesEntity(0, foodRecipes))
+
+    override fun messageShown(messageId: Long) = _uiState.update { currentUiState ->
+        val messages = currentUiState.userMessages.filterNot { it.id == messageId }
+        currentUiState.copy(userMessages = messages)
     }
 
-    override fun messageShown(messageId: Long) {
-        _uiState.update { currentUiState ->
-            val messages = currentUiState.userMessages.filterNot { it.id == messageId }
-            currentUiState.copy(userMessages = messages)
-        }
-    }
-
-    override fun addMessageToQueue(message: String) {
-        _uiState.update { currentState ->
-            val messages = currentState.userMessages + UserMessage(
-                id = UUID.randomUUID().mostSignificantBits,
-                text = message
-            )
-            currentState.copy(userMessages = messages)
-        }
+    override fun addMessageToQueue(message: String) = _uiState.update { currentState ->
+        val messages = currentState.userMessages + UserMessage(
+            id = UUID.randomUUID().mostSignificantBits,
+            text = message
+        )
+        currentState.copy(userMessages = messages)
     }
 
 }

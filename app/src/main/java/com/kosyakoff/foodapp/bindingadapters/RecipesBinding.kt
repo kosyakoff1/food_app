@@ -10,7 +10,7 @@ import com.kosyakoff.foodapp.util.NetworkResult
 object RecipesBinding {
 
     @JvmStatic
-    @BindingAdapter("readApiResponse", "readDatabase", requireAll = true)
+    @BindingAdapter("readApiResponse")
     fun errorViewVisibility(
         view: View,
         apiResponse: NetworkResult<FoodRecipes>?

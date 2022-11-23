@@ -7,6 +7,5 @@ import com.kosyakoff.foodapp.util.NetworkResult
 data class RecipesUIState(
     val userMessages: List<UserMessage>,
     val mealAndDietType: MealAndDietType,
-    val recipes: NetworkResult<FoodRecipes>,
-    val backFromBottomSheet: Boolean
+    val recipes: NetworkResult<FoodRecipes>
 )
